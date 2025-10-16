@@ -2,11 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-
-interface LogoProps {
-  size?: number;
-  variant?: "light" | "dark";
-}
+import Link from "next/link";
 
 // Generate 100 unique logo designs
 const generateLogos = (size: number = 80, variant: "light" | "dark" = "light") => {
@@ -368,9 +364,9 @@ export default function LogosPage() {
 
         {/* Back button */}
         <div className="mt-8 text-center">
-          <a href="/" className="inline-block px-6 py-3 bg-green-primary text-black font-semibold rounded hover:bg-green-vibrant transition-colors">
+          <Link href="/" className="inline-block px-6 py-3 bg-green-primary text-black font-semibold rounded hover:bg-green-vibrant transition-colors">
             Back to Home
-          </a>
+          </Link>
         </div>
       </div>
 
