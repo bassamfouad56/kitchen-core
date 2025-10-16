@@ -1,0 +1,150 @@
+import { defineType, defineField } from 'sanity'
+
+export default defineType({
+  name: 'project',
+  title: 'Portfolio Project',
+  type: 'document',
+  fields: [
+    defineField({
+      name: 'title',
+      title: 'Project Title',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'slug',
+      title: 'Slug',
+      type: 'slug',
+      options: {
+        source: 'title',
+        maxLength: 96,
+      },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'location',
+      title: 'Location',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'category',
+      title: 'Category',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Palace', value: 'Palace' },
+          { title: 'Villa', value: 'Villa' },
+          { title: 'Estate', value: 'Estate' },
+          { title: 'Penthouse', value: 'Penthouse' },
+        ],
+      },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'image',
+      title: 'Main Image',
+      type: 'image',
+      options: {
+        hotspot: true,
+      },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'gallery',
+      title: 'Image Gallery',
+      type: 'array',
+      of: [{ type: 'image', options: { hotspot: true } }],
+    }),
+    defineField({
+      name: 'description',
+      title: 'Short Description',
+      type: 'text',
+      rows: 3,
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'year',
+      title: 'Year',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'area',
+      title: 'Area',
+      type: 'string',
+      description: 'e.g., "850 sq ft"',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'budget',
+      title: 'Budget Range',
+      type: 'string',
+      description: 'e.g., "$500K - $1M"',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'materials',
+      title: 'Materials',
+      type: 'array',
+      of: [{ type: 'string' }],
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'appliances',
+      title: 'Appliances',
+      type: 'array',
+      of: [{ type: 'string' }],
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'features',
+      title: 'Key Features',
+      type: 'array',
+      of: [{ type: 'string' }],
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'duration',
+      title: 'Project Duration',
+      type: 'string',
+      description: 'e.g., "24 weeks"',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'challenges',
+      title: 'Engineering Challenge',
+      type: 'text',
+      rows: 3,
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'innovations',
+      title: 'Innovations',
+      type: 'array',
+      of: [{ type: 'string' }],
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'featured',
+      title: 'Featured Project',
+      type: 'boolean',
+      description: 'Show this project prominently on the homepage',
+      initialValue: false,
+    }),
+    defineField({
+      name: 'order',
+      title: 'Display Order',
+      type: 'number',
+      description: 'Lower numbers appear first',
+      validation: (Rule) => Rule.min(0),
+    }),
+  ],
+  preview: {
+    select: {
+      title: 'title',
+      subtitle: 'location',
+      media: 'image',
+    },
+  },
+})
