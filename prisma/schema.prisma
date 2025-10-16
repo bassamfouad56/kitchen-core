@@ -1,0 +1,196 @@
+// Kitchen Core Custom CMS Schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User & Authentication
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  password      String    // Hashed
+  name          String?
+  role          UserRole  @default(ADMIN)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+enum UserRole {
+  ADMIN
+  EDITOR
+}
+
+// Portfolio Projects
+model Project {
+  id            String    @id @default(cuid())
+  title         String
+  slug          String    @unique
+  location      String
+  category      ProjectCategory
+  image         String    // Main image URL
+  gallery       String[]  // Array of image URLs
+  description   String
+  year          String
+  area          String
+  budget        String
+  materials     String[]
+  appliances    String[]
+  features      String[]
+  duration      String
+  challenges    String    @db.Text
+  innovations   String[]
+  featured      Boolean   @default(false)
+  order         Int       @default(0)
+  published     Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([category])
+  @@index([featured])
+  @@index([order])
+}
+
+enum ProjectCategory {
+  PALACE
+  VILLA
+  ESTATE
+  PENTHOUSE
+}
+
+// Gallery Images
+model GalleryImage {
+  id            String    @id @default(cuid())
+  title         String
+  image         String    // Image URL
+  category      ProjectCategory
+  location      String
+  size          GallerySize
+  description   String
+  order         Int       @default(0)
+  published     Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([category])
+  @@index([order])
+}
+
+enum GallerySize {
+  SMALL
+  MEDIUM
+  LARGE
+  WIDE
+  TALL
+}
+
+// Testimonials
+model Testimonial {
+  id            String    @id @default(cuid())
+  name          String
+  title         String
+  location      String
+  image         String    // Client image URL
+  quote         String    @db.Text
+  rating        Int       @default(5)
+  project       String
+  featured      Boolean   @default(false)
+  order         Int       @default(0)
+  published     Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([featured])
+  @@index([order])
+}
+
+// Process Steps
+model ProcessStep {
+  id            String    @id @default(cuid())
+  number        String
+  title         String
+  description   String    @db.Text
+  duration      String
+  iconName      String    // Icon identifier
+  order         Int       @unique
+  published     Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([order])
+}
+
+// Services
+model Service {
+  id            String    @id @default(cuid())
+  title         String
+  description   String    @db.Text
+  features      String[]
+  order         Int       @default(0)
+  published     Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([order])
+}
+
+// Statistics/Metrics
+model Statistic {
+  id            String    @id @default(cuid())
+  number        String
+  label         String
+  section       StatSection
+  order         Int       @default(0)
+  published     Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([section])
+  @@index([order])
+}
+
+enum StatSection {
+  HOMEPAGE_TRUST
+  GALLERY_STATS
+}
+
+// Founder Information (Singleton)
+model Founder {
+  id            String    @id @default(cuid())
+  name          String
+  title         String
+  image         String    // Portrait image URL
+  bio           String    @db.Text
+  education     String[]
+  recognition   String[]
+  quote         String    @db.Text
+  published     Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+// Site Settings (Singleton)
+model SiteSettings {
+  id                String    @id @default(cuid())
+  siteTitle         String
+  heroTagline       String?
+  heroHeading       String?
+  heroSubheading    String?   @db.Text
+  heroImage         String?   // Hero background image URL
+  contactPhone      String?
+  contactEmail      String?
+  showroomAddress   String?   @db.Text
+  instagramUrl      String?
+  pinterestUrl      String?
+  linkedinUrl       String?
+  houzzUrl          String?
+  partnerships      String[]  // Brand partners
+  seoDescription    String?   @db.Text
+  seoKeywords       String[]
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+}
