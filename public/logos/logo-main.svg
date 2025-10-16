@@ -1,0 +1,19 @@
+<svg width="400" height="120" viewBox="0 0 400 120" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="400" height="120" fill="#000000"/>
+
+  <!-- Yellow circle background for @re -->
+  <circle cx="240" cy="60" r="45" fill="#F5C518"/>
+
+  <!-- Text: kitchen -->
+  <text x="20" y="75" font-family="Arial, sans-serif" font-size="42" font-weight="400" fill="#FFFFFF">kitchen</text>
+
+  <!-- Text: @ symbol (in circle) -->
+  <text x="215" y="75" font-family="Arial, sans-serif" font-size="42" font-weight="700" fill="#000000">@</text>
+
+  <!-- Text: re (in circle) -->
+  <text x="250" y="75" font-family="Arial, sans-serif" font-size="42" font-weight="700" fill="#FFFFFF">re</text>
+
+  <!-- Text: M.A.S -->
+  <text x="320" y="75" font-family="Arial, sans-serif" font-size="16" font-weight="300" fill="#FFFFFF">M.A.S</text>
+</svg>

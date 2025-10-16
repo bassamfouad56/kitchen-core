@@ -1,0 +1,10 @@
+<svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="120" height="120" fill="#000000"/>
+
+  <!-- Yellow circle -->
+  <circle cx="60" cy="60" r="45" fill="#F5C518"/>
+
+  <!-- @ symbol -->
+  <text x="35" y="80" font-family="Arial, sans-serif" font-size="60" font-weight="700" fill="#000000">@</text>
+</svg>
