@@ -1,0 +1,93 @@
+import { getServerSession } from 'next-auth'
+import { redirect } from 'next/navigation'
+import { authOptions } from '@/lib/auth'
+import { prisma } from '@/lib/prisma'
+
+export default async function AdminDashboard() {
+  const session = await getServerSession(authOptions)
+
+  if (!session) {
+    redirect('/admin/login')
+  }
+
+  // Get content stats
+  const [projectsCount, galleryCount, testimonialsCount, servicesCount] = await Promise.all([
+    prisma.project.count(),
+    prisma.galleryImage.count(),
+    prisma.testimonial.count(),
+    prisma.service.count(),
+  ])
+
+  const stats = [
+    { label: 'Projects', count: projectsCount, href: '/admin/projects' },
+    { label: 'Gallery Images', count: galleryCount, href: '/admin/gallery' },
+    { label: 'Testimonials', count: testimonialsCount, href: '/admin/testimonials' },
+    { label: 'Services', count: servicesCount, href: '/admin/services' },
+  ]
+
+  return (
+    <div className="min-h-screen bg-black text-white p-8">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="mb-12">
+          <h1 className="text-4xl font-serif text-white mb-2">Welcome back, {session.user.name}</h1>
+          <p className="text-gray-light">Manage your Kitchen Core content</p>
+        </div>
+
+        {/* Stats Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          {stats.map((stat) => (
+            <a
+              key={stat.label}
+              href={stat.href}
+              className="bg-background-card border border-gray-dark p-6 hover:border-green-primary transition-colors"
+            >
+              <div className="text-4xl font-serif text-green-vibrant mb-2">{stat.count}</div>
+              <div className="text-sm text-gray-light uppercase tracking-wider">{stat.label}</div>
+            </a>
+          ))}
+        </div>
+
+        {/* Quick Actions */}
+        <div>
+          <h2 className="text-2xl font-serif mb-6">Quick Actions</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <a
+              href="/admin/projects/new"
+              className="bg-green-primary text-black p-6 hover:bg-green-vibrant transition-colors font-medium"
+            >
+              + New Project
+            </a>
+            <a
+              href="/admin/gallery"
+              className="bg-background-card border border-gray-dark p-6 hover:border-green-primary transition-colors"
+            >
+              Manage Gallery
+            </a>
+            <a
+              href="/admin/settings"
+              className="bg-background-card border border-gray-dark p-6 hover:border-green-primary transition-colors"
+            >
+              Site Settings
+            </a>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="mt-12 pt-8 border-t border-gray-dark flex justify-between items-center">
+          <div className="text-sm text-gray-dark">
+            Kitchen Core CMS v1.0
+          </div>
+          <div className="space-x-4">
+            <a href="/" className="text-sm text-gray-light hover:text-green-primary transition-colors">
+              View Website
+            </a>
+            <a href="/api/auth/signout" className="text-sm text-gray-light hover:text-green-primary transition-colors">
+              Sign Out
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
