@@ -11,7 +11,7 @@ export async function GET() {
     })
 
     return NextResponse.json(testimonials)
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to fetch testimonials' }, { status: 500 })
   }
 }
@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
     const testimonial = await prisma.testimonial.create({ data: body })
 
     return NextResponse.json(testimonial, { status: 201 })
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to create testimonial' }, { status: 500 })
   }
 }

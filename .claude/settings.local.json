@@ -13,7 +13,10 @@
       "Bash(git commit:*)",
       "Bash(npx prisma generate:*)",
       "Bash(npx prisma migrate:*)",
-      "Bash(npm run db:seed:*)"
+      "Bash(npm run db:seed:*)",
+      "Bash(next build)",
+      "Bash(npx next build)",
+      "Bash(vercel:*)"
     ],
     "deny": [],
     "ask": []

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
+import { Prisma, ProjectCategory } from '@prisma/client'
 
 // GET all projects
 export async function GET(request: NextRequest) {
@@ -10,9 +11,11 @@ export async function GET(request: NextRequest) {
     const published = searchParams.get('published')
     const category = searchParams.get('category')
 
-    const where: any = {}
+    const where: Prisma.ProjectWhereInput = {}
     if (published === 'true') where.published = true
-    if (category) where.category = category
+    if (category && Object.values(ProjectCategory).includes(category as ProjectCategory)) {
+      where.category = category as ProjectCategory
+    }
 
     const projects = await prisma.project.findMany({
       where,
@@ -20,7 +23,7 @@ export async function GET(request: NextRequest) {
     })
 
     return NextResponse.json(projects)
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to fetch projects' }, { status: 500 })
   }
 }

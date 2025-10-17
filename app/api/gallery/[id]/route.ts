@@ -3,28 +3,28 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 
-// GET single project
+// GET single gallery image
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { id } = await params
-    const project = await prisma.project.findUnique({
+    const image = await prisma.galleryImage.findUnique({
       where: { id },
     })
 
-    if (!project) {
-      return NextResponse.json({ error: 'Project not found' }, { status: 404 })
+    if (!image) {
+      return NextResponse.json({ error: 'Image not found' }, { status: 404 })
     }
 
-    return NextResponse.json(project)
+    return NextResponse.json(image)
   } catch {
-    return NextResponse.json({ error: 'Failed to fetch project' }, { status: 500 })
+    return NextResponse.json({ error: 'Failed to fetch image' }, { status: 500 })
   }
 }
 
-// PUT update project
+// PUT update gallery image
 export async function PUT(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
@@ -37,19 +37,19 @@ export async function PUT(
 
     const { id } = await params
     const body = await request.json()
-    const project = await prisma.project.update({
+    const image = await prisma.galleryImage.update({
       where: { id },
       data: body,
     })
 
-    return NextResponse.json(project)
+    return NextResponse.json(image)
   } catch (error) {
-    console.error('Error updating project:', error)
-    return NextResponse.json({ error: 'Failed to update project' }, { status: 500 })
+    console.error('Error updating gallery image:', error)
+    return NextResponse.json({ error: 'Failed to update image' }, { status: 500 })
   }
 }
 
-// DELETE project
+// DELETE gallery image
 export async function DELETE(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
@@ -61,13 +61,13 @@ export async function DELETE(
     }
 
     const { id } = await params
-    await prisma.project.delete({
+    await prisma.galleryImage.delete({
       where: { id },
     })
 
-    return NextResponse.json({ message: 'Project deleted successfully' })
+    return NextResponse.json({ message: 'Image deleted successfully' })
   } catch (error) {
-    console.error('Error deleting project:', error)
-    return NextResponse.json({ error: 'Failed to delete project' }, { status: 500 })
+    console.error('Error deleting gallery image:', error)
+    return NextResponse.json({ error: 'Failed to delete image' }, { status: 500 })
   }
 }

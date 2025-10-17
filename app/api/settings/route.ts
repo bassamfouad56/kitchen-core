@@ -7,7 +7,7 @@ export async function GET() {
   try {
     const settings = await prisma.siteSettings.findFirst()
     return NextResponse.json(settings)
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to fetch settings' }, { status: 500 })
   }
 }
@@ -32,7 +32,7 @@ export async function PUT(request: NextRequest) {
       const created = await prisma.siteSettings.create({ data: body })
       return NextResponse.json(created, { status: 201 })
     }
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to update settings' }, { status: 500 })
   }
 }

@@ -2,6 +2,7 @@ import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
 import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
+import Link from 'next/link'
 
 export default async function AdminDashboard() {
   const session = await getServerSession(authOptions)
@@ -37,14 +38,14 @@ export default async function AdminDashboard() {
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           {stats.map((stat) => (
-            <a
+            <Link
               key={stat.label}
               href={stat.href}
               className="bg-background-card border border-gray-dark p-6 hover:border-green-primary transition-colors"
             >
               <div className="text-4xl font-serif text-green-vibrant mb-2">{stat.count}</div>
               <div className="text-sm text-gray-light uppercase tracking-wider">{stat.label}</div>
-            </a>
+            </Link>
           ))}
         </div>
 
@@ -79,12 +80,12 @@ export default async function AdminDashboard() {
             Kitchen Core CMS v1.0
           </div>
           <div className="space-x-4">
-            <a href="/" className="text-sm text-gray-light hover:text-green-primary transition-colors">
+            <Link href="/" className="text-sm text-gray-light hover:text-green-primary transition-colors">
               View Website
-            </a>
-            <a href="/api/auth/signout" className="text-sm text-gray-light hover:text-green-primary transition-colors">
+            </Link>
+            <Link href="/api/auth/signout" className="text-sm text-gray-light hover:text-green-primary transition-colors">
               Sign Out
-            </a>
+            </Link>
           </div>
         </div>
       </div>

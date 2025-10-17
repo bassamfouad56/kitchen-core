@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -30,7 +31,7 @@ export default function LoginPage() {
         router.push('/admin')
         router.refresh()
       }
-    } catch (error) {
+    } catch {
       setError('An error occurred. Please try again.')
     } finally {
       setIsLoading(false)
@@ -108,9 +109,9 @@ export default function LoginPage() {
         </div>
 
         <div className="mt-8 text-center text-xs text-gray-dark">
-          <a href="/" className="hover:text-green-primary transition-colors">
+          <Link href="/" className="hover:text-green-primary transition-colors">
             ← Back to Website
-          </a>
+          </Link>
         </div>
       </div>
     </div>

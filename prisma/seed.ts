@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient, ProjectCategory, GallerySize, StatSection } from '@prisma/client'
 import * as bcrypt from 'bcryptjs'
 
 const prisma = new PrismaClient()
@@ -28,7 +28,7 @@ async function main() {
       title: 'Royal Palace Kitchen',
       slug: 'royal-palace-kitchen-dubai',
       location: 'Dubai, UAE',
-      category: 'PALACE',
+      category: 'PALACE' as ProjectCategory,
       image: '/2.jpg',
       gallery: ['/2.jpg'],
       description: 'Bespoke culinary masterpiece featuring Italian marble and smart technology',
@@ -42,13 +42,14 @@ async function main() {
       challenges: 'Integrated HVAC system for 15-foot ceilings while maintaining aesthetic purity',
       innovations: ['Custom marble extraction', 'Hidden appliance panels', 'Voice-activated lighting'],
       featured: true,
+      published: true,
       order: 1,
     },
     {
       title: 'Mediterranean Villa',
       slug: 'mediterranean-villa-monaco',
       location: 'Monaco',
-      category: 'VILLA',
+      category: 'VILLA' as ProjectCategory,
       image: '/3.jpg',
       gallery: ['/3.jpg'],
       description: 'Contemporary elegance with panoramic sea views',
@@ -62,13 +63,14 @@ async function main() {
       challenges: 'Weather-resistant outdoor integration with climate control systems',
       innovations: ['Retractable glass walls', 'Marine-grade materials', 'Smart climate zones'],
       featured: true,
+      published: true,
       order: 2,
     },
     {
       title: 'Modern Estate Kitchen',
       slug: 'modern-estate-london',
       location: 'London, UK',
-      category: 'ESTATE',
+      category: 'ESTATE' as ProjectCategory,
       image: '/4.jpg',
       gallery: ['/4.jpg'],
       description: 'Minimalist sophistication meets functional luxury',
@@ -82,13 +84,14 @@ async function main() {
       challenges: 'Integrated downdraft ventilation system in island without compromising design',
       innovations: ['Hidden extraction', 'Motorized storage', 'App-controlled appliances'],
       featured: true,
+      published: true,
       order: 3,
     },
     {
       title: 'Heritage Palace',
       slug: 'heritage-palace-riyadh',
       location: 'Riyadh, Saudi Arabia',
-      category: 'PALACE',
+      category: 'PALACE' as ProjectCategory,
       image: '/5.jpg',
       gallery: ['/5.jpg'],
       description: 'Classical grandeur reimagined for modern culinary excellence',
@@ -102,13 +105,14 @@ async function main() {
       challenges: 'Preserving heritage architectural details while modernizing infrastructure',
       innovations: ['Heritage-compliant HVAC', 'Concealed modern systems', 'Traditional finishes with smart tech'],
       featured: false,
+      published: true,
       order: 4,
     },
     {
       title: 'Penthouse Kitchen',
       slug: 'penthouse-kitchen-new-york',
       location: 'New York, USA',
-      category: 'PENTHOUSE',
+      category: 'PENTHOUSE' as ProjectCategory,
       image: '/6.jpg',
       gallery: ['/6.jpg'],
       description: 'Urban luxury with handcrafted Italian cabinetry',
@@ -122,13 +126,14 @@ async function main() {
       challenges: 'Maximizing functionality in limited square footage with luxury finishes',
       innovations: ['Space-saving solutions', 'Vertical storage systems', 'Sliding mechanisms'],
       featured: false,
+      published: true,
       order: 5,
     },
     {
       title: 'Coastal Villa',
       slug: 'coastal-villa-malibu',
       location: 'Malibu, USA',
-      category: 'VILLA',
+      category: 'VILLA' as ProjectCategory,
       image: '/7.jpg',
       gallery: ['/7.jpg'],
       description: 'Seamless indoor-outdoor entertaining kitchen',
@@ -142,6 +147,7 @@ async function main() {
       challenges: 'Salt-air corrosion protection and extreme weather resilience',
       innovations: ['Corrosion-resistant materials', 'Automated weather shutters', 'Salt-air rated systems'],
       featured: false,
+      published: true,
       order: 6,
     },
   ]
@@ -157,16 +163,16 @@ async function main() {
   // Seed Gallery Images
   console.log('Seeding gallery images...')
   const galleryImages = [
-    { title: 'Royal Palace Kitchen', image: '/2.jpg', category: 'PALACE', location: 'Dubai, UAE', size: 'LARGE', description: 'Italian marble countertops with custom brass fixtures', order: 1 },
-    { title: 'Mediterranean Villa', image: '/3.jpg', category: 'VILLA', location: 'Monaco', size: 'MEDIUM', description: 'Ocean-view cooking with premium Sub-Zero appliances', order: 2 },
-    { title: 'Modern Estate', image: '/4.jpg', category: 'ESTATE', location: 'London, UK', size: 'TALL', description: 'Minimalist elegance with smart home integration', order: 3 },
-    { title: 'Heritage Palace', image: '/5.jpg', category: 'PALACE', location: 'Riyadh', size: 'WIDE', description: 'Classical grandeur meets modern technology', order: 4 },
-    { title: 'Manhattan Penthouse', image: '/6.jpg', category: 'PENTHOUSE', location: 'New York', size: 'MEDIUM', description: 'Urban luxury with handcrafted Italian cabinetry', order: 5 },
-    { title: 'Coastal Villa', image: '/7.jpg', category: 'VILLA', location: 'Malibu', size: 'SMALL', description: 'Indoor-outdoor living with weather-resistant systems', order: 6 },
-    { title: 'Contemporary Estate', image: '/8.jpg', category: 'ESTATE', location: 'Singapore', size: 'MEDIUM', description: 'Asian fusion design with European craftsmanship', order: 7 },
-    { title: 'Private Residence', image: '/1.jpg', category: 'VILLA', location: 'Paris', size: 'LARGE', description: 'French elegance with cutting-edge technology', order: 8 },
-    { title: 'Luxury Apartment', image: '/10.jpg', category: 'PENTHOUSE', location: 'Hong Kong', size: 'SMALL', description: 'Space-efficient luxury with panoramic views', order: 9 },
-    { title: 'Desert Villa', image: '/9.jpg', category: 'VILLA', location: 'Dubai', size: 'MEDIUM', description: 'Contemporary Middle Eastern design', order: 10 },
+    { title: 'Royal Palace Kitchen', image: '/2.jpg', category: 'PALACE' as ProjectCategory, location: 'Dubai, UAE', size: 'LARGE' as GallerySize, description: 'Italian marble countertops with custom brass fixtures', order: 1, published: true },
+    { title: 'Mediterranean Villa', image: '/3.jpg', category: 'VILLA' as ProjectCategory, location: 'Monaco', size: 'MEDIUM' as GallerySize, description: 'Ocean-view cooking with premium Sub-Zero appliances', order: 2, published: true },
+    { title: 'Modern Estate', image: '/4.jpg', category: 'ESTATE' as ProjectCategory, location: 'London, UK', size: 'LARGE' as GallerySize, description: 'Minimalist elegance with smart home integration', order: 3, published: true },
+    { title: 'Heritage Palace', image: '/5.jpg', category: 'PALACE' as ProjectCategory, location: 'Riyadh', size: 'LARGE' as GallerySize, description: 'Classical grandeur meets modern technology', order: 4, published: true },
+    { title: 'Manhattan Penthouse', image: '/6.jpg', category: 'PENTHOUSE' as ProjectCategory, location: 'New York', size: 'MEDIUM' as GallerySize, description: 'Urban luxury with handcrafted Italian cabinetry', order: 5, published: true },
+    { title: 'Coastal Villa', image: '/7.jpg', category: 'VILLA' as ProjectCategory, location: 'Malibu', size: 'SMALL' as GallerySize, description: 'Indoor-outdoor living with weather-resistant systems', order: 6, published: true },
+    { title: 'Contemporary Estate', image: '/8.jpg', category: 'ESTATE' as ProjectCategory, location: 'Singapore', size: 'MEDIUM' as GallerySize, description: 'Asian fusion design with European craftsmanship', order: 7, published: true },
+    { title: 'Private Residence', image: '/1.jpg', category: 'VILLA' as ProjectCategory, location: 'Paris', size: 'LARGE' as GallerySize, description: 'French elegance with cutting-edge technology', order: 8, published: true },
+    { title: 'Luxury Apartment', image: '/10.jpg', category: 'PENTHOUSE' as ProjectCategory, location: 'Hong Kong', size: 'SMALL' as GallerySize, description: 'Space-efficient luxury with panoramic views', order: 9, published: true },
+    { title: 'Desert Villa', image: '/9.jpg', category: 'VILLA' as ProjectCategory, location: 'Dubai', size: 'MEDIUM' as GallerySize, description: 'Contemporary Middle Eastern design', order: 10, published: true },
   ]
 
   for (const img of galleryImages) {
@@ -275,14 +281,14 @@ async function main() {
   // Seed Statistics
   console.log('Seeding statistics...')
   const stats = [
-    { number: '150+', label: 'Luxury Kitchens', section: 'HOMEPAGE_TRUST', order: 1 },
-    { number: '25+', label: 'Countries', section: 'HOMEPAGE_TRUST', order: 2 },
-    { number: '15', label: 'Years Excellence', section: 'HOMEPAGE_TRUST', order: 3 },
-    { number: '100%', label: 'Client Satisfaction', section: 'HOMEPAGE_TRUST', order: 4 },
-    { number: '150+', label: 'Projects Completed', section: 'GALLERY_STATS', order: 1 },
-    { number: '25', label: 'Countries Served', section: 'GALLERY_STATS', order: 2 },
-    { number: '$2B+', label: 'Project Value', section: 'GALLERY_STATS', order: 3 },
-    { number: '100%', label: 'Satisfaction Rate', section: 'GALLERY_STATS', order: 4 },
+    { number: '150+', label: 'Luxury Kitchens', section: 'HOMEPAGE_TRUST' as StatSection, order: 1 },
+    { number: '25+', label: 'Countries', section: 'HOMEPAGE_TRUST' as StatSection, order: 2 },
+    { number: '15', label: 'Years Excellence', section: 'HOMEPAGE_TRUST' as StatSection, order: 3 },
+    { number: '100%', label: 'Client Satisfaction', section: 'HOMEPAGE_TRUST' as StatSection, order: 4 },
+    { number: '150+', label: 'Projects Completed', section: 'GALLERY_STATS' as StatSection, order: 1 },
+    { number: '25', label: 'Countries Served', section: 'GALLERY_STATS' as StatSection, order: 2 },
+    { number: '$2B+', label: 'Project Value', section: 'GALLERY_STATS' as StatSection, order: 3 },
+    { number: '100%', label: 'Satisfaction Rate', section: 'GALLERY_STATS' as StatSection, order: 4 },
   ]
 
   for (const stat of stats) {
