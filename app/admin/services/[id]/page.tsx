@@ -14,7 +14,14 @@ export default function EditServicePage() {
   const [saving, setSaving] = useState(false)
   const [deleting, setDeleting] = useState(false)
   const [error, setError] = useState('')
-  const [service, setService] = useState<any>(null)
+  const [service, setService] = useState<{
+    id: string;
+    title: string;
+    description: string;
+    features: string[];
+    order: number;
+    published: boolean;
+  } | null>(null)
   const [features, setFeatures] = useState<string[]>([''])
 
   useEffect(() => {

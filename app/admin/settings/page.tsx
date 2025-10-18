@@ -4,12 +4,30 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 
+interface SiteSettings {
+  id?: string;
+  siteTitle: string;
+  heroTagline?: string | null;
+  heroHeading?: string | null;
+  heroSubheading?: string | null;
+  heroImage?: string | null;
+  contactPhone?: string | null;
+  contactEmail?: string | null;
+  showroomAddress?: string | null;
+  instagramUrl?: string | null;
+  pinterestUrl?: string | null;
+  linkedinUrl?: string | null;
+  houzzUrl?: string | null;
+  partnerships?: string[];
+  seoDescription?: string | null;
+  seoKeywords?: string[];
+}
+
 export default function SettingsPage() {
-  const router = useRouter()
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
-  const [settings, setSettings] = useState<any>(null)
+  const [settings, setSettings] = useState<SiteSettings | null>(null)
   const [partnerships, setPartnerships] = useState<string[]>([''])
   const [seoKeywords, setSeoKeywords] = useState<string[]>([''])
 
@@ -148,7 +166,7 @@ export default function SettingsPage() {
                   type="text"
                   id="heroTagline"
                   name="heroTagline"
-                  defaultValue={settings?.heroTagline}
+                  defaultValue={settings?.heroTagline || ''}
                   className="w-full bg-background-card border border-gray-dark px-4 py-2 text-white focus:border-green-primary focus:outline-none"
                 />
               </div>
@@ -161,7 +179,7 @@ export default function SettingsPage() {
                   type="text"
                   id="heroHeading"
                   name="heroHeading"
-                  defaultValue={settings?.heroHeading}
+                  defaultValue={settings?.heroHeading || ''}
                   className="w-full bg-background-card border border-gray-dark px-4 py-2 text-white focus:border-green-primary focus:outline-none"
                 />
               </div>
@@ -174,7 +192,7 @@ export default function SettingsPage() {
                   id="heroSubheading"
                   name="heroSubheading"
                   rows={3}
-                  defaultValue={settings?.heroSubheading}
+                  defaultValue={settings?.heroSubheading || ''}
                   className="w-full bg-background-card border border-gray-dark px-4 py-2 text-white focus:border-green-primary focus:outline-none"
                 />
               </div>
@@ -187,7 +205,7 @@ export default function SettingsPage() {
                   type="text"
                   id="heroImage"
                   name="heroImage"
-                  defaultValue={settings?.heroImage}
+                  defaultValue={settings?.heroImage || ''}
                   className="w-full bg-background-card border border-gray-dark px-4 py-2 text-white focus:border-green-primary focus:outline-none"
                 />
               </div>
@@ -207,7 +225,7 @@ export default function SettingsPage() {
                   type="text"
                   id="contactPhone"
                   name="contactPhone"
-                  defaultValue={settings?.contactPhone}
+                  defaultValue={settings?.contactPhone || ''}
                   className="w-full bg-background-card border border-gray-dark px-4 py-2 text-white focus:border-green-primary focus:outline-none"
                 />
               </div>
@@ -220,7 +238,7 @@ export default function SettingsPage() {
                   type="email"
                   id="contactEmail"
                   name="contactEmail"
-                  defaultValue={settings?.contactEmail}
+                  defaultValue={settings?.contactEmail || ''}
                   className="w-full bg-background-card border border-gray-dark px-4 py-2 text-white focus:border-green-primary focus:outline-none"
                 />
               </div>
@@ -233,7 +251,7 @@ export default function SettingsPage() {
                   id="showroomAddress"
                   name="showroomAddress"
                   rows={3}
-                  defaultValue={settings?.showroomAddress}
+                  defaultValue={settings?.showroomAddress || ''}
                   className="w-full bg-background-card border border-gray-dark px-4 py-2 text-white focus:border-green-primary focus:outline-none"
                 />
               </div>
@@ -253,7 +271,7 @@ export default function SettingsPage() {
                   type="url"
                   id="instagramUrl"
                   name="instagramUrl"
-                  defaultValue={settings?.instagramUrl}
+                  defaultValue={settings?.instagramUrl || ''}
                   className="w-full bg-background-card border border-gray-dark px-4 py-2 text-white focus:border-green-primary focus:outline-none"
                 />
               </div>
@@ -266,7 +284,7 @@ export default function SettingsPage() {
                   type="url"
                   id="pinterestUrl"
                   name="pinterestUrl"
-                  defaultValue={settings?.pinterestUrl}
+                  defaultValue={settings?.pinterestUrl || ''}
                   className="w-full bg-background-card border border-gray-dark px-4 py-2 text-white focus:border-green-primary focus:outline-none"
                 />
               </div>
@@ -279,7 +297,7 @@ export default function SettingsPage() {
                   type="url"
                   id="linkedinUrl"
                   name="linkedinUrl"
-                  defaultValue={settings?.linkedinUrl}
+                  defaultValue={settings?.linkedinUrl || ''}
                   className="w-full bg-background-card border border-gray-dark px-4 py-2 text-white focus:border-green-primary focus:outline-none"
                 />
               </div>
@@ -292,7 +310,7 @@ export default function SettingsPage() {
                   type="url"
                   id="houzzUrl"
                   name="houzzUrl"
-                  defaultValue={settings?.houzzUrl}
+                  defaultValue={settings?.houzzUrl || ''}
                   className="w-full bg-background-card border border-gray-dark px-4 py-2 text-white focus:border-green-primary focus:outline-none"
                 />
               </div>
@@ -346,7 +364,7 @@ export default function SettingsPage() {
                   id="seoDescription"
                   name="seoDescription"
                   rows={3}
-                  defaultValue={settings?.seoDescription}
+                  defaultValue={settings?.seoDescription || ''}
                   className="w-full bg-background-card border border-gray-dark px-4 py-2 text-white focus:border-green-primary focus:outline-none"
                 />
               </div>

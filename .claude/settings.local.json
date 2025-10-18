@@ -21,7 +21,8 @@
       "Bash(npx vercel blob:*)",
       "Bash(curl:*)",
       "Bash(npx prisma db push:*)",
-      "Bash(test:*)"
+      "Bash(test:*)",
+      "Bash(git push)"
     ],
     "deny": [],
     "ask": []
