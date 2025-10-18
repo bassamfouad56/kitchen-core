@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Inter, Playfair_Display, Cairo, Amiri } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 
@@ -14,6 +14,21 @@ const playfair = Playfair_Display({
   subsets: ["latin"],
   display: "swap",
   weight: ["400", "500", "600", "700", "800"],
+});
+
+// Arabic fonts for RTL support
+const cairo = Cairo({
+  variable: "--font-cairo",
+  subsets: ["arabic", "latin"],
+  display: "swap",
+  weight: ["200", "300", "400", "500", "600", "700", "800"],
+});
+
+const amiri = Amiri({
+  variable: "--font-amiri",
+  subsets: ["arabic", "latin"],
+  display: "swap",
+  weight: ["400", "700"],
 });
 
 export const metadata: Metadata = {
@@ -87,18 +102,16 @@ export const metadata: Metadata = {
   category: "Interior Design",
 };
 
+type RootLayoutProps = {
+  children: React.ReactNode;
+};
+
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <html lang="en">
-      <body
-        className={`${inter.variable} ${playfair.variable} antialiased`}
-      >
-        <Providers>{children}</Providers>
-      </body>
-    </html>
-  );
+}: Readonly<RootLayoutProps>) {
+  // Note: This root layout does NOT set lang/dir attributes
+  // Those are set in app/[locale]/layout.tsx based on the current locale
+  // This allows locale-specific layouts to control HTML attributes
+  // while admin routes can use a different layout structure
+  return children;
 }

@@ -1,14 +1,14 @@
 import Link from "next/link";
 import Image from "next/image";
 
-export default function NotFound() {
+export default function RootNotFound() {
   return (
     <div className="min-h-screen bg-black text-white flex items-center justify-center px-6">
       <div className="max-w-2xl mx-auto text-center">
         {/* Logo */}
         <div className="mb-8 flex justify-center">
           <Image
-            src="/logo.jpg"
+            src="/logo.png"
             alt="Kitchen Core Logo"
             width={200}
             height={67}
@@ -39,13 +39,13 @@ export default function NotFound() {
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-6 justify-center">
           <Link
-            href="/"
+            href="/en"
             className="bg-green-primary text-black px-10 py-4 text-sm tracking-widest font-medium hover:bg-green-vibrant transition-all duration-300 shadow-xl shadow-green-primary/20"
           >
             BACK TO HOME
           </Link>
           <Link
-            href="/#portfolio"
+            href="/en#portfolio"
             className="border-2 border-green-primary text-green-primary px-10 py-4 text-sm tracking-widest font-medium hover:bg-green-primary/10 transition-all duration-300"
           >
             VIEW PORTFOLIO
@@ -54,7 +54,7 @@ export default function NotFound() {
 
         {/* Decorative Elements */}
         <div className="mt-16 grid grid-cols-3 gap-8 text-center">
-          <Link href="/#services" className="group">
+          <Link href="/en#services" className="group">
             <div className="text-green-vibrant text-3xl mb-2">
               <svg
                 className="w-8 h-8 mx-auto group-hover:scale-110 transition-transform"
@@ -74,7 +74,7 @@ export default function NotFound() {
               Our Services
             </div>
           </Link>
-          <Link href="/#about" className="group">
+          <Link href="/en#about" className="group">
             <div className="text-green-vibrant text-3xl mb-2">
               <svg
                 className="w-8 h-8 mx-auto group-hover:scale-110 transition-transform"
@@ -94,7 +94,7 @@ export default function NotFound() {
               About Us
             </div>
           </Link>
-          <Link href="/#contact" className="group">
+          <Link href="/en#contact" className="group">
             <div className="text-green-vibrant text-3xl mb-2">
               <svg
                 className="w-8 h-8 mx-auto group-hover:scale-110 transition-transform"

@@ -1,42 +1,42 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { signIn } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
-import Image from 'next/image'
-import Link from 'next/link'
+import { useState } from "react";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function LoginPage() {
-  const router = useRouter()
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError('')
-    setIsLoading(true)
+    e.preventDefault();
+    setError("");
+    setIsLoading(true);
 
     try {
-      const result = await signIn('credentials', {
+      const result = await signIn("credentials", {
         email,
         password,
         redirect: false,
-      })
+      });
 
       if (result?.error) {
-        setError('Invalid email or password')
+        setError("Invalid email or password");
       } else {
-        router.push('/admin')
-        router.refresh()
+        router.push("/admin");
+        router.refresh();
       }
     } catch {
-      setError('An error occurred. Please try again.')
+      setError("An error occurred. Please try again.");
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-black flex items-center justify-center px-4">
@@ -44,14 +44,16 @@ export default function LoginPage() {
         {/* Logo */}
         <div className="text-center mb-8">
           <Image
-            src="/logo.jpg"
+            src="/logo.png"
             alt="Kitchen Core"
             width={200}
             height={67}
             className="mx-auto mb-4"
           />
           <h1 className="text-2xl font-serif text-white">Admin Login</h1>
-          <p className="text-gray-light text-sm mt-2">Sign in to manage your content</p>
+          <p className="text-gray-light text-sm mt-2">
+            Sign in to manage your content
+          </p>
         </div>
 
         {/* Login Form */}
@@ -64,7 +66,10 @@ export default function LoginPage() {
             )}
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-light mb-2">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-light mb-2"
+              >
                 Email
               </label>
               <input
@@ -79,7 +84,10 @@ export default function LoginPage() {
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-light mb-2">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-light mb-2"
+              >
                 Password
               </label>
               <input
@@ -98,13 +106,15 @@ export default function LoginPage() {
               disabled={isLoading}
               className="w-full bg-green-primary text-black py-3 px-4 font-medium hover:bg-green-vibrant transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isLoading ? 'Signing in...' : 'Sign In'}
+              {isLoading ? "Signing in..." : "Sign In"}
             </button>
           </form>
 
           <div className="mt-6 text-center text-sm text-gray-light">
             <p>Default credentials:</p>
-            <p className="font-mono text-xs mt-1">admin@kitchencore.com / admin123</p>
+            <p className="font-mono text-xs mt-1">
+              admin@kitchencore.com / admin123
+            </p>
           </div>
         </div>
 
@@ -115,5 +125,5 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

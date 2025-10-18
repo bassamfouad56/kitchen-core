@@ -1,0 +1,210 @@
+{
+  "Navigation": {
+    "portfolio": "Portfolio",
+    "gallery": "Gallery",
+    "collections": "Collections",
+    "videos": "Videos",
+    "technology": "Technology",
+    "services": "Services",
+    "founder": "Founder",
+    "contact": "Contact",
+    "scheduleConsultation": "Schedule Consultation"
+  },
+  "Hero": {
+    "badge": "Luxury Kitchen Specialists",
+    "title": "Culinary",
+    "titleHighlight": "Excellence",
+    "description": "Bespoke kitchen design and fit-out for palaces, villas, and luxury estates. Where Italian craftsmanship meets cutting-edge technology.",
+    "viewProjects": "View Projects",
+    "startProject": "Start Your Project",
+    "scroll": "Scroll"
+  },
+  "Stats": {
+    "kitchens": "Luxury Kitchens",
+    "countries": "Countries",
+    "experience": "Years Excellence",
+    "satisfaction": "Client Satisfaction"
+  },
+  "GalleryNass0": {
+    "badge": "Elegant & Durable Design",
+    "title": "European",
+    "titleHighlight": "Craftsmanship",
+    "description": "A design that combines elegance and durability with MDF panels finished with PVC coating for a modern, easy-to-clean look, and Greek Alpha Wood columns that add a touch of European luxury and quality. Your optimal choice for practical beauty in every detail.",
+    "viewDetails": "View Details",
+    "features": {
+      "mdf": "MDF Panels",
+      "mdfDesc": "PVC-Finished",
+      "wood": "Greek Alpha Wood",
+      "woodDesc": "European Quality",
+      "maintenance": "Easy Maintenance",
+      "maintenanceDesc": "Modern Design"
+    }
+  },
+  "GalleryNass1": {
+    "badge": "Modern Prep Kitchen",
+    "title": "Aluminum",
+    "titleHighlight": "Precision",
+    "description": "Modern prep kitchen with an aluminum internal structure for lasting durability, and double-sheet aluminum doors with Salko MDF wood touch for natural elegance. Indian first-grade beige quartz countertop adds luxury and sophistication.",
+    "specs": {
+      "structure": "Aluminum Structure",
+      "structureDesc": "Long-lasting Durability",
+      "doors": "Double-Sheet Doors",
+      "doorsDesc": "Premium Finish",
+      "wood": "Salko MDF Wood",
+      "woodDesc": "Natural Elegance",
+      "quartz": "First-Grade Quartz",
+      "quartzDesc": "Indian Beige"
+    }
+  },
+  "GalleryNass2": {
+    "badge": "Luxurious Main Kitchen",
+    "title": "European",
+    "titleHighlight": "Excellence",
+    "description": "Luxurious main kitchen featuring internal aluminum structure, doors with PVC-finished MDF and Salko wood mix, elegant nano white quartz surface, and equipped with latest European appliances and accessories.",
+    "features": [
+      "Internal Aluminum Structure",
+      "PVC-Finished MDF Doors",
+      "Nano White Quartz Surface",
+      "European Appliances & Accessories"
+    ],
+    "philosophy": {
+      "title": "Design That Combines",
+      "titleHighlight": "Luxury",
+      "titleEnd": "with Practical Daily Use",
+      "description": "Every element is carefully selected to provide not just aesthetic beauty, but functional excellence that enhances your daily cooking experience. From the durable aluminum structure to the premium European accessories, this kitchen is built to last while maintaining its elegance."
+    }
+  },
+  "GalleryNass3": {
+    "badge": "Elegant Living Space Design",
+    "title": "Practical",
+    "titleHighlight": "Beauty",
+    "description": "Elegant design combining practicality and beauty: TV Unit, buffet table, and hidden door from PVC-finished MDF wood, and living room washbasin in quartz (terrazzo) with mirror touch that adds depth and elegance to the space.",
+    "items": {
+      "tvUnit": "TV Unit",
+      "tvUnitAlt": "TV Unit with PVC-finished MDF wood",
+      "buffet": "Buffet Table",
+      "buffetAlt": "Buffet table with elegant design",
+      "hiddenDoor": "Hidden Door",
+      "hiddenDoorAlt": "Hidden door with seamless integration",
+      "washbasin": "Quartz Washbasin",
+      "washbasinAlt": "Living room washbasin in quartz terrazzo",
+      "mirror": "Mirror Accent",
+      "mirrorAlt": "Mirror detail adding depth and elegance"
+    },
+    "exploreDetails": "Explore Details",
+    "features": {
+      "mdf": "PVC-Finished MDF",
+      "mdfDesc": "Durable & Elegant",
+      "terrazzo": "Quartz Terrazzo",
+      "terrazzoDesc": "Luxury Washbasin",
+      "mirror": "Mirror Details",
+      "mirrorDesc": "Depth & Elegance",
+      "door": "Hidden Door",
+      "doorDesc": "Seamless Design"
+    }
+  },
+  "GalleryNass4": {
+    "badge": "Elegant Contemporary Kitchen",
+    "title": "Kitchen",
+    "titleHighlight": "Core",
+    "description": "Elegant contemporary kitchen from kitchenCore that combines beauty and practicality, with spacious cabinets and soft lighting adding a refined touch to the space. The central island provides ideal space for preparation and serving with complete comfort.",
+    "items": {
+      "contemporary": "Contemporary Design",
+      "contemporaryDesc": "Spacious cabinets with soft lighting adding a refined touch. Central island provides ideal space for preparation and serving.",
+      "premium": "Premium Finishing",
+      "premiumDesc": "Simple and organized design with high-quality finishing. Optimal space utilization for maximum functionality."
+    },
+    "featured": "Featured",
+    "of": "of",
+    "viewFullSize": "View Full Size",
+    "features": {
+      "design": "Simple & Organized Design",
+      "designDesc": "Clean lines and thoughtful layout",
+      "quality": "High-Quality Finishing",
+      "qualityDesc": "Premium materials and craftsmanship",
+      "space": "Optimal Space Utilization",
+      "spaceDesc": "Maximum functionality in every inch"
+    }
+  },
+  "VideoShowcase": {
+    "badge": "Video Showcase",
+    "title": "Experience",
+    "titleHighlight": "Excellence",
+    "description": "Watch our kitchen transformations come to life. See the quality, precision, and attention to detail that defines Kitchen Core.",
+    "video1Title": "Complete Kitchen Solutions",
+    "video1Description": "Kitchen Core offers a complete solution for kitchens that combine high quality and modern design. The internal structure is made entirely of aluminum to ensure durability and efficiency in the long term. The external facades are made of PVC material, designed carefully to give an elegant and lasting appearance.",
+    "video2Title": "Modern High-Quality Design",
+    "video2Description": "Modern design with high quality adds a refined touch to every corner of your home.",
+    "cta": {
+      "title": "Ready to Transform Your",
+      "titleHighlight": "Kitchen?",
+      "description": "Experience the perfect blend of durability and elegance. Our aluminum structures and PVC finishes ensure your kitchen stays beautiful for years to come.",
+      "button": "Start Your Project"
+    }
+  },
+  "Services": {
+    "badge": "Our Expertise",
+    "title": "Comprehensive Services",
+    "palace": {
+      "title": "Palace Kitchen Design",
+      "description": "Bespoke kitchen architecture for palatial residences combining classical grandeur with modern culinary technology.",
+      "features": [
+        "Custom millwork & cabinetry",
+        "Italian marble selection",
+        "Smart home integration",
+        "Premium appliance curation"
+      ]
+    },
+    "villa": {
+      "title": "Villa Kitchen Fit-Out",
+      "description": "Complete kitchen solutions for luxury villas featuring handcrafted details and state-of-the-art equipment.",
+      "features": [
+        "European appliances",
+        "Wine cellar integration",
+        "Outdoor kitchen design",
+        "Lighting architecture"
+      ]
+    },
+    "estate": {
+      "title": "Estate Kitchen Systems",
+      "description": "Holistic kitchen design for private estates with butler's pantries, prep kitchens, and entertaining spaces.",
+      "features": [
+        "Multi-zone kitchens",
+        "Professional equipment",
+        "Ventilation systems",
+        "Custom storage solutions"
+      ]
+    }
+  },
+  "About": {
+    "badge": "Our Philosophy",
+    "title": "Crafting Culinary Sanctuaries",
+    "description1": "For over fifteen years, Kitchen Core has been the trusted partner for the world's most exclusive residences, transforming kitchens into architectural masterpieces.",
+    "description2": "Our approach combines old-world Italian craftsmanship with cutting-edge smart technology, creating kitchens that are both timeless and innovative.",
+    "description3": "From palatial estates in Dubai to coastal villas in Monaco, we collaborate with elite clients who demand nothing less than perfection in every detail.",
+    "recognizedBy": "Recognized By",
+    "recognizedByValue": "Architectural Digest\nLuxury Home Design",
+    "awards": "Awards",
+    "awardsValue": "Best Kitchen Design 2024\nExcellence in Fit-Out"
+  },
+  "Contact": {
+    "badge": "Begin Your Journey",
+    "title": "Let's Create Your Dream Kitchen",
+    "description": "Schedule a private consultation to discuss your vision. We work exclusively with clients who value exceptional quality and timeless design.",
+    "showroom": "Visit Our Showroom",
+    "showroomValue": "By appointment only\nDubai Design District",
+    "contactLabel": "Contact",
+    "contactValue": "+971 4 XXX XXXX\ndesign@kitchencore.com",
+    "follow": "Follow",
+    "followValue": "Instagram / Pinterest\nLinkedIn / Houzz"
+  },
+  "Footer": {
+    "copyright": "© 2025 Kitchen Core. All rights reserved.",
+    "privacy": "Privacy",
+    "terms": "Terms"
+  },
+  "Partnerships": {
+    "badge": "Premium Partnerships",
+    "title": "Trusted by the World's Best Brands"
+  }
+}

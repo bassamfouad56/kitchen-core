@@ -16,7 +16,12 @@
       "Bash(npm run db:seed:*)",
       "Bash(next build)",
       "Bash(npx next build)",
-      "Bash(vercel:*)"
+      "Bash(vercel:*)",
+      "Bash(cat:*)",
+      "Bash(npx vercel blob:*)",
+      "Bash(curl:*)",
+      "Bash(npx prisma db push:*)",
+      "Bash(test:*)"
     ],
     "deny": [],
     "ask": []

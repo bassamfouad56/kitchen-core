@@ -195,3 +195,220 @@ model SiteSettings {
   createdAt         DateTime  @default(now())
   updatedAt         DateTime  @updatedAt
 }
+
+// ===== NEW CMS MODELS =====
+
+// Hero Section (Singleton) - Bilingual
+model HeroSection {
+  id                  String   @id @default(cuid())
+  badgeEn             String
+  badgeAr             String
+  titleEn             String
+  titleAr             String
+  titleHighlightEn    String
+  titleHighlightAr    String
+  descriptionEn       String   @db.Text
+  descriptionAr       String   @db.Text
+  backgroundImage     String
+  cta1TextEn          String
+  cta1TextAr          String
+  cta1Link            String
+  cta2TextEn          String
+  cta2TextAr          String
+  cta2Link            String
+  published           Boolean  @default(true)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
+
+// Nass Gallery Collections - Bilingual
+model NassGallery {
+  id                String        @id @default(cuid())
+  collectionKey     String        @unique // "nass0", "nass1", "nass2", "nass3", "nass4"
+  badgeEn           String
+  badgeAr           String
+  titleEn           String
+  titleAr           String
+  titleHighlightEn  String
+  titleHighlightAr  String
+  descriptionEn     String        @db.Text
+  descriptionAr     String        @db.Text
+  images            NassImage[]
+  features          NassFeature[]
+  order             Int           @default(0)
+  published         Boolean       @default(true)
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+
+  @@index([collectionKey])
+  @@index([order])
+}
+
+model NassImage {
+  id          String      @id @default(cuid())
+  gallery     NassGallery @relation(fields: [galleryId], references: [id], onDelete: Cascade)
+  galleryId   String
+  src         String
+  alt         String
+  title       String?
+  size        GallerySize @default(MEDIUM)
+  order       Int         @default(0)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@index([galleryId])
+  @@index([order])
+}
+
+model NassFeature {
+  id              String      @id @default(cuid())
+  gallery         NassGallery @relation(fields: [galleryId], references: [id], onDelete: Cascade)
+  galleryId       String
+  icon            String?
+  labelEn         String
+  labelAr         String
+  descriptionEn   String
+  descriptionAr   String
+  order           Int         @default(0)
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  @@index([galleryId])
+  @@index([order])
+}
+
+// Videos - Bilingual
+model Video {
+  id              String   @id @default(cuid())
+  titleEn         String
+  titleAr         String
+  descriptionEn   String   @db.Text
+  descriptionAr   String   @db.Text
+  url             String   // Vercel Blob URL
+  thumbnail       String?
+  order           Int      @default(0)
+  published       Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([order])
+}
+
+// Before/After Comparisons - Bilingual
+model BeforeAfter {
+  id              String   @id @default(cuid())
+  titleEn         String
+  titleAr         String
+  beforeImage     String
+  afterImage      String
+  descriptionEn   String?  @db.Text
+  descriptionAr   String?  @db.Text
+  order           Int      @default(0)
+  published       Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([order])
+}
+
+// Technical Specifications - Bilingual
+model TechnicalSpec {
+  id              String   @id @default(cuid())
+  titleEn         String
+  titleAr         String
+  descriptionEn   String   @db.Text
+  descriptionAr   String   @db.Text
+  icon            String
+  category        String
+  order           Int      @default(0)
+  published       Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([category])
+  @@index([order])
+}
+
+// Innovation Features - Bilingual
+model Innovation {
+  id              String   @id @default(cuid())
+  titleEn         String
+  titleAr         String
+  descriptionEn   String   @db.Text
+  descriptionAr   String   @db.Text
+  icon            String
+  order           Int      @default(0)
+  published       Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([order])
+}
+
+// Credentials/Certifications - Bilingual
+model Credential {
+  id              String   @id @default(cuid())
+  titleEn         String
+  titleAr         String
+  issuer          String
+  image           String?
+  descriptionEn   String?  @db.Text
+  descriptionAr   String?  @db.Text
+  year            String?
+  order           Int      @default(0)
+  published       Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([order])
+}
+
+// Engineering Metrics - Bilingual
+model EngineeringMetric {
+  id              String   @id @default(cuid())
+  number          String
+  labelEn         String
+  labelAr         String
+  descriptionEn   String?
+  descriptionAr   String?
+  icon            String?
+  order           Int      @default(0)
+  published       Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([order])
+}
+
+// Partnerships/Brand Logos - Bilingual
+model Partnership {
+  id          String   @id @default(cuid())
+  nameEn      String
+  nameAr      String
+  logo        String?
+  url         String?
+  order       Int      @default(0)
+  published   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([order])
+}
+
+// CTA Section (Singleton) - Bilingual
+model CTASection {
+  id              String   @id @default(cuid())
+  badgeEn         String?
+  badgeAr         String?
+  titleEn         String
+  titleAr         String
+  descriptionEn   String   @db.Text
+  descriptionAr   String   @db.Text
+  buttonTextEn    String
+  buttonTextAr    String
+  buttonLink      String
+  image           String?
+  published       Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}

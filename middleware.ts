@@ -1,41 +1,11 @@
-import { withAuth } from 'next-auth/middleware'
-import { NextResponse } from 'next/server'
+import createMiddleware from 'next-intl/middleware';
+import { routing } from './i18n/routing';
 
-export default withAuth(
-  function middleware(req) {
-    const token = req.nextauth.token
-    const isAdminRoute = req.nextUrl.pathname.startsWith('/admin')
-    const isLoginPage = req.nextUrl.pathname === '/admin/login'
-
-    // If accessing admin routes without token, redirect to login
-    if (isAdminRoute && !token && !isLoginPage) {
-      return NextResponse.redirect(new URL('/admin/login', req.url))
-    }
-
-    // If logged in and trying to access login page, redirect to dashboard
-    if (isLoginPage && token) {
-      return NextResponse.redirect(new URL('/admin', req.url))
-    }
-
-    return NextResponse.next()
-  },
-  {
-    callbacks: {
-      authorized: ({ token, req }) => {
-        // Allow access to login page without token
-        if (req.nextUrl.pathname === '/admin/login') {
-          return true
-        }
-        // Require token for all other admin routes
-        if (req.nextUrl.pathname.startsWith('/admin')) {
-          return !!token
-        }
-        return true
-      },
-    },
-  }
-)
+export default createMiddleware(routing);
 
 export const config = {
-  matcher: ['/admin/:path*'],
-}
+  // Match all pathnames except for
+  // - … if they start with `/api`, `/_next`, `/_vercel`, or `/admin`
+  // - … the ones containing a dot (e.g. `favicon.ico`)
+  matcher: ['/((?!api|admin|_next|_vercel|.*\..*).*)']
+};

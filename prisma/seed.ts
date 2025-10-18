@@ -299,10 +299,12 @@ async function main() {
   console.log('Seeding founder information...')
   await prisma.founder.create({
     data: {
-      name: 'Eng. Ahmad Al-Khateeb',
+      name: 'Eng. AEsam Odeh
+',
       title: 'Founder & CEO',
       image: '/ceo.png',
-      bio: 'With over 15 years of experience in luxury kitchen design and fit-out, Eng. Ahmad Al-Khateeb has established Kitchen Core as the premier choice for discerning clients across the Middle East and beyond. His vision combines traditional craftsmanship with cutting-edge technology to create culinary spaces that are both timeless and innovative.',
+      bio: 'With over 15 years of experience in luxury kitchen design and fit-out, Eng. AEsam Odeh
+ has established Kitchen Core as the premier choice for discerning clients across the Middle East and beyond. His vision combines traditional craftsmanship with cutting-edge technology to create culinary spaces that are both timeless and innovative.',
       education: ['Master of Architecture, Politecnico di Milano', 'Bachelor of Engineering, American University of Sharjah'],
       recognition: ['Best Kitchen Design Award 2024 - Architectural Digest Middle East', 'Excellence in Luxury Fit-Out 2023 - Dubai Design Week', 'Featured in Luxury Home Design Magazine'],
       quote: 'A kitchen is not just a place to cook—it\'s the heart of the home, a sanctuary where memories are created and families gather. Every project we undertake is a commitment to excellence, craftsmanship, and the pursuit of culinary perfection.',

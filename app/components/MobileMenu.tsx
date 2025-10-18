@@ -3,6 +3,8 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect } from "react";
 import Image from "next/image";
+import { useTranslations, useLocale } from "next-intl";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -10,6 +12,10 @@ interface MobileMenuProps {
 }
 
 export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
+  const t = useTranslations();
+  const locale = useLocale();
+  const isRTL = locale === 'ar';
+
   // Prevent body scroll when menu is open
   useEffect(() => {
     if (isOpen) {
@@ -23,10 +29,15 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   }, [isOpen]);
 
   const menuItems = [
-    { label: "Portfolio", href: "#portfolio" },
-    { label: "Services", href: "#services" },
+    { label: t("Navigation.portfolio"), href: "#portfolio" },
+    { label: t("Navigation.gallery"), href: "#gallery" },
+    { label: t("Navigation.collections"), href: "#gallery-nass0" },
+    { label: t("Navigation.videos"), href: "#video-showcase" },
+    { label: t("Navigation.technology"), href: "#innovation" },
+    { label: t("Navigation.services"), href: "#services" },
+    { label: t("Navigation.founder"), href: "#founder" },
     { label: "About", href: "#about" },
-    { label: "Contact", href: "#contact" },
+    { label: t("Navigation.contact"), href: "#contact" },
   ];
 
   const handleLinkClick = () => {
@@ -47,20 +58,20 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             onClick={onClose}
           />
 
-          {/* Menu Panel */}
+          {/* Menu Panel - RTL aware */}
           <motion.div
-            initial={{ x: "100%" }}
+            initial={{ x: isRTL ? "-100%" : "100%" }}
             animate={{ x: 0 }}
-            exit={{ x: "100%" }}
+            exit={{ x: isRTL ? "-100%" : "100%" }}
             transition={{ type: "spring", damping: 30, stiffness: 300 }}
-            className="fixed top-0 right-0 bottom-0 w-[80vw] max-w-sm bg-background-card border-l border-green-primary/20 z-50 overflow-y-auto"
+            className={`fixed top-0 ${isRTL ? 'left-0 border-r' : 'right-0 border-l'} bottom-0 w-[80vw] max-w-sm bg-background-card border-green-primary/20 z-50 overflow-y-auto`}
           >
             <div className="flex flex-col h-full">
               {/* Header */}
               <div className="flex justify-between items-center p-6 border-b border-gray-dark">
                 <div className="flex items-center gap-3">
                   <Image
-                    src="/logo.jpg"
+                    src="/logo.png"
                     alt="Kitchen Core Logo"
                     width={120}
                     height={40}
@@ -88,13 +99,18 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 </button>
               </div>
 
+              {/* Language Switcher */}
+              <div className="px-6 py-4 border-b border-gray-dark flex justify-center">
+                <LanguageSwitcher />
+              </div>
+
               {/* Navigation Links */}
               <nav className="flex-1 p-6">
                 <ul className="space-y-2">
                   {menuItems.map((item, index) => (
                     <motion.li
                       key={item.label}
-                      initial={{ opacity: 0, x: 20 }}
+                      initial={{ opacity: 0, x: isRTL ? -20 : 20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.1 }}
                     >
@@ -117,7 +133,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                   onClick={handleLinkClick}
                   className="block w-full bg-green-primary text-black py-4 text-center text-sm tracking-widest font-medium hover:bg-green-vibrant transition-all duration-300"
                 >
-                  SCHEDULE CONSULTATION
+                  {t("Navigation.scheduleConsultation").toUpperCase()}
                 </a>
               </div>
 
@@ -126,23 +142,27 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 <div className="space-y-4 text-sm">
                   <div>
                     <div className="text-green-vibrant tracking-wider mb-1">
-                      CONTACT
+                      {t("Contact.contactLabel").toUpperCase()}
                     </div>
-                    <div className="text-gray-light">
-                      +971 4 XXX XXXX
-                      <br />
-                      design@kitchencore.com
+                    <div className="text-gray-light whitespace-pre-line">
+                      {t("Contact.contactValue")}
                     </div>
                   </div>
                   <div>
                     <div className="text-green-vibrant tracking-wider mb-1">
-                      FOLLOW US
+                      {t("Contact.follow").toUpperCase()}
                     </div>
                     <div className="flex gap-4 text-gray-light">
-                      <a href="#" className="hover:text-green-vibrant transition-colors">
+                      <a
+                        href="#"
+                        className="hover:text-green-vibrant transition-colors"
+                      >
                         Instagram
                       </a>
-                      <a href="#" className="hover:text-green-vibrant transition-colors">
+                      <a
+                        href="#"
+                        className="hover:text-green-vibrant transition-colors"
+                      >
                         LinkedIn
                       </a>
                     </div>

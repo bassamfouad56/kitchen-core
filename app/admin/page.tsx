@@ -12,11 +12,20 @@ export default async function AdminDashboard() {
   }
 
   // Get content stats
-  const [projectsCount, galleryCount, testimonialsCount, servicesCount] = await Promise.all([
+  const [
+    projectsCount,
+    galleryCount,
+    testimonialsCount,
+    servicesCount,
+    videosCount,
+    innovationsCount,
+  ] = await Promise.all([
     prisma.project.count(),
     prisma.galleryImage.count(),
     prisma.testimonial.count(),
     prisma.service.count(),
+    prisma.video.count(),
+    prisma.innovation.count(),
   ])
 
   const stats = [
@@ -24,6 +33,8 @@ export default async function AdminDashboard() {
     { label: 'Gallery Images', count: galleryCount, href: '/admin/gallery' },
     { label: 'Testimonials', count: testimonialsCount, href: '/admin/testimonials' },
     { label: 'Services', count: servicesCount, href: '/admin/services' },
+    { label: 'Videos', count: videosCount, href: '/admin/videos' },
+    { label: 'Innovations', count: innovationsCount, href: '/admin/innovations' },
   ]
 
   return (
@@ -36,7 +47,7 @@ export default async function AdminDashboard() {
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
           {stats.map((stat) => (
             <Link
               key={stat.label}
@@ -53,24 +64,24 @@ export default async function AdminDashboard() {
         <div>
           <h2 className="text-2xl font-serif mb-6">Quick Actions</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <a
+            <Link
               href="/admin/projects/new"
               className="bg-green-primary text-black p-6 hover:bg-green-vibrant transition-colors font-medium"
             >
               + New Project
-            </a>
-            <a
+            </Link>
+            <Link
               href="/admin/gallery"
               className="bg-background-card border border-gray-dark p-6 hover:border-green-primary transition-colors"
             >
               Manage Gallery
-            </a>
-            <a
+            </Link>
+            <Link
               href="/admin/settings"
               className="bg-background-card border border-gray-dark p-6 hover:border-green-primary transition-colors"
             >
               Site Settings
-            </a>
+            </Link>
           </div>
         </div>
 

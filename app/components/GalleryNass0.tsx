@@ -1,0 +1,331 @@
+"use client";
+
+import React, { useState } from "react";
+import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
+import EnhancedLightbox from "./EnhancedLightbox";
+
+interface GalleryImage {
+  id: number;
+  src: string;
+  alt: string;
+  size: "small" | "medium" | "large" | "wide" | "tall";
+}
+
+const galleryImages: GalleryImage[] = [
+  {
+    id: 1,
+    src: "/nass0/1.png",
+    alt: "MDF and PVC kitchen design - Front view",
+    size: "large",
+  },
+  {
+    id: 2,
+    src: "/nass0/2.png",
+    alt: "Greek Alpha Wood columns detail",
+    size: "medium",
+  },
+  {
+    id: 3,
+    src: "/nass0/3.png",
+    alt: "PVC-finished MDF panels close-up",
+    size: "tall",
+  },
+  {
+    id: 4,
+    src: "/nass0/4.png",
+    alt: "Kitchen cabinet interior",
+    size: "wide",
+  },
+  {
+    id: 5,
+    src: "/nass0/5.png",
+    alt: "European quality finishing",
+    size: "medium",
+  },
+  {
+    id: 6,
+    src: "/nass0/6.png",
+    alt: "Elegant kitchen storage solution",
+    size: "small",
+  },
+  {
+    id: 7,
+    src: "/nass0/7.png",
+    alt: "Complete kitchen view",
+    size: "medium",
+  },
+];
+
+export default function GalleryNass0() {
+  const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  const [hoveredId, setHoveredId] = useState<number | null>(null);
+
+  const handleImageClick = (image: GalleryImage, index: number) => {
+    setSelectedImage(image);
+    setSelectedIndex(index);
+  };
+
+  const handleNext = () => {
+    const nextIndex = (selectedIndex + 1) % galleryImages.length;
+    setSelectedIndex(nextIndex);
+    setSelectedImage(galleryImages[nextIndex]);
+  };
+
+  const handlePrevious = () => {
+    const prevIndex = (selectedIndex - 1 + galleryImages.length) % galleryImages.length;
+    setSelectedIndex(prevIndex);
+    setSelectedImage(galleryImages[prevIndex]);
+  };
+
+  const getSizeClass = (size: string) => {
+    switch (size) {
+      case "large":
+        return "md:col-span-2 md:row-span-2";
+      case "wide":
+        return "md:col-span-2";
+      case "tall":
+        return "md:row-span-2";
+      case "medium":
+        return "md:col-span-1 md:row-span-1";
+      case "small":
+        return "md:col-span-1";
+      default:
+        return "";
+    }
+  };
+
+  return (
+    <section id="gallery-nass0" className="py-32 bg-background-card relative overflow-hidden">
+      {/* Animated Background */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 opacity-5">
+          <motion.div
+            animate={{
+              backgroundPosition: ["0% 0%", "100% 100%"],
+            }}
+            transition={{
+              duration: 20,
+              repeat: Infinity,
+              repeatType: "reverse",
+            }}
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `radial-gradient(circle at center, rgba(5, 150, 105, 0.1) 0%, transparent 50%)`,
+              backgroundSize: "200% 200%",
+            }}
+          />
+        </div>
+      </div>
+
+      <div className="relative z-10 max-w-[1800px] mx-auto px-6 lg:px-8">
+        {/* Header */}
+        <div className="text-center mb-20">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              whileInView={{ scale: 1, opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, delay: 0.2 }}
+              className="inline-block mb-6"
+            >
+              <div className="relative">
+                <div className="absolute inset-0 bg-green-primary/20 blur-3xl" />
+                <p className="relative text-green-vibrant text-sm tracking-[0.4em] mb-2 font-light">
+                  ELEGANT & DURABLE DESIGN
+                </p>
+              </div>
+            </motion.div>
+            <h2 className="font-serif text-6xl md:text-7xl lg:text-8xl text-white mb-8 leading-tight">
+              European
+              <span className="block text-green-vibrant italic mt-2">Craftsmanship</span>
+            </h2>
+            <p className="text-xl md:text-2xl text-gray-light max-w-3xl mx-auto font-light leading-relaxed">
+              A design that combines elegance and durability with MDF panels finished with PVC
+              coating for a modern, easy-to-clean look, and Greek Alpha Wood columns that add a
+              touch of European luxury and quality. Your optimal choice for practical beauty in
+              every detail.
+            </p>
+          </motion.div>
+        </div>
+
+        {/* Masonry Gallery Grid */}
+        <motion.div
+          layout
+          className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-[300px]"
+        >
+          <AnimatePresence mode="popLayout">
+            {galleryImages.map((image, index) => (
+              <motion.div
+                key={image.id}
+                layout
+                initial={{ opacity: 0, scale: 0.8, rotateY: -20 }}
+                animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+                exit={{ opacity: 0, scale: 0.8, rotateY: 20 }}
+                transition={{
+                  duration: 0.6,
+                  delay: index * 0.05,
+                  layout: { duration: 0.4 },
+                }}
+                className={`group relative cursor-pointer overflow-hidden ${getSizeClass(
+                  image.size
+                )}`}
+                onMouseEnter={() => setHoveredId(image.id)}
+                onMouseLeave={() => setHoveredId(null)}
+                onClick={() => handleImageClick(image, index)}
+              >
+                {/* Image */}
+                <div className="relative w-full h-full">
+                  <Image
+                    src={image.src}
+                    alt={image.alt}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
+                </div>
+
+                {/* Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
+
+                {/* Green Glow Overlay */}
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-br from-green-primary/0 via-green-vibrant/0 to-green-primary/0"
+                  initial={false}
+                  animate={{
+                    opacity: hoveredId === image.id ? 0.3 : 0,
+                  }}
+                  transition={{ duration: 0.5 }}
+                />
+
+                {/* Animated Border */}
+                <motion.div
+                  className="absolute inset-0 border-2"
+                  initial={{ borderColor: "rgba(38, 38, 38, 0.5)" }}
+                  whileHover={{
+                    borderColor: [
+                      "rgba(5, 150, 105, 0.5)",
+                      "rgba(52, 211, 153, 0.8)",
+                      "rgba(5, 150, 105, 0.5)",
+                    ],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                  }}
+                />
+
+                {/* View Details Arrow */}
+                <motion.div
+                  className="absolute bottom-6 right-6 flex items-center gap-2 text-green-vibrant text-sm font-medium"
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{
+                    opacity: hoveredId === image.id ? 1 : 0,
+                    x: hoveredId === image.id ? 0 : -10,
+                  }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <span>View Details</span>
+                  <motion.svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    animate={{ x: hoveredId === image.id ? [0, 5, 0] : 0 }}
+                    transition={{ duration: 1, repeat: Infinity }}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M17 8l4 4m0 0l-4 4m4-4H3"
+                    />
+                  </motion.svg>
+                </motion.div>
+
+                {/* Corner Accents */}
+                <motion.div
+                  className="absolute top-0 right-0 w-20 h-20 border-t-2 border-r-2 border-green-primary opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  initial={false}
+                  animate={{
+                    scale: hoveredId === image.id ? [1, 1.1, 1] : 1,
+                  }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                />
+                <motion.div
+                  className="absolute bottom-0 left-0 w-20 h-20 border-b-2 border-l-2 border-green-primary opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  initial={false}
+                  animate={{
+                    scale: hoveredId === image.id ? [1, 1.1, 1] : 1,
+                  }}
+                  transition={{ duration: 2, repeat: Infinity, delay: 1 }}
+                />
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
+
+        {/* Features Grid */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-6"
+        >
+          {[
+            { label: "MDF Panels", desc: "PVC-Finished" },
+            { label: "Greek Alpha Wood", desc: "European Quality" },
+            { label: "Easy Maintenance", desc: "Modern Design" },
+          ].map((feature, index) => (
+            <motion.div
+              key={feature.label}
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+              className="relative group"
+            >
+              <div className="bg-background-elevated border border-gray-dark group-hover:border-green-primary transition-all duration-500 p-8 text-center relative overflow-hidden">
+                <motion.div className="absolute inset-0 bg-green-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="relative z-10">
+                  <motion.div
+                    className="text-2xl text-green-vibrant mb-2 font-serif"
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
+                    {feature.label}
+                  </motion.div>
+                  <div className="text-xs tracking-wider text-gray-light uppercase">
+                    {feature.desc}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
+
+      {/* Enhanced Lightbox */}
+      <EnhancedLightbox
+        image={selectedImage ? {
+          src: selectedImage.src,
+          alt: selectedImage.alt,
+          title: "European Craftsmanship",
+          description: "Elegant and durable design combining MDF panels with PVC coating and Greek Alpha Wood columns, adding European luxury and quality to your kitchen.",
+          category: "European Design"
+        } : null}
+        onClose={() => setSelectedImage(null)}
+        onNext={handleNext}
+        onPrevious={handlePrevious}
+        currentIndex={selectedIndex}
+        totalImages={galleryImages.length}
+      />
+    </section>
+  );
+}
