@@ -24,7 +24,8 @@
       "Bash(test:*)",
       "Bash(git push)",
       "Bash(chmod:*)",
-      "Bash(bash:*)"
+      "Bash(bash:*)",
+      "Bash(pnpm add ai @ai-sdk/openai langchain @langchain/community @upstash/redis @upstash/ratelimit @sentry/nextjs swr recharts date-fns sharp @vercel/og next-pwa workbox-webpack-plugin commander inquirer chalk zod-to-json-schema)"
     ],
     "deny": [],
     "ask": []
