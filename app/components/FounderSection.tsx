@@ -71,7 +71,7 @@ export default function FounderSection() {
             {/* Founder name and title */}
             <div className="mb-8">
               <h3 className="font-serif text-4xl text-white mb-2">
-                Eng. AEsam Odeh
+                Eng. Esam Odeh
               </h3>
               <p className="text-green-vibrant text-lg tracking-wide">
                 Founder & Chief Executive Officer

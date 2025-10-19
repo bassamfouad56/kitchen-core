@@ -22,7 +22,9 @@
       "Bash(curl:*)",
       "Bash(npx prisma db push:*)",
       "Bash(test:*)",
-      "Bash(git push)"
+      "Bash(git push)",
+      "Bash(chmod:*)",
+      "Bash(bash:*)"
     ],
     "deny": [],
     "ask": []
