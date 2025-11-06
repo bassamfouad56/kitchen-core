@@ -58,7 +58,9 @@
       "Bash($env:POSTGRES_PRISMA_URL)",
       "Bash(powershell -ExecutionPolicy Bypass -File ./scripts/setup-db.ps1)",
       "Bash(pnpm build:*)",
-      "Bash(pnpm db:update-social:*)"
+      "Bash(pnpm db:update-social:*)",
+      "Bash(git reset:*)",
+      "Bash(git config:*)"
     ],
     "deny": [],
     "ask": []
