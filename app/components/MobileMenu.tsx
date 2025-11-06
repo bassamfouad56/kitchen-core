@@ -14,7 +14,7 @@ interface MobileMenuProps {
 export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   const t = useTranslations();
   const locale = useLocale();
-  const isRTL = locale === 'ar';
+  const isRTL = locale === "ar";
 
   // Prevent body scroll when menu is open
   useEffect(() => {
@@ -28,7 +28,14 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
     };
   }, [isOpen]);
 
-  const menuItems = [
+  const pageLinks = [
+    { label: t("Navigation.home"), href: `/${locale}` },
+    { label: t("Navigation.about"), href: `/${locale}/about` },
+    { label: t("Navigation.blog"), href: `/${locale}/blog` },
+    { label: t("Navigation.contact"), href: "#contact" },
+  ];
+
+  const sectionLinks = [
     { label: t("Navigation.portfolio"), href: "#portfolio" },
     { label: t("Navigation.gallery"), href: "#gallery" },
     { label: t("Navigation.collections"), href: "#gallery-nass0" },
@@ -36,8 +43,6 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
     { label: t("Navigation.technology"), href: "#innovation" },
     { label: t("Navigation.services"), href: "#services" },
     { label: t("Navigation.founder"), href: "#founder" },
-    { label: "About", href: "#about" },
-    { label: t("Navigation.contact"), href: "#contact" },
   ];
 
   const handleLinkClick = () => {
@@ -64,7 +69,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             animate={{ x: 0 }}
             exit={{ x: isRTL ? "-100%" : "100%" }}
             transition={{ type: "spring", damping: 30, stiffness: 300 }}
-            className={`fixed top-0 ${isRTL ? 'left-0 border-r' : 'right-0 border-l'} bottom-0 w-[80vw] max-w-sm bg-background-card border-green-primary/20 z-50 overflow-y-auto`}
+            className={`fixed top-0 ${isRTL ? "left-0 border-r" : "right-0 border-l"} bottom-0 w-[80vw] max-w-sm bg-background-card border-green-primary/20 z-50 overflow-y-auto`}
           >
             <div className="flex flex-col h-full">
               {/* Header */}
@@ -105,25 +110,56 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
               </div>
 
               {/* Navigation Links */}
-              <nav className="flex-1 p-6">
-                <ul className="space-y-2">
-                  {menuItems.map((item, index) => (
-                    <motion.li
-                      key={item.label}
-                      initial={{ opacity: 0, x: isRTL ? -20 : 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.1 }}
-                    >
-                      <a
-                        href={item.href}
-                        onClick={handleLinkClick}
-                        className="block px-4 py-4 text-lg text-gray-light hover:text-green-vibrant hover:bg-green-primary/5 transition-all duration-300 rounded"
+              <nav className="flex-1 p-6 overflow-y-auto">
+                {/* Pages Section */}
+                <div className="mb-8">
+                  <h3 className="text-green-vibrant text-xs tracking-[0.3em] mb-4 px-4 font-light">
+                    {isRTL ? "الصفحات" : "PAGES"}
+                  </h3>
+                  <ul className="space-y-2">
+                    {pageLinks.map((item, index) => (
+                      <motion.li
+                        key={item.label}
+                        initial={{ opacity: 0, x: isRTL ? -20 : 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.1 }}
                       >
-                        {item.label}
-                      </a>
-                    </motion.li>
-                  ))}
-                </ul>
+                        <a
+                          href={item.href}
+                          onClick={handleLinkClick}
+                          className="block px-4 py-3 text-base text-gray-light hover:text-green-vibrant hover:bg-green-primary/5 transition-all duration-300 rounded border-l-2 border-transparent hover:border-green-vibrant"
+                        >
+                          {item.label}
+                        </a>
+                      </motion.li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Sections */}
+                <div>
+                  <h3 className="text-green-vibrant text-xs tracking-[0.3em] mb-4 px-4 font-light">
+                    {isRTL ? "الأقسام" : "SECTIONS"}
+                  </h3>
+                  <ul className="space-y-2">
+                    {sectionLinks.map((item, index) => (
+                      <motion.li
+                        key={item.label}
+                        initial={{ opacity: 0, x: isRTL ? -20 : 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: (pageLinks.length + index) * 0.1 }}
+                      >
+                        <a
+                          href={item.href}
+                          onClick={handleLinkClick}
+                          className="block px-4 py-3 text-base text-gray-light hover:text-green-vibrant hover:bg-green-primary/5 transition-all duration-300 rounded border-l-2 border-transparent hover:border-green-vibrant"
+                        >
+                          {item.label}
+                        </a>
+                      </motion.li>
+                    ))}
+                  </ul>
+                </div>
               </nav>
 
               {/* CTA Button */}

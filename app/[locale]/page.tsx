@@ -1,10 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useTranslations } from "next-intl";
-import MobileMenu from "../components/MobileMenu";
+import { useTranslations, useLocale } from "next-intl";
 import ContactForm from "../components/ContactForm";
 import Testimonials from "../components/Testimonials";
 import ProcessTimeline from "../components/ProcessTimeline";
@@ -23,121 +21,41 @@ import GalleryNass2 from "../components/GalleryNass2";
 import GalleryNass3 from "../components/GalleryNass3";
 import GalleryNass4 from "../components/GalleryNass4";
 import VideoShowcase from "../components/VideoShowcase";
-import LanguageSwitcher from "../components/LanguageSwitcher";
 
 export default function Home() {
   const t = useTranslations();
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const locale = useLocale();
   const { scrollY } = useScroll();
   const heroOpacity = useTransform(scrollY, [0, 300], [1, 0]);
   const heroScale = useTransform(scrollY, [0, 300], [1, 0.95]);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   return (
     <div className="min-h-screen bg-black text-white overflow-x-hidden">
-      {/* Mobile Menu */}
-      <MobileMenu
-        isOpen={isMobileMenuOpen}
-        onClose={() => setIsMobileMenuOpen(false)}
-      />
-
-      {/* Navigation */}
-      <nav
-        className={`fixed top-0 w-full z-50 transition-all duration-500 ${
-          isScrolled
-            ? "bg-black/95 backdrop-blur-md shadow-lg shadow-green-primary/10 border-b border-green-primary/20"
-            : "bg-transparent"
-        }`}
-      >
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
-            <div className="flex items-center">
-              <a
-                href="#"
-                className="hover:opacity-80 transition-opacity relative w-40 h-12"
-              >
-                <Image
-                  src="/logo.png"
-                  alt="Kitchen Core Logo"
-                  fill
-                  className="h-full w-full absolute object-cover "
-                  priority
-                />
-              </a>
-            </div>
-            <div className="hidden md:flex items-center gap-8">
-              {[
-                { label: t("Navigation.portfolio"), href: "#portfolio" },
-                { label: t("Navigation.gallery"), href: "#gallery" },
-                { label: t("Navigation.collections"), href: "#gallery-nass0" },
-                { label: t("Navigation.videos"), href: "#video-showcase" },
-                { label: t("Navigation.technology"), href: "#innovation" },
-                { label: t("Navigation.services"), href: "#services" },
-                { label: t("Navigation.founder"), href: "#founder" },
-                { label: t("Navigation.contact"), href: "#contact" },
-              ].map((link) => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  className="text-sm tracking-wide font-light text-gray-light hover:text-green-vibrant transition-colors duration-300 relative group"
-                >
-                  {link.label}
-                  <span className="absolute -bottom-1 left-0 w-0 h-px bg-green-primary transition-all duration-300 group-hover:w-full" />
-                </a>
-              ))}
-            </div>
-            <div className="hidden md:flex items-center gap-4">
-              <LanguageSwitcher />
-              <button className="px-6 py-2.5 border border-green-primary text-green-primary hover:bg-green-primary hover:text-black transition-all duration-300 text-sm tracking-wide font-medium">
-                {t("Navigation.scheduleConsultation").toUpperCase()}
-              </button>
-            </div>
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsMobileMenuOpen(true)}
-              className="md:hidden p-2 text-gray-light hover:text-green-vibrant transition-colors"
-              aria-label="Open menu"
-            >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
-            </button>
-          </div>
-        </div>
-      </nav>
 
       {/* Hero Section - Full Screen with Parallax */}
       <motion.section
         style={{ opacity: heroOpacity, scale: heroScale }}
         className="relative min-h-screen flex items-center justify-center overflow-hidden"
       >
-        {/* Hero Background */}
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage: "url(/1.jpg)",
-          }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-black/80 to-black/90" />
-          <div className="absolute inset-0 bg-gradient-to-r from-green-darker/30 via-transparent to-green-darker/30" />
+        {/* Hero Video Background */}
+        <div className="absolute inset-0 w-full h-full">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover"
+            poster="/1.jpg"
+          >
+            <source
+              src="https://dr3oahdfiq9ky1mn.public.blob.vercel-storage.com/kitchen%20core%20new.mp4"
+              type="video/mp4"
+            />
+            {/* Fallback to image if video doesn't load */}
+            Your browser does not support the video tag.
+          </video>
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/80" />
+          <div className="absolute inset-0 bg-gradient-to-r from-green-darker/20 via-transparent to-green-darker/20" />
         </div>
 
         {/* Animated grid overlay */}
@@ -167,7 +85,9 @@ export default function Home() {
             <h1 className="font-serif text-6xl md:text-8xl lg:text-9xl text-white mb-8 leading-tight">
               {t("Hero.title")}
               <br />
-              <span className="text-green-vibrant italic">{t("Hero.titleHighlight")}</span>
+              <span className="text-green-vibrant italic">
+                {t("Hero.titleHighlight")}
+              </span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-light max-w-3xl mx-auto font-light leading-relaxed mb-12">
               {t("Hero.description")}
@@ -485,9 +405,21 @@ export default function Home() {
                   <div className="text-green-vibrant tracking-wider mb-2">
                     {t("Contact.follow").toUpperCase()}
                   </div>
-                  <div className="text-gray-light font-light whitespace-pre-line">
-                    {t("Contact.followValue")}
-                  </div>
+                  <a
+                    href="https://instagram.com/kitchen_core_uae?igsh=cGx3ejc0YWtleXU3"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-light hover:text-green-primary transition-colors font-light flex items-center gap-2 group"
+                  >
+                    <svg
+                      className="w-5 h-5 group-hover:scale-110 transition-transform"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                    <span>@kitchen_core_uae</span>
+                  </a>
                 </div>
               </div>
             </div>
@@ -506,9 +438,7 @@ export default function Home() {
               height={50}
               className="h-12 w-auto"
             />
-            <div className="font-light">
-              {t("Footer.copyright")}
-            </div>
+            <div className="font-light">{t("Footer.copyright")}</div>
             <div className="flex gap-6 font-light">
               <a
                 href="#"

@@ -1,0 +1,126 @@
+{
+  "Next.js Functional Component": {
+    "prefix": "nfc",
+    "body": [
+      "interface ${1:ComponentName}Props {",
+      "  ${2:// Add props here}",
+      "}",
+      "",
+      "export default function ${1:ComponentName}({ $3 }: ${1:ComponentName}Props) {",
+      "  return (",
+      "    <div>",
+      "      ${4:<h2>${1:ComponentName}</h2>}",
+      "    </div>",
+      "  )",
+      "}"
+    ],
+    "description": "Create a Next.js functional component"
+  },
+  "Next.js Client Component": {
+    "prefix": "ncc",
+    "body": [
+      "\"use client\"",
+      "",
+      "interface ${1:ComponentName}Props {",
+      "  ${2:// Add props here}",
+      "}",
+      "",
+      "export default function ${1:ComponentName}({ $3 }: ${1:ComponentName}Props) {",
+      "  return (",
+      "    <div>",
+      "      ${4:<h2>${1:ComponentName}</h2>}",
+      "    </div>",
+      "  )",
+      "}"
+    ],
+    "description": "Create a Next.js client component"
+  },
+  "Next.js API Route": {
+    "prefix": "napi",
+    "body": [
+      "import { NextRequest, NextResponse } from 'next/server'",
+      "import { getServerSession } from 'next-auth'",
+      "import { authOptions } from '@/lib/auth'",
+      "import { prisma } from '@/lib/prisma'",
+      "",
+      "export async function GET(request: NextRequest) {",
+      "  try {",
+      "    ${1:// Implement GET logic}",
+      "    return NextResponse.json({ data: null })",
+      "  } catch (error) {",
+      "    return NextResponse.json({ error: 'Request failed' }, { status: 500 })",
+      "  }",
+      "}",
+      "",
+      "export async function POST(request: NextRequest) {",
+      "  try {",
+      "    const session = await getServerSession(authOptions)",
+      "    if (!session) {",
+      "      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })",
+      "    }",
+      "    ",
+      "    const body = await request.json()",
+      "    ${2:// Implement POST logic}",
+      "    ",
+      "    return NextResponse.json({ data: null })",
+      "  } catch (error) {",
+      "    return NextResponse.json({ error: 'Request failed' }, { status: 500 })",
+      "  }",
+      "}"
+    ],
+    "description": "Create a Next.js API route"
+  },
+  "Next.js Server Action": {
+    "prefix": "nserver",
+    "body": [
+      "\"use server\"",
+      "",
+      "import { revalidatePath } from 'next/cache'",
+      "import { prisma } from '@/lib/prisma'",
+      "",
+      "export async function ${1:actionName}(${2:formData: FormData}) {",
+      "  try {",
+      "    ${3:// Implement server action logic}",
+      "    ",
+      "    revalidatePath('/${4:path}')",
+      "    return { success: true }",
+      "  } catch (error) {",
+      "    return { success: false, error: 'Action failed' }",
+      "  }",
+      "}"
+    ],
+    "description": "Create a Next.js server action"
+  },
+  "Prisma Model": {
+    "prefix": "nprisma",
+    "body": [
+      "model ${1:ModelName} {",
+      "  id        String   @id @default(cuid())",
+      "  ${2:field}     ${3:String}",
+      "  createdAt DateTime @default(now())",
+      "  updatedAt DateTime @updatedAt",
+      "",
+      "  ${4:// Add indexes}",
+      "  @@index([${5:field}])",
+      "}"
+    ],
+    "description": "Create a Prisma model"
+  },
+  "React Hook": {
+    "prefix": "nhook",
+    "body": [
+      "import { useState, useEffect } from 'react'",
+      "",
+      "export function use${1:HookName}(${2:params}) {",
+      "  const [${3:state}, set${3/(.*)/${1:/capitalize}/}] = useState(${4:initialValue})",
+      "  ",
+      "  useEffect(() => {",
+      "    ${5:// Effect logic}",
+      "  }, [${6:dependencies}])",
+      "  ",
+      "  return { ${3:state}, set${3/(.*)/${1:/capitalize}/} }",
+      "}"
+    ],
+    "description": "Create a custom React hook"
+  }
+}

@@ -645,6 +645,203 @@ async function main() {
     },
   });
 
+  // Seed Company Information
+  console.log("Seeding company information...");
+  await prisma.company.create({
+    data: {
+      nameEn: "Kitchen Core",
+      nameAr: "كيتشن كور",
+      taglineEn: "Where Craftsmanship Meets Innovation",
+      taglineAr: "حيث تلتقي الحرفية بالابتكار",
+      descriptionEn:
+        "Kitchen Core stands at the intersection of timeless Italian craftsmanship and cutting-edge technology. For over 15 years, we have been transforming kitchens into architectural masterpieces for palaces, villas, and luxury estates across 25+ countries. Our commitment to excellence, sustainable practices, and client satisfaction has made us the trusted partner for the world's most discerning clients.",
+      descriptionAr:
+        "تقف كيتشن كور عند تقاطع الحرفية الإيطالية الخالدة والتكنولوجيا المتطورة. منذ أكثر من 15 عاماً، نقوم بتحويل المطابخ إلى تحف معمارية للقصور والفلل والعقارات الفاخرة في أكثر من 25 دولة. التزامنا بالتميز والممارسات المستدامة ورضا العملاء جعلنا الشريك الموثوق به لأكثر العملاء تميزاً في العالم.",
+      missionEn:
+        "To create bespoke kitchens that seamlessly blend functionality, aesthetics, and innovation—delivering spaces where culinary artistry meets architectural excellence. We strive to exceed expectations by combining the finest materials, cutting-edge technology, and exceptional craftsmanship in every project.",
+      missionAr:
+        "إنشاء مطابخ مخصصة تمزج بسلاسة بين الوظيفة والجماليات والابتكار - تقديم مساحات حيث يلتقي فن الطهي بالتميز المعماري. نسعى لتجاوز التوقعات من خلال الجمع بين أجود المواد والتكنولوجيا المتطورة والحرفية الاستثنائية في كل مشروع.",
+      visionEn:
+        "To be the global leader in luxury kitchen design, recognized for uncompromising quality, sustainable practices, and transformative spaces that inspire generations. We envision a future where every Kitchen Core project sets new standards for excellence and innovation in the luxury kitchen industry.",
+      visionAr:
+        "أن نكون الرواد العالميين في تصميم المطابخ الفاخرة، معترف بنا من حيث الجودة غير القابلة للمساومة والممارسات المستدامة والمساحات التحويلية التي تلهم الأجيال. نتصور مستقبلاً حيث يضع كل مشروع من مشاريع كيتشن كور معايير جديدة للتميز والابتكار في صناعة المطابخ الفاخرة.",
+      valuesEn: [
+        "Excellence in every detail",
+        "Timeless design philosophy",
+        "Sustainable luxury",
+        "Client-centric approach",
+        "Continuous innovation",
+        "Integrity and transparency",
+      ],
+      valuesAr: [
+        "التميز في كل التفاصيل",
+        "فلسفة التصميم الخالدة",
+        "الفخامة المستدامة",
+        "نهج يركز على العميل",
+        "الابتكار المستمر",
+        "النزاهة والشفافية",
+      ],
+      foundedYear: "2010",
+      employeeCount: "50+",
+      projectsCompleted: "150+",
+      countriesServed: "25+",
+      yearsOfExperience: "15",
+      featuredImage: "/8.jpg",
+      backgroundVideo:
+        "https://dr3oahdfiq9ky1mn.public.blob.vercel-storage.com/kitchen%20core%20new.mp4",
+      published: true,
+    },
+  });
+
+  // Seed Team Members
+  console.log("Seeding team members...");
+  const teamMembers = [
+    {
+      nameEn: "Eng. Esam Odeh",
+      nameAr: "م. عصام عودة",
+      roleEn: "Founder & CEO",
+      roleAr: "المؤسس والرئيس التنفيذي",
+      bioEn:
+        "With over 15 years of experience in luxury kitchen design and fit-out, Eng. Esam Odeh has established Kitchen Core as the premier choice for discerning clients. His vision combines traditional craftsmanship with cutting-edge technology to create culinary spaces that are both timeless and innovative.",
+      bioAr:
+        "مع أكثر من 15 عاماً من الخبرة في تصميم وتركيب المطابخ الفاخرة، أسس م. عصام عودة كيتشن كور كخيار أول للعملاء المميزين. تجمع رؤيته بين الحرفية التقليدية والتكنولوجيا المتطورة لإنشاء مساحات طهي خالدة ومبتكرة.",
+      image: "/team/WhatsApp_Image_2025-10-18_at_17.42.09_446c0a80-removebg-preview.png",
+      specialtiesEn: [
+        "Luxury Kitchen Design",
+        "Project Management",
+        "Italian Craftsmanship",
+        "Smart Home Integration",
+      ],
+      specialtiesAr: [
+        "تصميم المطابخ الفاخرة",
+        "إدارة المشاريع",
+        "الحرفية الإيطالية",
+        "تكامل المنزل الذكي",
+      ],
+      email: "esam@kitchencore.com",
+      linkedin: "https://linkedin.com/in/esamodeh",
+      yearsOfExperience: "15+",
+      order: 1,
+      published: true,
+    },
+    {
+      nameEn: "Sarah Johnson",
+      nameAr: "سارة جونسون",
+      roleEn: "Lead Designer",
+      roleAr: "مصممة رئيسية",
+      bioEn:
+        "Sarah brings a fresh perspective to luxury kitchen design with her background in European architecture and interior design. She specializes in creating harmonious spaces that balance aesthetics with functionality.",
+      bioAr:
+        "تجلب سارة منظوراً جديداً لتصميم المطابخ الفاخرة بخلفيتها في الهندسة المعمارية الأوروبية والتصميم الداخلي. تتخصص في إنشاء مساحات متناغمة توازن بين الجماليات والوظيفة.",
+      image: "/team/WhatsApp_Image_2025-10-18_at_17.42.10_a00ed2b4-removebg-preview.png",
+      specialtiesEn: [
+        "Interior Design",
+        "3D Visualization",
+        "Material Selection",
+        "Color Theory",
+      ],
+      specialtiesAr: [
+        "التصميم الداخلي",
+        "التصور ثلاثي الأبعاد",
+        "اختيار المواد",
+        "نظرية الألوان",
+      ],
+      email: "sarah@kitchencore.com",
+      linkedin: "https://linkedin.com/in/sarahjohnson",
+      yearsOfExperience: "10+",
+      order: 2,
+      published: true,
+    },
+    {
+      nameEn: "Marco Rossi",
+      nameAr: "ماركو روسي",
+      roleEn: "Master Craftsman",
+      roleAr: "حرفي ماهر",
+      bioEn:
+        "A third-generation Italian craftsman, Marco oversees all custom cabinetry and millwork. His expertise in traditional woodworking techniques ensures every Kitchen Core project meets the highest standards of quality.",
+      bioAr:
+        "حرفي إيطالي من الجيل الثالث، يشرف ماركو على جميع الخزائن والنجارة المخصصة. خبرته في تقنيات النجارة التقليدية تضمن أن كل مشروع من مشاريع كيتشن كور يلبي أعلى معايير الجودة.",
+      image: "/team/WhatsApp_Image_2025-10-18_at_17.42.11_23cae256-removebg-preview.png",
+      specialtiesEn: [
+        "Custom Cabinetry",
+        "Italian Millwork",
+        "Quality Control",
+        "Artisan Techniques",
+      ],
+      specialtiesAr: [
+        "الخزائن المخصصة",
+        "النجارة الإيطالية",
+        "مراقبة الجودة",
+        "تقنيات الحرفيين",
+      ],
+      email: "marco@kitchencore.com",
+      linkedin: "https://linkedin.com/in/marcorossi",
+      yearsOfExperience: "20+",
+      order: 3,
+      published: true,
+    },
+    {
+      nameEn: "Ahmed Al-Mansouri",
+      nameAr: "أحمد المنصوري",
+      roleEn: "Technical Director",
+      roleAr: "المدير الفني",
+      bioEn:
+        "Ahmed leads our technical team, ensuring seamless integration of smart home systems, ventilation, plumbing, and electrical infrastructure in every kitchen project. His engineering expertise is crucial to our success.",
+      bioAr:
+        "يقود أحمد فريقنا الفني، مما يضمن التكامل السلس لأنظمة المنزل الذكي والتهوية والسباكة والبنية التحتية الكهربائية في كل مشروع مطبخ. خبرته الهندسية حاسمة لنجاحنا.",
+      image: "/team/WhatsApp_Image_2025-10-18_at_17.42.11_c3be06da-removebg-preview.png",
+      specialtiesEn: [
+        "MEP Engineering",
+        "Smart Home Systems",
+        "HVAC Design",
+        "Technical Planning",
+      ],
+      specialtiesAr: [
+        "الهندسة الميكانيكية والكهربائية",
+        "أنظمة المنزل الذكي",
+        "تصميم التكييف",
+        "التخطيط الفني",
+      ],
+      email: "ahmed@kitchencore.com",
+      linkedin: "https://linkedin.com/in/ahmedalmansouri",
+      yearsOfExperience: "12+",
+      order: 4,
+      published: true,
+    },
+    {
+      nameEn: "Elena Petrova",
+      nameAr: "إيلينا بتروفا",
+      roleEn: "Project Manager",
+      roleAr: "مديرة المشاريع",
+      bioEn:
+        "Elena coordinates all aspects of Kitchen Core projects from initial consultation to final handover. Her exceptional organizational skills and attention to detail ensure every project is delivered on time and exceeds expectations.",
+      bioAr:
+        "تنسق إيلينا جميع جوانب مشاريع كيتشن كور من الاستشارة الأولية إلى التسليم النهائي. مهاراتها التنظيمية الاستثنائية واهتمامها بالتفاصيل يضمنان تسليم كل مشروع في الوقت المحدد وتجاوز التوقعات.",
+      image: "/team/WhatsApp_Image_2025-10-18_at_17.42.12_09558bae-removebg-preview.png",
+      specialtiesEn: [
+        "Project Coordination",
+        "Client Relations",
+        "Timeline Management",
+        "Quality Assurance",
+      ],
+      specialtiesAr: [
+        "تنسيق المشاريع",
+        "علاقات العملاء",
+        "إدارة الجدول الزمني",
+        "ضمان الجودة",
+      ],
+      email: "elena@kitchencore.com",
+      linkedin: "https://linkedin.com/in/elenapetrova",
+      yearsOfExperience: "8+",
+      order: 5,
+      published: true,
+    },
+  ];
+
+  for (const member of teamMembers) {
+    await prisma.teamMember.create({ data: member });
+  }
+
   console.log("✅ Database seeded successfully!");
 }
 

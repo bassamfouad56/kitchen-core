@@ -47,7 +47,7 @@ export default function FounderSection() {
                   src="/ceo.png"
                   alt="Founder and CEO - Kitchen Core"
                   fill
-                  className="object-contain transition-transform duration-700 group-hover:scale-105"
+                  className="object-contain transition-transform duration-700 group-hover:scale-105 "
                   sizes="(max-width: 768px) 100vw, 70vw"
                 />
                 {/* Subtle overlay gradient */}

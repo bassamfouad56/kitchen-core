@@ -1,11 +1,14 @@
 {
   "Navigation": {
+    "home": "Home",
     "portfolio": "Portfolio",
     "gallery": "Gallery",
     "collections": "Collections",
     "videos": "Videos",
     "technology": "Technology",
     "services": "Services",
+    "about": "About",
+    "blog": "Blog",
     "founder": "Founder",
     "contact": "Contact",
     "scheduleConsultation": "Schedule Consultation"
@@ -185,7 +188,9 @@
     "recognizedBy": "Recognized By",
     "recognizedByValue": "Architectural Digest\nLuxury Home Design",
     "awards": "Awards",
-    "awardsValue": "Best Kitchen Design 2024\nExcellence in Fit-Out"
+    "awardsValue": "Best Kitchen Design 2024\nExcellence in Fit-Out",
+    "pageTitle": "About Us",
+    "metaDescription": "Discover Kitchen Core - luxury kitchen design specialists with over 15 years of excellence. Italian craftsmanship meets cutting-edge technology for palaces, villas, and estates."
   },
   "Contact": {
     "badge": "Begin Your Journey",
@@ -195,16 +200,67 @@
     "showroomValue": "By appointment only\nDubai Design District",
     "contactLabel": "Contact",
     "contactValue": "+971 4 XXX XXXX\ndesign@kitchencore.com",
-    "follow": "Follow",
+    "follow": "Follow Us on Instagram",
     "followValue": "Instagram / Pinterest\nLinkedIn / Houzz"
   },
   "Footer": {
     "copyright": "© 2025 Kitchen Core. All rights reserved.",
     "privacy": "Privacy",
-    "terms": "Terms"
+    "terms": "Terms",
+    "quickLinks": "Quick Links",
+    "followUs": "Follow Us"
   },
   "Partnerships": {
     "badge": "Premium Partnerships",
     "title": "Trusted by the World's Best Brands"
+  },
+  "AboutPage": {
+    "hero": {
+      "badge": "Our Story",
+      "title": "Where Craftsmanship Meets",
+      "titleHighlight": "Innovation",
+      "description": "Discover the passion, expertise, and dedication that drives Kitchen Core to create exceptional luxury kitchens for the world's most discerning clients."
+    },
+    "company": {
+      "badge": "About Kitchen Core",
+      "title": "Redefining Luxury Kitchen Design",
+      "description": "Kitchen Core stands at the intersection of timeless Italian craftsmanship and cutting-edge technology. For over 15 years, we have been transforming kitchens into architectural masterpieces for palaces, villas, and luxury estates across 25+ countries.",
+      "mission": {
+        "title": "Our Mission",
+        "description": "To create bespoke kitchens that seamlessly blend functionality, aesthetics, and innovation—delivering spaces where culinary artistry meets architectural excellence."
+      },
+      "vision": {
+        "title": "Our Vision",
+        "description": "To be the global leader in luxury kitchen design, recognized for uncompromising quality, sustainable practices, and transformative spaces that inspire generations."
+      },
+      "values": {
+        "title": "Our Values",
+        "items": [
+          "Excellence in every detail",
+          "Timeless design philosophy",
+          "Sustainable luxury",
+          "Client-centric approach",
+          "Continuous innovation"
+        ]
+      }
+    },
+    "stats": {
+      "projects": "150+ Luxury Kitchens",
+      "countries": "25+ Countries Served",
+      "experience": "15 Years of Excellence",
+      "satisfaction": "100% Client Satisfaction"
+    },
+    "team": {
+      "badge": "Meet Our Team",
+      "title": "The Experts Behind",
+      "titleHighlight": "Your Dream Kitchen",
+      "description": "Our talented team of designers, engineers, and craftsmen work together to bring your vision to life with precision and passion."
+    },
+    "cta": {
+      "title": "Ready to Start Your",
+      "titleHighlight": "Kitchen Transformation?",
+      "description": "Let's create a space that reflects your unique style and elevates your culinary experience.",
+      "button": "Schedule Consultation"
+    }
   }
 }

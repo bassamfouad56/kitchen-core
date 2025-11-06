@@ -48,12 +48,21 @@ model Project {
   featured      Boolean   @default(false)
   order         Int       @default(0)
   published     Boolean   @default(true)
+  
+  // CRM Relations
+  leadId        String?   // Reference to original lead
+  customerId    String?   // Reference to customer
+  lead          Lead?     @relation(fields: [leadId], references: [id])
+  customer      Customer? @relation(fields: [customerId], references: [id])
+  
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
   @@index([category])
   @@index([featured])
   @@index([order])
+  @@index([leadId])
+  @@index([customerId])
 }
 
 enum ProjectCategory {
@@ -411,4 +420,395 @@ model CTASection {
   published       Boolean  @default(true)
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
+}
+
+// Vector Embeddings for Semantic Search
+model Embedding {
+  id            String   @id @default(cuid())
+  contentType   String   // 'project', 'service', 'gallery', 'blog', etc.
+  contentId     String   // Reference to the original content ID
+  title         String
+  content       String   @db.Text
+  embedding     Json     // Store vector as JSON array for now (upgrade to pgvector later)
+  metadata      Json?    // Additional metadata for filtering
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([contentType, contentId])
+  @@index([createdAt])
+}
+
+// Blog Posts for Content Marketing
+model BlogPost {
+  id            String   @id @default(cuid())
+  slug          String   @unique
+  titleEn       String
+  titleAr       String?
+  excerptEn     String
+  excerptAr     String?
+  contentEn     String   @db.Text
+  contentAr     String?  @db.Text
+  featuredImage String?
+  category      String
+  tags          String[]
+  author        String   @default("Kitchen Core Team")
+  readingTime   Int      // in minutes
+  views         Int      @default(0)
+  published     Boolean  @default(false)
+  publishedAt   DateTime?
+  seoTitle      String?
+  seoDescription String?
+  seoKeywords   String[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([slug])
+  @@index([published, publishedAt])
+  @@index([category])
+}
+
+// Newsletter Subscribers
+model Subscriber {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  name          String?
+  preferences   Json?    // Subscription preferences
+  verified      Boolean  @default(false)
+  verifyToken   String?
+  unsubscribeToken String @unique @default(cuid())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([email])
+  @@index([verified])
+}
+
+// Analytics Events
+model AnalyticsEvent {
+  id            String   @id @default(cuid())
+  eventType     String   // 'page_view', 'click', 'form_submit', etc.
+  eventName     String
+  userId        String?  // Optional user identifier
+  sessionId     String
+  page          String
+  metadata      Json?    // Additional event data
+  userAgent     String?
+  ip            String?
+  country       String?
+  createdAt     DateTime @default(now())
+
+  @@index([eventType, createdAt])
+  @@index([sessionId])
+  @@index([userId])
+}
+
+// Company Information (Singleton) - Bilingual
+model Company {
+  id                    String   @id @default(cuid())
+  nameEn                String
+  nameAr                String
+  taglineEn             String?
+  taglineAr             String?
+  descriptionEn         String   @db.Text
+  descriptionAr         String   @db.Text
+  missionEn             String?  @db.Text
+  missionAr             String?  @db.Text
+  visionEn              String?  @db.Text
+  visionAr              String?  @db.Text
+  valuesEn              String[] // Array of values
+  valuesAr              String[]
+  foundedYear           String?
+  employeeCount         String?
+  projectsCompleted     String?
+  countriesServed       String?
+  yearsOfExperience     String?
+  featuredImage         String?  // Main about page image
+  backgroundVideo       String?  // Background video URL
+
+  // Contact & Social Media
+  phone                 String?  // Main contact number
+  email                 String?  // Main contact email
+  whatsappNumber        String?  // WhatsApp contact number
+  instagramUrl          String?  // Instagram profile URL
+  facebookUrl           String?  // Facebook page URL
+  linkedinUrl           String?  // LinkedIn company page
+  twitterUrl            String?  // Twitter/X profile
+  youtubeUrl            String?  // YouTube channel
+  tiktokUrl             String?  // TikTok account
+
+  published             Boolean  @default(true)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+}
+
+// Team Members - Bilingual
+model TeamMember {
+  id                String   @id @default(cuid())
+  nameEn            String
+  nameAr            String
+  roleEn            String
+  roleAr            String
+  bioEn             String   @db.Text
+  bioAr             String   @db.Text
+  image             String   // Team member photo
+  specialtiesEn     String[] // Areas of expertise
+  specialtiesAr     String[]
+  email             String?
+  linkedin          String?
+  yearsOfExperience String?
+  order             Int      @default(0)
+  published         Boolean  @default(true)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([order])
+}
+
+// ===== CRM MODELS =====
+
+// Leads - Customer inquiries and potential clients
+model Lead {
+  id                String      @id @default(cuid())
+  firstName         String
+  lastName          String
+  email             String
+  phone             String?
+  company           String?
+  jobTitle          String?
+  projectType       ProjectCategory?
+  budget            String?
+  timeline          String?
+  location          String?
+  message           String      @db.Text
+  source            LeadSource  @default(WEBSITE)
+  status            LeadStatus  @default(NEW)
+  priority          LeadPriority @default(MEDIUM)
+  assignedTo        String?     // User ID
+  notes             String?     @db.Text
+  lastContacted     DateTime?
+  nextFollowUp      DateTime?
+  tags              String[]    // Custom tags for organization
+  metadata          Json?       // Additional data (UTM params, etc.)
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+
+  // Relations
+  interactions      LeadInteraction[]
+  projects          Project[]
+
+  @@index([email])
+  @@index([status])
+  @@index([source])
+  @@index([assignedTo])
+  @@index([createdAt])
+}
+
+enum LeadSource {
+  WEBSITE
+  SOCIAL_MEDIA
+  REFERRAL
+  ADVERTISING
+  SHOWROOM
+  EVENT
+  PHONE
+  EMAIL
+  OTHER
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  QUALIFIED
+  PROPOSAL_SENT
+  NEGOTIATING
+  WON
+  LOST
+  ON_HOLD
+}
+
+enum LeadPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+// Lead Interactions - Track all communications
+model LeadInteraction {
+  id            String            @id @default(cuid())
+  lead          Lead              @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  leadId        String
+  type          InteractionType
+  subject       String?
+  content       String            @db.Text
+  direction     InteractionDirection
+  outcome       InteractionOutcome?
+  scheduledFor  DateTime?
+  completedAt   DateTime?
+  createdBy     String?           // User ID
+  metadata      Json?             // Additional data
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+
+  @@index([leadId])
+  @@index([type])
+  @@index([createdAt])
+}
+
+enum InteractionType {
+  EMAIL
+  PHONE_CALL
+  MEETING
+  SITE_VISIT
+  PROPOSAL
+  FOLLOW_UP
+  NOTE
+  OTHER
+}
+
+enum InteractionDirection {
+  INBOUND
+  OUTBOUND
+}
+
+enum InteractionOutcome {
+  POSITIVE
+  NEUTRAL
+  NEGATIVE
+  NO_RESPONSE
+  SCHEDULED
+}
+
+// Customers - Converted leads
+model Customer {
+  id                String      @id @default(cuid())
+  firstName         String
+  lastName          String
+  email             String      @unique
+  phone             String?
+  company           String?
+  jobTitle          String?
+  address           String?     @db.Text
+  city              String?
+  country           String?
+  customerType      CustomerType @default(INDIVIDUAL)
+  status            CustomerStatus @default(ACTIVE)
+  source            LeadSource?
+  leadId            String?     // Reference to original lead
+  assignedTo        String?     // User ID
+  notes             String?     @db.Text
+  tags              String[]
+  metadata          Json?
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+
+  // Relations
+  projects          Project[]
+  interactions      CustomerInteraction[]
+
+  @@index([email])
+  @@index([status])
+  @@index([customerType])
+  @@index([assignedTo])
+}
+
+enum CustomerType {
+  INDIVIDUAL
+  BUSINESS
+  CORPORATE
+  GOVERNMENT
+}
+
+enum CustomerStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+  CLOSED
+}
+
+// Customer Interactions
+model CustomerInteraction {
+  id            String            @id @default(cuid())
+  customer      Customer          @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  customerId    String
+  type          InteractionType
+  subject       String?
+  content       String            @db.Text
+  direction     InteractionDirection
+  outcome       InteractionOutcome?
+  scheduledFor  DateTime?
+  completedAt   DateTime?
+  createdBy     String?           // User ID
+  metadata      Json?
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+
+  @@index([customerId])
+  @@index([type])
+  @@index([createdAt])
+}
+
+// Tasks - For follow-ups and project management
+model Task {
+  id            String      @id @default(cuid())
+  title         String
+  description   String?     @db.Text
+  type          TaskType
+  priority      LeadPriority
+  status        TaskStatus  @default(PENDING)
+  dueDate       DateTime?
+  completedAt   DateTime?
+  assignedTo    String?     // User ID
+  relatedTo     String?     // Lead ID or Customer ID
+  relatedType   String?     // 'lead' or 'customer'
+  metadata      Json?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@index([assignedTo])
+  @@index([status])
+  @@index([dueDate])
+  @@index([relatedTo, relatedType])
+}
+
+enum TaskType {
+  FOLLOW_UP
+  PROPOSAL
+  SITE_VISIT
+  MEETING
+  CALL
+  EMAIL
+  DOCUMENTATION
+  OTHER
+}
+
+enum TaskStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+  OVERDUE
+}
+
+// Contact Form Submissions
+model ContactSubmission {
+  id            String      @id @default(cuid())
+  name          String
+  email         String
+  phone         String?
+  company       String?
+  subject       String?
+  message       String      @db.Text
+  source        String?     // Page URL or referrer
+  metadata      Json?       // UTM params, user agent, etc.
+  processed     Boolean     @default(false)
+  processedBy   String?     // User ID
+  processedAt   DateTime?
+  notes         String?     @db.Text
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@index([email])
+  @@index([processed])
+  @@index([createdAt])
 }

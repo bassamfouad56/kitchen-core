@@ -1,39 +1,49 @@
-import { NextResponse } from 'next/server'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/lib/auth'
-import { prisma } from '@/lib/prisma'
+import { NextRequest } from 'next/server';
+import { successResponse, handleApiError } from '@/lib/api/response';
+import { requireAuth } from '@/lib/api/auth';
+import { getServices } from '@/lib/db/content';
+import { createServiceSchema } from '@/lib/validations/service';
+import { prisma } from '@/lib/prisma';
 
-export async function GET() {
+/**
+ * GET /api/services
+ * Get all services
+ */
+export async function GET(request: NextRequest) {
   try {
-    const services = await prisma.service.findMany({
-      where: { published: true },
-      orderBy: { order: 'asc' },
-    })
-    return NextResponse.json(services)
+    const { searchParams } = new URL(request.url);
+    const published = searchParams.get('published');
+
+    const services = await getServices({
+      published: published === 'true' ? true : undefined,
+    });
+
+    return successResponse(services);
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to fetch services' }, { status: 500 })
+    return handleApiError(error);
   }
 }
 
-export async function POST(request: Request) {
-  const session = await getServerSession(authOptions)
-  if (!session) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  }
-
+/**
+ * POST /api/services
+ * Create a new service (requires authentication)
+ */
+export async function POST(request: NextRequest) {
   try {
-    const body = await request.json()
+    // Require authentication
+    await requireAuth();
+
+    // Parse and validate request body
+    const body = await request.json();
+    const validatedData = createServiceSchema.parse(body);
+
+    // Create service
     const service = await prisma.service.create({
-      data: {
-        title: body.title,
-        description: body.description,
-        features: body.features || [],
-        order: body.order || 0,
-        published: body.published ?? true,
-      },
-    })
-    return NextResponse.json(service)
+      data: validatedData,
+    });
+
+    return successResponse(service, 'Service created successfully', 201);
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to create service' }, { status: 500 })
+    return handleApiError(error);
   }
 }

@@ -4,6 +4,10 @@ import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import { Inter, Playfair_Display, Cairo, Amiri } from "next/font/google";
 import { Providers } from "../providers";
+import Navigation from "@/app/components/Navigation";
+import Footer from "@/app/components/Footer";
+import ContactForm from "@/app/components/ContactForm";
+import FloatingSocialWrapper from "@/app/components/FloatingSocialWrapper";
 import "../globals.css";
 
 const inter = Inter({
@@ -62,11 +66,28 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} dir={isRTL ? 'rtl' : 'ltr'} suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${playfair.variable} ${cairo.variable} ${amiri.variable} antialiased`}
+        className={`${inter.variable} ${playfair.variable} ${cairo.variable} ${amiri.variable} antialiased bg-black text-white`}
       >
         <Providers>
           <NextIntlClientProvider messages={messages} locale={locale}>
-            {children}
+            {/* Navigation Bar */}
+            <Navigation />
+
+            {/* Main Content */}
+            <main className="min-h-screen">
+              {children}
+            </main>
+
+            {/* Contact Form Section */}
+            <section id="contact" className="relative">
+              <ContactForm />
+            </section>
+
+            {/* Footer */}
+            <Footer />
+
+            {/* Floating Social Media Widget */}
+            <FloatingSocialWrapper />
           </NextIntlClientProvider>
         </Providers>
       </body>

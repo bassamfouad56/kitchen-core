@@ -1,14 +1,14 @@
-import { getServerSession } from 'next-auth'
-import { redirect } from 'next/navigation'
-import { authOptions } from '@/lib/auth'
-import { prisma } from '@/lib/prisma'
-import Link from 'next/link'
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
+import { authOptions } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
+import Link from "next/link";
 
 export default async function AdminDashboard() {
-  const session = await getServerSession(authOptions)
+  const session = await getServerSession(authOptions);
 
   if (!session) {
-    redirect('/admin/login')
+    redirect("/admin/login");
   }
 
   // Get content stats
@@ -26,23 +26,38 @@ export default async function AdminDashboard() {
     prisma.service.count(),
     prisma.video.count(),
     prisma.innovation.count(),
-  ])
+  ]);
 
   const stats = [
-    { label: 'Projects', count: projectsCount, href: '/admin/projects' },
-    { label: 'Gallery Images', count: galleryCount, href: '/admin/gallery' },
-    { label: 'Testimonials', count: testimonialsCount, href: '/admin/testimonials' },
-    { label: 'Services', count: servicesCount, href: '/admin/services' },
-    { label: 'Videos', count: videosCount, href: '/admin/videos' },
-    { label: 'Innovations', count: innovationsCount, href: '/admin/innovations' },
-  ]
+    { label: "Projects", count: projectsCount, href: "/admin/projects" },
+    { label: "Gallery Images", count: galleryCount, href: "/admin/gallery" },
+    {
+      label: "Testimonials",
+      count: testimonialsCount,
+      href: "/admin/testimonials",
+    },
+    { label: "Services", count: servicesCount, href: "/admin/services" },
+    { label: "Videos", count: videosCount, href: "/admin/videos" },
+    {
+      label: "Innovations",
+      count: innovationsCount,
+      href: "/admin/innovations",
+    },
+    {
+      label: "Leads (CRM)",
+      count: await prisma.lead.count(),
+      href: "/admin/leads",
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-black text-white p-8">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-12">
-          <h1 className="text-4xl font-serif text-white mb-2">Welcome back, {session.user.name}</h1>
+          <h1 className="text-4xl font-serif text-white mb-2">
+            Welcome back, {session.user.name}
+          </h1>
           <p className="text-gray-light">Manage your Kitchen Core content</p>
         </div>
 
@@ -54,8 +69,12 @@ export default async function AdminDashboard() {
               href={stat.href}
               className="bg-background-card border border-gray-dark p-6 hover:border-green-primary transition-colors"
             >
-              <div className="text-4xl font-serif text-green-vibrant mb-2">{stat.count}</div>
-              <div className="text-sm text-gray-light uppercase tracking-wider">{stat.label}</div>
+              <div className="text-4xl font-serif text-green-vibrant mb-2">
+                {stat.count}
+              </div>
+              <div className="text-sm text-gray-light uppercase tracking-wider">
+                {stat.label}
+              </div>
             </Link>
           ))}
         </div>
@@ -77,6 +96,12 @@ export default async function AdminDashboard() {
               Manage Gallery
             </Link>
             <Link
+              href="/admin/leads"
+              className="bg-background-card border border-gray-dark p-6 hover:border-green-primary transition-colors"
+            >
+              CRM Leads
+            </Link>
+            <Link
               href="/admin/settings"
               className="bg-background-card border border-gray-dark p-6 hover:border-green-primary transition-colors"
             >
@@ -87,19 +112,23 @@ export default async function AdminDashboard() {
 
         {/* Footer */}
         <div className="mt-12 pt-8 border-t border-gray-dark flex justify-between items-center">
-          <div className="text-sm text-gray-dark">
-            Kitchen Core CMS v1.0
-          </div>
+          <div className="text-sm text-gray-dark">Kitchen Core CMS v1.0</div>
           <div className="space-x-4">
-            <Link href="/" className="text-sm text-gray-light hover:text-green-primary transition-colors">
+            <Link
+              href="/"
+              className="text-sm text-gray-light hover:text-green-primary transition-colors"
+            >
               View Website
             </Link>
-            <Link href="/api/auth/signout" className="text-sm text-gray-light hover:text-green-primary transition-colors">
+            <Link
+              href="/api/auth/signout"
+              className="text-sm text-gray-light hover:text-green-primary transition-colors"
+            >
               Sign Out
             </Link>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
