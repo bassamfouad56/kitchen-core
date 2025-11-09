@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useTranslations, useLocale } from "next-intl";
@@ -22,12 +23,84 @@ import GalleryNass3 from "../components/GalleryNass3";
 import GalleryNass4 from "../components/GalleryNass4";
 import VideoShowcase from "../components/VideoShowcase";
 
+interface Statistic {
+  id: string;
+  value: string;
+  label: string;
+}
+
+interface Service {
+  id: string;
+  title: string;
+  description: string;
+  features: string[];
+}
+
 export default function Home() {
   const t = useTranslations();
   const locale = useLocale();
   const { scrollY } = useScroll();
   const heroOpacity = useTransform(scrollY, [0, 300], [1, 0]);
   const heroScale = useTransform(scrollY, [0, 300], [1, 0.95]);
+
+  // CMS Data State
+  const [statistics, setStatistics] = useState<Statistic[]>([
+    { id: "1", value: "150+", label: t("Stats.kitchens") },
+    { id: "2", value: "25+", label: t("Stats.countries") },
+    { id: "3", value: "15", label: t("Stats.experience") },
+    { id: "4", value: "100%", label: t("Stats.satisfaction") },
+  ]);
+  const [services, setServices] = useState<Service[]>([
+    {
+      id: "1",
+      title: t("Services.palace.title"),
+      description: t("Services.palace.description"),
+      features: t.raw("Services.palace.features") as string[],
+    },
+    {
+      id: "2",
+      title: t("Services.villa.title"),
+      description: t("Services.villa.description"),
+      features: t.raw("Services.villa.features") as string[],
+    },
+    {
+      id: "3",
+      title: t("Services.estate.title"),
+      description: t("Services.estate.description"),
+      features: t.raw("Services.estate.features") as string[],
+    },
+  ]);
+
+  // Fetch CMS data
+  useEffect(() => {
+    async function fetchCMSData() {
+      try {
+        const response = await fetch(`/api/cms/homepage?locale=${locale}`);
+        if (response.ok) {
+          const data = await response.json();
+
+          // Update statistics if available from CMS
+          if (data.statistics && data.statistics.length > 0) {
+            const trustStats = data.statistics.filter(
+              (stat: any) => stat.section === 'trust'
+            );
+            if (trustStats.length > 0) {
+              setStatistics(trustStats);
+            }
+          }
+
+          // Update services if available from CMS
+          if (data.services && data.services.length > 0) {
+            setServices(data.services);
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching homepage CMS data:', error);
+        // Keep fallback data on error
+      }
+    }
+    fetchCMSData();
+  }, [locale, t]);
 
   return (
     <div className="min-h-screen bg-black text-white overflow-x-hidden">
@@ -131,21 +204,16 @@ export default function Home() {
       <section className="py-20 bg-background-elevated border-y border-gray-dark">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            {[
-              { number: "150+", label: t("Stats.kitchens") },
-              { number: "25+", label: t("Stats.countries") },
-              { number: "15", label: t("Stats.experience") },
-              { number: "100%", label: t("Stats.satisfaction") },
-            ].map((stat, index) => (
+            {statistics.map((stat, index) => (
               <motion.div
-                key={index}
+                key={stat.id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
                 viewport={{ once: true }}
               >
                 <div className="font-serif text-5xl text-green-vibrant mb-2">
-                  {stat.number}
+                  {stat.value}
                 </div>
                 <div className="text-sm tracking-wider text-gray-light uppercase">
                   {stat.label}
@@ -204,25 +272,9 @@ export default function Home() {
             </motion.div>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                title: t("Services.palace.title"),
-                description: t("Services.palace.description"),
-                features: t.raw("Services.palace.features") as string[],
-              },
-              {
-                title: t("Services.villa.title"),
-                description: t("Services.villa.description"),
-                features: t.raw("Services.villa.features") as string[],
-              },
-              {
-                title: t("Services.estate.title"),
-                description: t("Services.estate.description"),
-                features: t.raw("Services.estate.features") as string[],
-              },
-            ].map((service, index) => (
+            {services.map((service, index) => (
               <motion.div
-                key={index}
+                key={service.id}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.15 }}
