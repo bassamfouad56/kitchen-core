@@ -40,7 +40,7 @@ export default async function GalleryPage() {
               <div className="aspect-video relative bg-black">
                 <Image
                   src={img.image}
-                  alt={img.title}
+                  alt={img.title || 'Gallery image'}
                   fill
                   className="object-cover"
                 />

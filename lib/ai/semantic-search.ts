@@ -143,7 +143,7 @@ export async function indexAllProjects() {
       await indexContent(
         'project',
         project.id,
-        project.title,
+        project.title || 'Untitled Project',
         content,
         {
           slug: project.slug,
@@ -178,7 +178,7 @@ export async function indexAllServices() {
       await indexContent(
         'service',
         service.id,
-        service.title,
+        service.title || 'Untitled Service',
         content,
         {
           title: service.title
@@ -210,7 +210,7 @@ export async function indexAllGalleryImages() {
       await indexContent(
         'gallery',
         image.id,
-        image.title,
+        image.title || 'Untitled Image',
         content,
         {
           category: image.category,

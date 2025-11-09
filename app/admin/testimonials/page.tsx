@@ -42,7 +42,7 @@ export default async function TestimonialsPage() {
                   <div className="w-16 h-16 relative rounded-full overflow-hidden bg-gray-dark">
                     <Image
                       src={testimonial.image}
-                      alt={testimonial.name}
+                      alt={testimonial.name || 'Client testimonial'}
                       fill
                       className="object-cover"
                     />
