@@ -1,11 +1,24 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocale } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
 
-const testimonials = [
+interface Testimonial {
+  id: string;
+  name: string;
+  title: string;
+  location: string;
+  image: string;
+  quote: string;
+  rating: number;
+  project: string;
+}
+
+// Fallback data in case CMS fetch fails
+const fallbackTestimonials: Testimonial[] = [
   {
-    id: 1,
+    id: "1",
     name: "Sheikh Mohammed Al-Rashid",
     title: "Private Palace Owner",
     location: "Dubai, UAE",
@@ -15,7 +28,7 @@ const testimonials = [
     project: "Royal Palace Kitchen, Dubai",
   },
   {
-    id: 2,
+    id: "2",
     name: "Isabella Rossi",
     title: "Villa Owner",
     location: "Monaco",
@@ -24,30 +37,35 @@ const testimonials = [
     rating: 5,
     project: "Mediterranean Villa Kitchen",
   },
-  {
-    id: 3,
-    name: "Alexander Chen",
-    title: "Private Estate Owner",
-    location: "London, UK",
-    image: "/9.jpg",
-    quote: "From concept to completion, Kitchen Core delivered exceptional service. Our estate kitchen now features the finest European appliances and custom cabinetry. It's a perfect blend of tradition and innovation.",
-    rating: 5,
-    project: "Contemporary Estate Kitchen",
-  },
-  {
-    id: 4,
-    name: "Fatima Al-Saud",
-    title: "Heritage Palace",
-    location: "Riyadh, Saudi Arabia",
-    image: "/10.jpg",
-    quote: "Kitchen Core respected our heritage while bringing modern culinary excellence to our palace. The team's professionalism and expertise in luxury fit-out is remarkable. Highly recommended for discerning clients.",
-    rating: 5,
-    project: "Heritage Palace Renovation",
-  },
 ];
 
 export default function Testimonials() {
+  const locale = useLocale();
+  const [testimonials, setTestimonials] = useState<Testimonial[]>(fallbackTestimonials);
+  const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  // Fetch testimonials from CMS
+  useEffect(() => {
+    async function fetchTestimonials() {
+      try {
+        setLoading(true);
+        const response = await fetch(`/api/cms/homepage?locale=${locale}`);
+        if (response.ok) {
+          const data = await response.json();
+          if (data.testimonials && data.testimonials.length > 0) {
+            setTestimonials(data.testimonials);
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching testimonials from CMS:', error);
+        // Keep fallback data on error
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchTestimonials();
+  }, [locale]);
 
   const nextTestimonial = () => {
     setCurrentIndex((prev) => (prev + 1) % testimonials.length);
