@@ -60,7 +60,8 @@
       "Bash(pnpm build:*)",
       "Bash(pnpm db:update-social:*)",
       "Bash(git reset:*)",
-      "Bash(git config:*)"
+      "Bash(git config:*)",
+      "Bash(pnpm db:migrate-bilingual:*)"
     ],
     "deny": [],
     "ask": []
