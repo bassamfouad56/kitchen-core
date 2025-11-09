@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocale } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface Project {
-  id: number;
+  id: string;
   title: string;
   location: string;
   category: string;
@@ -13,157 +14,87 @@ interface Project {
   year: string;
   area: string;
   budget: string;
-  specs: {
-    materials: string[];
-    appliances: string[];
-    features: string[];
-  };
-  technical: {
-    duration: string;
-    challenges: string;
-    innovations: string[];
-  };
+  materials: string[];
+  appliances: string[];
+  features: string[];
+  duration: string;
+  challenges: string;
+  innovations: string[];
 }
 
-const portfolioProjects: Project[] = [
+// Fallback data in case CMS fetch fails
+const fallbackProjects: Project[] = [
   {
-    id: 1,
+    id: "1",
     title: "Royal Palace Kitchen",
     location: "Dubai, UAE",
-    category: "Palace",
+    category: "PALACE",
     image: "/2.jpg",
     description: "Bespoke culinary masterpiece featuring Italian marble and smart technology",
     year: "2024",
     area: "850 sq ft",
     budget: "$500K - $1M",
-    specs: {
-      materials: ["Calacatta Gold Marble", "American Walnut Cabinetry", "Brass Hardware"],
-      appliances: ["Sub-Zero PRO 48", "Wolf Dual Fuel Range", "Miele Steam Oven"],
-      features: ["Smart Home Integration", "Custom Wine Cellar", "Butler's Pantry"],
-    },
-    technical: {
-      duration: "24 weeks",
-      challenges: "Integrated HVAC system for 15-foot ceilings while maintaining aesthetic purity",
-      innovations: ["Custom marble extraction", "Hidden appliance panels", "Voice-activated lighting"],
-    },
+    materials: ["Calacatta Gold Marble", "American Walnut Cabinetry", "Brass Hardware"],
+    appliances: ["Sub-Zero PRO 48", "Wolf Dual Fuel Range", "Miele Steam Oven"],
+    features: ["Smart Home Integration", "Custom Wine Cellar", "Butler's Pantry"],
+    duration: "24 weeks",
+    challenges: "Integrated HVAC system for 15-foot ceilings while maintaining aesthetic purity",
+    innovations: ["Custom marble extraction", "Hidden appliance panels", "Voice-activated lighting"],
   },
   {
-    id: 2,
+    id: "2",
     title: "Mediterranean Villa",
     location: "Monaco",
-    category: "Villa",
+    category: "VILLA",
     image: "/3.jpg",
     description: "Contemporary elegance with panoramic sea views",
     year: "2024",
     area: "600 sq ft",
     budget: "$300K - $500K",
-    specs: {
-      materials: ["Thassos White Marble", "European Oak", "Polished Chrome"],
-      appliances: ["Gaggenau Vario 400", "Miele Pureline", "Sub-Zero Integrated"],
-      features: ["Outdoor Kitchen Extension", "Ocean-View Island", "Professional Ventilation"],
-    },
-    technical: {
-      duration: "18 weeks",
-      challenges: "Weather-resistant outdoor integration with climate control systems",
-      innovations: ["Retractable glass walls", "Marine-grade materials", "Smart climate zones"],
-    },
-  },
-  {
-    id: 3,
-    title: "Modern Estate Kitchen",
-    location: "London, UK",
-    category: "Estate",
-    image: "/4.jpg",
-    description: "Minimalist sophistication meets functional luxury",
-    year: "2023",
-    area: "750 sq ft",
-    budget: "$400K - $700K",
-    specs: {
-      materials: ["Nero Marquina Marble", "Smoked Oak", "Stainless Steel"],
-      appliances: ["Bora Pure Induction", "Wolf M Series", "Gaggenau 400 Series"],
-      features: ["Multi-Zone Cooking", "Professional Prep Area", "Walk-in Pantry"],
-    },
-    technical: {
-      duration: "22 weeks",
-      challenges: "Integrated downdraft ventilation system in island without compromising design",
-      innovations: ["Hidden extraction", "Motorized storage", "App-controlled appliances"],
-    },
-  },
-  {
-    id: 4,
-    title: "Heritage Palace",
-    location: "Riyadh, Saudi Arabia",
-    category: "Palace",
-    image: "/5.jpg",
-    description: "Classical grandeur reimagined for modern culinary excellence",
-    year: "2023",
-    area: "1200 sq ft",
-    budget: "$1M+",
-    specs: {
-      materials: ["Carrara Marble", "Hand-carved Mahogany", "24K Gold Leaf Accents"],
-      appliances: ["La Cornue Château", "Sub-Zero PRO Series", "Miele Grand Gourmet"],
-      features: ["Dual Islands", "Spice Kitchen", "Traditional Bread Oven Integration"],
-    },
-    technical: {
-      duration: "32 weeks",
-      challenges: "Preserving heritage architectural details while modernizing infrastructure",
-      innovations: ["Heritage-compliant HVAC", "Concealed modern systems", "Traditional finishes with smart tech"],
-    },
-  },
-  {
-    id: 5,
-    title: "Penthouse Kitchen",
-    location: "New York, USA",
-    category: "Penthouse",
-    image: "/6.jpg",
-    description: "Urban luxury with handcrafted Italian cabinetry",
-    year: "2024",
-    area: "450 sq ft",
-    budget: "$250K - $400K",
-    specs: {
-      materials: ["Statuario Marble", "Lacquered Italian Cabinetry", "Polished Nickel"],
-      appliances: ["Miele ArtLine", "Wolf Gourmet", "Sub-Zero Designer Series"],
-      features: ["City Views", "Compact Luxury", "Integrated Bar Station"],
-    },
-    technical: {
-      duration: "16 weeks",
-      challenges: "Maximizing functionality in limited square footage with luxury finishes",
-      innovations: ["Space-saving solutions", "Vertical storage systems", "Sliding mechanisms"],
-    },
-  },
-  {
-    id: 6,
-    title: "Coastal Villa",
-    location: "Malibu, USA",
-    category: "Villa",
-    image: "/7.jpg",
-    description: "Seamless indoor-outdoor entertaining kitchen",
-    year: "2023",
-    area: "700 sq ft",
-    budget: "$350K - $600K",
-    specs: {
-      materials: ["Caesarstone Coastal Grey", "Teak Wood", "Marine Bronze"],
-      appliances: ["Lynx Professional", "Wolf Outdoor", "Sub-Zero Outdoor Refrigeration"],
-      features: ["Beach Access", "Al Fresco Dining", "Weather-Resistant Systems"],
-    },
-    technical: {
-      duration: "20 weeks",
-      challenges: "Salt-air corrosion protection and extreme weather resilience",
-      innovations: ["Corrosion-resistant materials", "Automated weather shutters", "Salt-air rated systems"],
-    },
+    materials: ["Thassos White Marble", "European Oak", "Polished Chrome"],
+    appliances: ["Gaggenau Vario 400", "Miele Pureline", "Sub-Zero Integrated"],
+    features: ["Outdoor Kitchen Extension", "Ocean-View Island", "Professional Ventilation"],
+    duration: "18 weeks",
+    challenges: "Weather-resistant outdoor integration with climate control systems",
+    innovations: ["Retractable glass walls", "Marine-grade materials", "Smart climate zones"],
   },
 ];
 
-const categories = ["All", "Palace", "Villa", "Estate", "Penthouse"];
+const categories = ["All", "PALACE", "VILLA", "ESTATE", "PENTHOUSE"];
 
 export default function EnhancedPortfolio() {
+  const locale = useLocale();
+  const [projects, setProjects] = useState<Project[]>(fallbackProjects);
+  const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
+  // Fetch projects from CMS
+  useEffect(() => {
+    async function fetchProjects() {
+      try {
+        setLoading(true);
+        const response = await fetch(`/api/cms/homepage?locale=${locale}`);
+        if (response.ok) {
+          const data = await response.json();
+          if (data.projects && data.projects.length > 0) {
+            setProjects(data.projects);
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching projects from CMS:', error);
+        // Keep fallback data on error
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchProjects();
+  }, [locale]);
+
   const filteredProjects =
     selectedCategory === "All"
-      ? portfolioProjects
-      : portfolioProjects.filter((p) => p.category === selectedCategory);
+      ? projects
+      : projects.filter((p) => p.category === selectedCategory);
 
   return (
     <section id="portfolio" className="py-32 bg-black">
@@ -345,7 +276,7 @@ export default function EnhancedPortfolio() {
                       </div>
                       <div className="bg-background-elevated border border-gray-dark p-6">
                         <div className="text-green-vibrant text-sm tracking-wider mb-2">COMPLETION TIME</div>
-                        <div className="text-white text-2xl font-serif">{selectedProject.technical.duration}</div>
+                        <div className="text-white text-2xl font-serif">{selectedProject.duration}</div>
                       </div>
                     </div>
 
@@ -357,7 +288,7 @@ export default function EnhancedPortfolio() {
                         <div>
                           <h4 className="text-green-vibrant text-sm tracking-wider mb-4">MATERIALS</h4>
                           <ul className="space-y-2">
-                            {selectedProject.specs.materials.map((material, i) => (
+                            {selectedProject.materials.map((material, i) => (
                               <li key={i} className="flex items-start gap-3 text-gray-light">
                                 <span className="w-1.5 h-1.5 bg-green-vibrant mt-2 flex-shrink-0" />
                                 <span>{material}</span>
@@ -370,7 +301,7 @@ export default function EnhancedPortfolio() {
                         <div>
                           <h4 className="text-green-vibrant text-sm tracking-wider mb-4">APPLIANCES</h4>
                           <ul className="space-y-2">
-                            {selectedProject.specs.appliances.map((appliance, i) => (
+                            {selectedProject.appliances.map((appliance, i) => (
                               <li key={i} className="flex items-start gap-3 text-gray-light">
                                 <span className="w-1.5 h-1.5 bg-green-vibrant mt-2 flex-shrink-0" />
                                 <span>{appliance}</span>
@@ -383,7 +314,7 @@ export default function EnhancedPortfolio() {
                         <div>
                           <h4 className="text-green-vibrant text-sm tracking-wider mb-4">KEY FEATURES</h4>
                           <ul className="space-y-2">
-                            {selectedProject.specs.features.map((feature, i) => (
+                            {selectedProject.features.map((feature, i) => (
                               <li key={i} className="flex items-start gap-3 text-gray-light">
                                 <span className="w-1.5 h-1.5 bg-green-vibrant mt-2 flex-shrink-0" />
                                 <span>{feature}</span>
@@ -396,7 +327,7 @@ export default function EnhancedPortfolio() {
                         <div>
                           <h4 className="text-green-vibrant text-sm tracking-wider mb-4">INNOVATIONS</h4>
                           <ul className="space-y-2">
-                            {selectedProject.technical.innovations.map((innovation, i) => (
+                            {selectedProject.innovations.map((innovation, i) => (
                               <li key={i} className="flex items-start gap-3 text-gray-light">
                                 <span className="w-1.5 h-1.5 bg-green-vibrant mt-2 flex-shrink-0" />
                                 <span>{innovation}</span>
@@ -410,7 +341,7 @@ export default function EnhancedPortfolio() {
                     {/* Engineering Challenge */}
                     <div className="bg-background-elevated border border-gray-dark p-8">
                       <h4 className="text-green-vibrant text-sm tracking-wider mb-4">ENGINEERING CHALLENGE</h4>
-                      <p className="text-gray-light leading-relaxed">{selectedProject.technical.challenges}</p>
+                      <p className="text-gray-light leading-relaxed">{selectedProject.challenges}</p>
                     </div>
                   </div>
                 </motion.div>
