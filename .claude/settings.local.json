@@ -62,7 +62,8 @@
       "Bash(git reset:*)",
       "Bash(git config:*)",
       "Bash(pnpm db:migrate-bilingual:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(python:*)"
     ],
     "deny": [],
     "ask": []

@@ -9,8 +9,6 @@ const nextConfig: NextConfig = {
 
   // Experimental features
   experimental: {
-    // Enable Turbopack (already using via CLI flag)
-    turbo: {},
     // Server actions
     serverActions: {
       bodySizeLimit: '2mb',

@@ -17,21 +17,25 @@ interface GalleryImage {
   published: boolean
 }
 
-export default function EditGalleryImagePage({ params }: { params: { id: string } }) {
+export default function EditGalleryImagePage({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter()
   const [image, setImage] = useState<GalleryImage | null>(null)
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
   const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [imageId, setImageId] = useState<string | null>(null)
 
   useEffect(() => {
-    fetchImage()
-  }, [params.id])
+    params.then(p => {
+      setImageId(p.id)
+      fetchImage(p.id)
+    })
+  }, [])
 
-  const fetchImage = async () => {
+  const fetchImage = async (id: string) => {
     try {
-      const res = await fetch(`/api/gallery/${params.id}`)
+      const res = await fetch(`/api/gallery/${id}`)
       if (!res.ok) throw new Error('Failed to fetch image')
       const data = await res.json()
       setImage(data)
@@ -44,13 +48,13 @@ export default function EditGalleryImagePage({ params }: { params: { id: string 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!image) return
+    if (!image || !imageId) return
 
     setSaving(true)
     setError('')
 
     try {
-      const res = await fetch(`/api/gallery/${params.id}`, {
+      const res = await fetch(`/api/gallery/${imageId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(image),
@@ -68,8 +72,10 @@ export default function EditGalleryImagePage({ params }: { params: { id: string 
   }
 
   const handleDelete = async () => {
+    if (!imageId) return
+
     try {
-      const res = await fetch(`/api/gallery/${params.id}`, {
+      const res = await fetch(`/api/gallery/${imageId}`, {
         method: 'DELETE',
       })
 

@@ -56,12 +56,11 @@ async function getRelatedPosts(category: string, currentSlug: string) {
 }
 
 // Generate metadata for SEO
-export async function generateMetadata({
-  params,
-}: {
+export async function generateMetadata(props: {
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
-  const { locale, slug } = await params;
+  const params = await props.params;
+  const { locale, slug } = params;
   const post = await getBlogPost(slug);
 
   if (!post) {
@@ -106,12 +105,11 @@ export async function generateMetadata({
   };
 }
 
-export default async function BlogPostPage({
-  params,
-}: {
+export default async function BlogPostPage(props: {
   params: Promise<{ locale: string; slug: string }>;
 }) {
-  const { locale, slug } = await params;
+  const params = await props.params;
+  const { locale, slug } = params;
   const post = await getBlogPost(slug);
 
   if (!post) {

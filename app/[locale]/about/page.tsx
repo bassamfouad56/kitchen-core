@@ -51,11 +51,11 @@ async function getAboutData(): Promise<AboutPageData> {
 }
 
 // Generate metadata for SEO
-export async function generateMetadata({
-  params: { locale },
-}: {
-  params: { locale: string };
+export async function generateMetadata(props: {
+  params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
+  const params = await props.params;
+  const { locale } = params;
   const t = await getTranslations({ locale });
   const data = await getAboutData();
 
@@ -108,11 +108,11 @@ export async function generateMetadata({
   };
 }
 
-export default async function AboutPage({
-  params: { locale },
-}: {
-  params: { locale: string };
+export default async function AboutPage(props: {
+  params: Promise<{ locale: string }>;
 }) {
+  const params = await props.params;
+  const { locale } = params;
   const t = await getTranslations();
   const data = await getAboutData();
 

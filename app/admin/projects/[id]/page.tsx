@@ -27,21 +27,25 @@ interface Project {
   order: number
 }
 
-export default function EditProjectPage({ params }: { params: { id: string } }) {
+export default function EditProjectPage({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter()
   const [project, setProject] = useState<Project | null>(null)
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
   const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [projectId, setProjectId] = useState<string | null>(null)
 
   useEffect(() => {
-    fetchProject()
-  }, [params.id])
+    params.then(p => {
+      setProjectId(p.id)
+      fetchProject(p.id)
+    })
+  }, [])
 
-  const fetchProject = async () => {
+  const fetchProject = async (id: string) => {
     try {
-      const res = await fetch(`/api/projects/${params.id}`)
+      const res = await fetch(`/api/projects/${id}`)
       if (!res.ok) throw new Error('Failed to fetch project')
       const data = await res.json()
       setProject(data)
@@ -54,13 +58,13 @@ export default function EditProjectPage({ params }: { params: { id: string } }) 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!project) return
+    if (!project || !projectId) return
 
     setSaving(true)
     setError('')
 
     try {
-      const res = await fetch(`/api/projects/${params.id}`, {
+      const res = await fetch(`/api/projects/${projectId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(project),
@@ -78,8 +82,10 @@ export default function EditProjectPage({ params }: { params: { id: string } }) 
   }
 
   const handleDelete = async () => {
+    if (!projectId) return
+
     try {
-      const res = await fetch(`/api/projects/${params.id}`, {
+      const res = await fetch(`/api/projects/${projectId}`, {
         method: 'DELETE',
       })
 

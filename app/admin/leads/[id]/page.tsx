@@ -58,13 +58,14 @@ interface LeadFormData {
   tags: string[];
 }
 
-export default function LeadDetailPage({ params }: { params: { id: string } }) {
+export default function LeadDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter();
   const [lead, setLead] = useState<Lead | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [isEditing, setIsEditing] = useState(false);
+  const [leadId, setLeadId] = useState<string | null>(null);
 
   const [formData, setFormData] = useState<LeadFormData>({
     firstName: "",
@@ -89,12 +90,15 @@ export default function LeadDetailPage({ params }: { params: { id: string } }) {
   });
 
   useEffect(() => {
-    fetchLead();
-  }, [params.id]);
+    params.then(p => {
+      setLeadId(p.id)
+      fetchLead(p.id)
+    })
+  }, []);
 
-  const fetchLead = async () => {
+  const fetchLead = async (id: string) => {
     try {
-      const res = await fetch(`/api/leads/${params.id}`);
+      const res = await fetch(`/api/leads/${id}`);
       if (!res.ok) throw new Error("Failed to fetch lead");
 
       const leadData = await res.json();
@@ -135,11 +139,13 @@ export default function LeadDetailPage({ params }: { params: { id: string } }) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!leadId) return;
+
     setSaving(true);
     setError("");
 
     try {
-      const res = await fetch(`/api/leads/${params.id}`, {
+      const res = await fetch(`/api/leads/${leadId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -147,7 +153,7 @@ export default function LeadDetailPage({ params }: { params: { id: string } }) {
 
       if (!res.ok) throw new Error("Failed to update lead");
 
-      await fetchLead();
+      await fetchLead(leadId);
       setIsEditing(false);
     } catch (err) {
       setError("Failed to update lead. Please try again.");

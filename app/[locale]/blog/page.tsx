@@ -33,12 +33,11 @@ async function getBlogPosts() {
 }
 
 // Generate metadata for SEO
-export async function generateMetadata({
-  params,
-}: {
+export async function generateMetadata(props: {
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
-  const { locale } = await params;
+  const params = await props.params;
+  const { locale } = params;
   const t = await getTranslations({ locale });
   const isArabic = locale === "ar";
 
@@ -76,12 +75,11 @@ export async function generateMetadata({
   };
 }
 
-export default async function BlogPage({
-  params,
-}: {
+export default async function BlogPage(props: {
   params: Promise<{ locale: string }>;
 }) {
-  const { locale } = await params;
+  const params = await props.params;
+  const { locale } = params;
   const posts = await getBlogPosts();
 
   return (
