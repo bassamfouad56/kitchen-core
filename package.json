@@ -9,7 +9,7 @@
     "lint": "eslint",
     "type-check": "tsc --noEmit",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
-    "db:seed": "tsx prisma/seed.ts",
+    "db:seed": "tsx prisma/seed-complete.ts",
     "db:studio": "prisma studio",
     "db:push": "prisma db push",
     "db:migrate": "prisma migrate dev",
@@ -35,7 +35,7 @@
     "prepare": "husky"
   },
   "prisma": {
-    "seed": "tsx prisma/seed.ts"
+    "seed": "tsx prisma/seed-complete.ts"
   },
   "dependencies": {
     "@ai-sdk/openai": "^2.0.52",

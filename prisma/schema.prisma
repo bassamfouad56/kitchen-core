@@ -72,10 +72,10 @@ model Project {
 }
 
 enum ProjectCategory {
-  PALACE
-  VILLA
-  ESTATE
-  PENTHOUSE
+  MODERN_WOODEN
+  CLASSIC_WOODEN
+  ALUMINUM
+  BEDROOMS
 }
 
 // Gallery Images
