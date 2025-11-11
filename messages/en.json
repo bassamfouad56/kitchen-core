@@ -30,15 +30,15 @@
   },
   "GalleryNass0": {
     "badge": "Elegant & Durable Design",
-    "title": "European",
-    "titleHighlight": "Craftsmanship",
-    "description": "A design that combines elegance and durability with MDF panels finished with PVC coating for a modern, easy-to-clean look, and Greek Alpha Wood columns that add a touch of European luxury and quality. Your optimal choice for practical beauty in every detail.",
+    "title": "Distinguished",
+    "titleHighlight": "Design",
+    "description": "A design that combines elegance and durability with MDF panels finished with PVC coating for a modern, easy-to-clean look, and premium wood columns that add a touch of sophistication and high quality. Your optimal choice for practical beauty in every detail.",
     "viewDetails": "View Details",
     "features": {
       "mdf": "MDF Panels",
       "mdfDesc": "PVC-Finished",
-      "wood": "Greek Alpha Wood",
-      "woodDesc": "European Quality",
+      "wood": "Premium Wood",
+      "woodDesc": "High Quality",
       "maintenance": "Easy Maintenance",
       "maintenanceDesc": "Modern Design"
     }
@@ -47,34 +47,34 @@
     "badge": "Modern Prep Kitchen",
     "title": "Aluminum",
     "titleHighlight": "Precision",
-    "description": "Modern prep kitchen with an aluminum internal structure for lasting durability, and double-sheet aluminum doors with Salko MDF wood touch for natural elegance. Indian first-grade beige quartz countertop adds luxury and sophistication.",
+    "description": "Modern prep kitchen with an aluminum internal structure for lasting durability, and double-sheet aluminum doors with MDF wood touch for natural elegance. First-grade beige quartz countertop adds luxury and sophistication.",
     "specs": {
       "structure": "Aluminum Structure",
       "structureDesc": "Long-lasting Durability",
       "doors": "Double-Sheet Doors",
       "doorsDesc": "Premium Finish",
-      "wood": "Salko MDF Wood",
+      "wood": "MDF Wood",
       "woodDesc": "Natural Elegance",
       "quartz": "First-Grade Quartz",
-      "quartzDesc": "Indian Beige"
+      "quartzDesc": "Luxury Beige"
     }
   },
   "GalleryNass2": {
     "badge": "Luxurious Main Kitchen",
-    "title": "European",
+    "title": "Design",
     "titleHighlight": "Excellence",
-    "description": "Luxurious main kitchen featuring internal aluminum structure, doors with PVC-finished MDF and Salko wood mix, elegant nano white quartz surface, and equipped with latest European appliances and accessories.",
+    "description": "Luxurious main kitchen featuring internal aluminum structure, doors with PVC-finished MDF and natural wood mix, elegant nano white quartz surface, and equipped with latest premium appliances and accessories.",
     "features": [
       "Internal Aluminum Structure",
       "PVC-Finished MDF Doors",
       "Nano White Quartz Surface",
-      "European Appliances & Accessories"
+      "Premium Appliances & Accessories"
     ],
     "philosophy": {
       "title": "Design That Combines",
       "titleHighlight": "Luxury",
       "titleEnd": "with Practical Daily Use",
-      "description": "Every element is carefully selected to provide not just aesthetic beauty, but functional excellence that enhances your daily cooking experience. From the durable aluminum structure to the premium European accessories, this kitchen is built to last while maintaining its elegance."
+      "description": "Every element is carefully selected to provide not just aesthetic beauty, but functional excellence that enhances your daily cooking experience. From the durable aluminum structure to the premium accessories, this kitchen is built to last while maintaining its elegance."
     }
   },
   "GalleryNass3": {
