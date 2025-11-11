@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface Project {
@@ -12,8 +12,6 @@ interface Project {
   image: string;
   description: string;
   year: string;
-  area: string;
-  budget: string;
   materials: string[];
   appliances: string[];
   features: string[];
@@ -26,47 +24,44 @@ interface Project {
 const fallbackProjects: Project[] = [
   {
     id: "1",
-    title: "Royal Palace Kitchen",
+    title: "Contemporary Kitchen Design",
     location: "Dubai, UAE",
-    category: "PALACE",
+    category: "modernWooden",
     image: "/2.jpg",
-    description: "Bespoke culinary masterpiece featuring Italian marble and smart technology",
+    description: "Modern kitchen with precise design and smart details",
     year: "2024",
-    area: "850 sq ft",
-    budget: "$500K - $1M",
-    materials: ["Calacatta Gold Marble", "American Walnut Cabinetry", "Brass Hardware"],
-    appliances: ["Sub-Zero PRO 48", "Wolf Dual Fuel Range", "Miele Steam Oven"],
-    features: ["Smart Home Integration", "Custom Wine Cellar", "Butler's Pantry"],
-    duration: "24 weeks",
-    challenges: "Integrated HVAC system for 15-foot ceilings while maintaining aesthetic purity",
-    innovations: ["Custom marble extraction", "Hidden appliance panels", "Voice-activated lighting"],
+    materials: ["European Oak", "Quartz Countertops", "Brass Hardware"],
+    appliances: ["Sub-Zero", "Wolf Range", "Miele Dishwasher"],
+    features: ["Smart Home Integration", "Custom Lighting", "Island Design"],
+    duration: "20 weeks",
+    challenges: "Integrated modern technology while maintaining clean aesthetic",
+    innovations: ["Hidden storage", "Smart lighting", "Custom cabinetry"],
   },
   {
     id: "2",
-    title: "Mediterranean Villa",
-    location: "Monaco",
-    category: "VILLA",
+    title: "Traditional Wooden Kitchen",
+    location: "Riyadh, KSA",
+    category: "classicWooden",
     image: "/3.jpg",
-    description: "Contemporary elegance with panoramic sea views",
+    description: "Timeless elegance with luxurious details",
     year: "2024",
-    area: "600 sq ft",
-    budget: "$300K - $500K",
-    materials: ["Thassos White Marble", "European Oak", "Polished Chrome"],
-    appliances: ["Gaggenau Vario 400", "Miele Pureline", "Sub-Zero Integrated"],
-    features: ["Outdoor Kitchen Extension", "Ocean-View Island", "Professional Ventilation"],
+    materials: ["American Walnut", "Marble Countertops", "Antique Brass"],
+    appliances: ["Gaggenau", "Miele", "Sub-Zero"],
+    features: ["Butler's Pantry", "Wine Storage", "Professional Ventilation"],
     duration: "18 weeks",
-    challenges: "Weather-resistant outdoor integration with climate control systems",
-    innovations: ["Retractable glass walls", "Marine-grade materials", "Smart climate zones"],
+    challenges: "Preserving traditional aesthetics with modern functionality",
+    innovations: ["Custom millwork", "Integrated appliances", "Hidden pantry"],
   },
 ];
 
-const categories = ["All", "PALACE", "VILLA", "ESTATE", "PENTHOUSE"];
+const categoryKeys = ["all", "modernWooden", "classicWooden", "aluminum", "bedrooms"];
 
 export default function EnhancedPortfolio() {
   const locale = useLocale();
+  const t = useTranslations("ProjectCategories");
   const [projects, setProjects] = useState<Project[]>(fallbackProjects);
   const [loading, setLoading] = useState(true);
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   // Fetch projects from CMS
@@ -92,7 +87,7 @@ export default function EnhancedPortfolio() {
   }, [locale]);
 
   const filteredProjects =
-    selectedCategory === "All"
+    selectedCategory === "all"
       ? projects
       : projects.filter((p) => p.category === selectedCategory);
 
@@ -118,21 +113,36 @@ export default function EnhancedPortfolio() {
           </motion.div>
         </div>
 
-        {/* Category Filter */}
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
-          {categories.map((category) => (
-            <button
-              key={category}
-              onClick={() => setSelectedCategory(category)}
-              className={`px-6 py-2.5 text-sm tracking-wider font-medium border transition-all duration-300 ${
-                selectedCategory === category
-                  ? "bg-green-primary text-black border-green-primary"
-                  : "bg-transparent text-gray-light border-gray-dark hover:border-green-primary hover:text-green-primary"
-              }`}
+        {/* Category Filter with Slogans */}
+        <div className="flex flex-col gap-8 mb-16">
+          <div className="flex flex-wrap justify-center gap-4">
+            {categoryKeys.map((category) => (
+              <button
+                key={category}
+                onClick={() => setSelectedCategory(category)}
+                className={`px-6 py-2.5 text-sm tracking-wider font-medium border transition-all duration-300 ${
+                  selectedCategory === category
+                    ? "bg-green-primary text-black border-green-primary"
+                    : "bg-transparent text-gray-light border-gray-dark hover:border-green-primary hover:text-green-primary"
+                }`}
+              >
+                {t(`${category}.title`) || t(category)}
+              </button>
+            ))}
+          </div>
+
+          {/* Category Slogan */}
+          {selectedCategory !== "all" && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-center max-w-3xl mx-auto"
             >
-              {category}
-            </button>
-          ))}
+              <p className="text-gray-light text-lg font-light leading-relaxed italic">
+                {t(`${selectedCategory}.slogan`)}
+              </p>
+            </motion.div>
+          )}
         </div>
 
         {/* Projects Grid */}
@@ -161,7 +171,7 @@ export default function EnhancedPortfolio() {
 
                     {/* Category Badge */}
                     <div className="absolute top-4 left-4 bg-green-primary/90 text-black px-3 py-1 text-xs tracking-wider font-medium">
-                      {project.category.toUpperCase()}
+                      {t(`${project.category}.title`)}
                     </div>
 
                     {/* Year Badge */}
@@ -184,21 +194,9 @@ export default function EnhancedPortfolio() {
                     </p>
                     <p className="text-gray-light text-sm mb-4 flex-1">{project.description}</p>
 
-                    {/* Key Specs */}
-                    <div className="grid grid-cols-2 gap-4 pt-4 border-t border-gray-dark">
-                      <div>
-                        <div className="text-green-vibrant text-xs tracking-wider mb-1">AREA</div>
-                        <div className="text-white text-sm">{project.area}</div>
-                      </div>
-                      <div>
-                        <div className="text-green-vibrant text-xs tracking-wider mb-1">BUDGET</div>
-                        <div className="text-white text-sm">{project.budget}</div>
-                      </div>
-                    </div>
-
                     {/* View Details CTA */}
                     <button className="mt-4 w-full py-2.5 border border-green-primary/50 text-green-primary text-xs tracking-wider font-medium group-hover:bg-green-primary group-hover:text-black transition-all duration-300">
-                      VIEW TECHNICAL DETAILS
+                      VIEW DETAILS
                     </button>
                   </div>
                 </div>
@@ -249,31 +247,26 @@ export default function EnhancedPortfolio() {
                     <div className="mb-8">
                       <div className="flex items-center gap-4 mb-4">
                         <span className="bg-green-primary text-black px-4 py-1 text-sm tracking-wider font-medium">
-                          {selectedProject.category.toUpperCase()}
+                          {t(`${selectedProject.category}.title`)}
                         </span>
                         <span className="text-gray-light">{selectedProject.year}</span>
                       </div>
                       <h2 className="font-serif text-4xl md:text-5xl text-white mb-4">
                         {selectedProject.title}
                       </h2>
-                      <p className="text-lg text-gray-light flex items-center gap-2">
+                      <p className="text-lg text-gray-light flex items-center gap-2 mb-4">
                         <svg className="w-5 h-5 text-green-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                         </svg>
                         {selectedProject.location}
                       </p>
+                      <p className="text-gray-light italic">
+                        {t(`${selectedProject.category}.slogan`)}
+                      </p>
                     </div>
 
                     {/* Project Overview */}
-                    <div className="grid md:grid-cols-3 gap-6 mb-12 pb-12 border-b border-gray-dark">
-                      <div className="bg-background-elevated border border-gray-dark p-6">
-                        <div className="text-green-vibrant text-sm tracking-wider mb-2">TOTAL AREA</div>
-                        <div className="text-white text-2xl font-serif">{selectedProject.area}</div>
-                      </div>
-                      <div className="bg-background-elevated border border-gray-dark p-6">
-                        <div className="text-green-vibrant text-sm tracking-wider mb-2">INVESTMENT</div>
-                        <div className="text-white text-2xl font-serif">{selectedProject.budget}</div>
-                      </div>
+                    <div className="grid md:grid-cols-1 gap-6 mb-12 pb-12 border-b border-gray-dark">
                       <div className="bg-background-elevated border border-gray-dark p-6">
                         <div className="text-green-vibrant text-sm tracking-wider mb-2">COMPLETION TIME</div>
                         <div className="text-white text-2xl font-serif">{selectedProject.duration}</div>

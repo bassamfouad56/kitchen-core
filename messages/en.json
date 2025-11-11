@@ -214,6 +214,25 @@
     "badge": "Premium Partnerships",
     "title": "Trusted by the World's Best Brands"
   },
+  "ProjectCategories": {
+    "all": "All",
+    "modernWooden": {
+      "title": "Modern Wooden Kitchens",
+      "slogan": "Precise design and smart details — elegant simplicity with functionality that fits modern living."
+    },
+    "classicWooden": {
+      "title": "Classic Wooden Kitchens",
+      "slogan": "Timeless elegance — luxurious details that express warmth and sophistication."
+    },
+    "aluminum": {
+      "title": "Aluminum Kitchens",
+      "slogan": "A lasting practical solution — durable designs that deliver beauty without maintenance."
+    },
+    "bedrooms": {
+      "title": "Bedrooms & Wardrobes",
+      "slogan": "Spaces that reflect your style — smart organization giving every piece its place for an easier start every day."
+    }
+  },
   "AboutPage": {
     "hero": {
       "badge": "Our Story",
