@@ -1,23 +1,31 @@
-import { z } from 'zod';
+import { z } from "zod";
 
-export const projectCategorySchema = z.enum(['PALACE', 'VILLA', 'ESTATE', 'PENTHOUSE']);
+export const projectCategorySchema = z.enum([
+  "MODERN_WOODEN",
+  "CLASSIC_WOODEN",
+  "ALUMINUM",
+  "BEDROOMS",
+]);
 
 export const createProjectSchema = z.object({
-  title: z.string().min(1, 'Title is required'),
-  slug: z.string().min(1, 'Slug is required').regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
-  location: z.string().min(1, 'Location is required'),
+  title: z.string().min(1, "Title is required"),
+  slug: z
+    .string()
+    .min(1, "Slug is required")
+    .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
+  location: z.string().min(1, "Location is required"),
   category: projectCategorySchema,
-  image: z.string().url('Invalid image URL'),
+  image: z.string().url("Invalid image URL"),
   gallery: z.array(z.string().url()).default([]),
-  description: z.string().min(1, 'Description is required'),
-  year: z.string().min(1, 'Year is required'),
-  area: z.string().min(1, 'Area is required'),
-  budget: z.string().min(1, 'Budget is required'),
+  description: z.string().min(1, "Description is required"),
+  year: z.string().min(1, "Year is required"),
+  area: z.string().min(1, "Area is required"),
+  budget: z.string().min(1, "Budget is required"),
   materials: z.array(z.string()).default([]),
   appliances: z.array(z.string()).default([]),
   features: z.array(z.string()).default([]),
-  duration: z.string().min(1, 'Duration is required'),
-  challenges: z.string().min(1, 'Challenges are required'),
+  duration: z.string().min(1, "Duration is required"),
+  challenges: z.string().min(1, "Challenges are required"),
   innovations: z.array(z.string()).default([]),
   featured: z.boolean().default(false),
   order: z.number().int().default(0),

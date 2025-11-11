@@ -1,10 +1,10 @@
-import { prisma } from '../prisma';
+import { prisma } from "../prisma";
 
 /**
  * Fetch all CMS data needed for the homepage
  * This function is optimized to reduce database queries using Promise.all
  */
-export async function getHomepageData(locale: string = 'en') {
+export async function getHomepageData(locale: string = "en") {
   try {
     const [
       projects,
@@ -18,7 +18,7 @@ export async function getHomepageData(locale: string = 'en') {
       // Projects - published and ordered
       prisma.project.findMany({
         where: { published: true },
-        orderBy: [{ featured: 'desc' }, { order: 'asc' }],
+        orderBy: [{ featured: "desc" }, { order: "asc" }],
         select: {
           id: true,
           titleEn: true,
@@ -48,7 +48,7 @@ export async function getHomepageData(locale: string = 'en') {
       // Testimonials - published, featured first
       prisma.testimonial.findMany({
         where: { published: true },
-        orderBy: [{ featured: 'desc' }, { order: 'asc' }],
+        orderBy: [{ featured: "desc" }, { order: "asc" }],
         select: {
           id: true,
           nameEn: true,
@@ -68,7 +68,7 @@ export async function getHomepageData(locale: string = 'en') {
       // Services - published and ordered
       prisma.service.findMany({
         where: { published: true },
-        orderBy: { order: 'asc' },
+        orderBy: { order: "asc" },
         select: {
           id: true,
           titleEn: true,
@@ -83,7 +83,7 @@ export async function getHomepageData(locale: string = 'en') {
       // Gallery Images - published and ordered
       prisma.galleryImage.findMany({
         where: { published: true },
-        orderBy: { order: 'asc' },
+        orderBy: { order: "asc" },
         select: {
           id: true,
           titleEn: true,
@@ -101,7 +101,7 @@ export async function getHomepageData(locale: string = 'en') {
       // Process Steps - published and ordered
       prisma.processStep.findMany({
         where: { published: true },
-        orderBy: { order: 'asc' },
+        orderBy: { order: "asc" },
         select: {
           id: true,
           number: true,
@@ -118,7 +118,7 @@ export async function getHomepageData(locale: string = 'en') {
       // Statistics - published and ordered
       prisma.statistic.findMany({
         where: { published: true },
-        orderBy: { order: 'asc' },
+        orderBy: { order: "asc" },
         select: {
           id: true,
           number: true,
@@ -132,7 +132,7 @@ export async function getHomepageData(locale: string = 'en') {
       // Innovations - published and ordered
       prisma.innovation.findMany({
         where: { published: true },
-        orderBy: { order: 'asc' },
+        orderBy: { order: "asc" },
         select: {
           id: true,
           titleEn: true,
@@ -145,48 +145,60 @@ export async function getHomepageData(locale: string = 'en') {
       }),
     ]);
 
+    // Helper function to convert database enum to frontend category key
+    const mapCategoryToKey = (category: string): string => {
+      const mapping: Record<string, string> = {
+        MODERN_WOODEN: "modernWooden",
+        CLASSIC_WOODEN: "classicWooden",
+        ALUMINUM: "aluminum",
+        BEDROOMS: "bedrooms",
+      };
+      return mapping[category] || category.toLowerCase();
+    };
+
     // Map data based on locale (en/ar)
     const localizedProjects = projects.map((p) => ({
       ...p,
-      title: locale === 'ar' ? p.titleAr : p.titleEn,
-      description: locale === 'ar' ? p.descriptionAr : p.descriptionEn,
-      challenges: locale === 'ar' ? p.challengesAr : p.challengesEn,
+      title: locale === "ar" ? p.titleAr : p.titleEn,
+      description: locale === "ar" ? p.descriptionAr : p.descriptionEn,
+      challenges: locale === "ar" ? p.challengesAr : p.challengesEn,
+      category: mapCategoryToKey(p.category),
     }));
 
     const localizedTestimonials = testimonials.map((t) => ({
       ...t,
-      name: locale === 'ar' ? t.nameAr : t.nameEn,
-      title: locale === 'ar' ? t.titleAr : t.titleEn,
-      quote: locale === 'ar' ? t.quoteAr : t.quoteEn,
+      name: locale === "ar" ? t.nameAr : t.nameEn,
+      title: locale === "ar" ? t.titleAr : t.titleEn,
+      quote: locale === "ar" ? t.quoteAr : t.quoteEn,
     }));
 
     const localizedServices = services.map((s) => ({
       ...s,
-      title: locale === 'ar' ? s.titleAr : s.titleEn,
-      description: locale === 'ar' ? s.descriptionAr : s.descriptionEn,
+      title: locale === "ar" ? s.titleAr : s.titleEn,
+      description: locale === "ar" ? s.descriptionAr : s.descriptionEn,
     }));
 
     const localizedGalleryImages = galleryImages.map((g) => ({
       ...g,
-      title: locale === 'ar' ? g.titleAr : g.titleEn,
-      description: locale === 'ar' ? g.descriptionAr : g.descriptionEn,
+      title: locale === "ar" ? g.titleAr : g.titleEn,
+      description: locale === "ar" ? g.descriptionAr : g.descriptionEn,
     }));
 
     const localizedProcessSteps = processSteps.map((p) => ({
       ...p,
-      title: locale === 'ar' ? p.titleAr : p.titleEn,
-      description: locale === 'ar' ? p.descriptionAr : p.descriptionEn,
+      title: locale === "ar" ? p.titleAr : p.titleEn,
+      description: locale === "ar" ? p.descriptionAr : p.descriptionEn,
     }));
 
     const localizedStatistics = statistics.map((s) => ({
       ...s,
-      label: locale === 'ar' ? s.labelAr : s.labelEn,
+      label: locale === "ar" ? s.labelAr : s.labelEn,
     }));
 
     const localizedInnovations = innovations.map((i) => ({
       ...i,
-      title: locale === 'ar' ? i.titleAr : i.titleEn,
-      description: locale === 'ar' ? i.descriptionAr : i.descriptionEn,
+      title: locale === "ar" ? i.titleAr : i.titleEn,
+      description: locale === "ar" ? i.descriptionAr : i.descriptionEn,
     }));
 
     return {
@@ -199,7 +211,7 @@ export async function getHomepageData(locale: string = 'en') {
       innovations: localizedInnovations,
     };
   } catch (error) {
-    console.error('Error fetching homepage data:', error);
+    console.error("Error fetching homepage data:", error);
     // Return empty arrays on error so page doesn't crash
     return {
       projects: [],
@@ -216,14 +228,17 @@ export async function getHomepageData(locale: string = 'en') {
 /**
  * Fetch featured projects only (for homepage hero/showcase)
  */
-export async function getFeaturedProjects(locale: string = 'en', limit: number = 6) {
+export async function getFeaturedProjects(
+  locale: string = "en",
+  limit: number = 6,
+) {
   try {
     const projects = await prisma.project.findMany({
       where: {
         published: true,
         featured: true,
       },
-      orderBy: { order: 'asc' },
+      orderBy: { order: "asc" },
       take: limit,
       select: {
         id: true,
@@ -239,13 +254,24 @@ export async function getFeaturedProjects(locale: string = 'en', limit: number =
       },
     });
 
+    const mapCategoryToKey = (category: string): string => {
+      const mapping: Record<string, string> = {
+        MODERN_WOODEN: "modernWooden",
+        CLASSIC_WOODEN: "classicWooden",
+        ALUMINUM: "aluminum",
+        BEDROOMS: "bedrooms",
+      };
+      return mapping[category] || category.toLowerCase();
+    };
+
     return projects.map((p) => ({
       ...p,
-      title: locale === 'ar' ? p.titleAr : p.titleEn,
-      description: locale === 'ar' ? p.descriptionAr : p.descriptionEn,
+      title: locale === "ar" ? p.titleAr : p.titleEn,
+      description: locale === "ar" ? p.descriptionAr : p.descriptionEn,
+      category: mapCategoryToKey(p.category),
     }));
   } catch (error) {
-    console.error('Error fetching featured projects:', error);
+    console.error("Error fetching featured projects:", error);
     return [];
   }
 }
@@ -253,14 +279,17 @@ export async function getFeaturedProjects(locale: string = 'en', limit: number =
 /**
  * Fetch featured testimonials only (for homepage)
  */
-export async function getFeaturedTestimonials(locale: string = 'en', limit: number = 3) {
+export async function getFeaturedTestimonials(
+  locale: string = "en",
+  limit: number = 3,
+) {
   try {
     const testimonials = await prisma.testimonial.findMany({
       where: {
         published: true,
         featured: true,
       },
-      orderBy: { order: 'asc' },
+      orderBy: { order: "asc" },
       take: limit,
       select: {
         id: true,
@@ -279,12 +308,12 @@ export async function getFeaturedTestimonials(locale: string = 'en', limit: numb
 
     return testimonials.map((t) => ({
       ...t,
-      name: locale === 'ar' ? t.nameAr : t.nameEn,
-      title: locale === 'ar' ? t.titleAr : t.titleEn,
-      quote: locale === 'ar' ? t.quoteAr : t.quoteEn,
+      name: locale === "ar" ? t.nameAr : t.nameEn,
+      title: locale === "ar" ? t.titleAr : t.titleEn,
+      quote: locale === "ar" ? t.quoteAr : t.quoteEn,
     }));
   } catch (error) {
-    console.error('Error fetching featured testimonials:', error);
+    console.error("Error fetching featured testimonials:", error);
     return [];
   }
 }
@@ -293,8 +322,8 @@ export async function getFeaturedTestimonials(locale: string = 'en', limit: numb
  * Fetch homepage statistics by section
  */
 export async function getStatisticsBySection(
-  section: 'HOMEPAGE_TRUST' | 'GALLERY_STATS',
-  locale: string = 'en'
+  section: "HOMEPAGE_TRUST" | "GALLERY_STATS",
+  locale: string = "en",
 ) {
   try {
     const statistics = await prisma.statistic.findMany({
@@ -302,7 +331,7 @@ export async function getStatisticsBySection(
         published: true,
         section,
       },
-      orderBy: { order: 'asc' },
+      orderBy: { order: "asc" },
       select: {
         id: true,
         number: true,
@@ -314,10 +343,10 @@ export async function getStatisticsBySection(
 
     return statistics.map((s) => ({
       ...s,
-      label: locale === 'ar' ? s.labelAr : s.labelEn,
+      label: locale === "ar" ? s.labelAr : s.labelEn,
     }));
   } catch (error) {
-    console.error('Error fetching statistics:', error);
+    console.error("Error fetching statistics:", error);
     return [];
   }
 }

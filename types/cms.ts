@@ -1,13 +1,25 @@
 // CMS-related types
-import { Project, GalleryImage, Testimonial, Service, Video, Innovation, Partnership } from '@prisma/client';
+import {
+  Project,
+  GalleryImage,
+  Testimonial,
+  Service,
+  Video,
+  Innovation,
+  Partnership,
+} from "@prisma/client";
 
 export type ProjectWithRelations = Project & {
-  lead?: any;
-  customer?: any;
+  lead?: { id: string; firstName: string; lastName: string } | null;
+  customer?: { id: string; firstName: string; lastName: string } | null;
 };
 
-export type ProjectCategory = 'PALACE' | 'VILLA' | 'ESTATE' | 'PENTHOUSE';
-export type GallerySize = 'SMALL' | 'MEDIUM' | 'LARGE' | 'WIDE' | 'TALL';
+export type ProjectCategory =
+  | "MODERN_WOODEN"
+  | "CLASSIC_WOODEN"
+  | "ALUMINUM"
+  | "BEDROOMS";
+export type GallerySize = "SMALL" | "MEDIUM" | "LARGE" | "WIDE" | "TALL";
 
 export interface ProjectFormData {
   title: string;
@@ -48,4 +60,12 @@ export interface TestimonialFormData {
   published: boolean;
 }
 
-export type { Project, GalleryImage, Testimonial, Service, Video, Innovation, Partnership };
+export type {
+  Project,
+  GalleryImage,
+  Testimonial,
+  Service,
+  Video,
+  Innovation,
+  Partnership,
+};

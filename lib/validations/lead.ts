@@ -1,45 +1,47 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 export const leadSourceSchema = z.enum([
-  'WEBSITE',
-  'SOCIAL_MEDIA',
-  'REFERRAL',
-  'ADVERTISING',
-  'SHOWROOM',
-  'EVENT',
-  'PHONE',
-  'EMAIL',
-  'OTHER',
+  "WEBSITE",
+  "SOCIAL_MEDIA",
+  "REFERRAL",
+  "ADVERTISING",
+  "SHOWROOM",
+  "EVENT",
+  "PHONE",
+  "EMAIL",
+  "OTHER",
 ]);
 
 export const leadStatusSchema = z.enum([
-  'NEW',
-  'CONTACTED',
-  'QUALIFIED',
-  'PROPOSAL_SENT',
-  'NEGOTIATING',
-  'WON',
-  'LOST',
-  'ON_HOLD',
+  "NEW",
+  "CONTACTED",
+  "QUALIFIED",
+  "PROPOSAL_SENT",
+  "NEGOTIATING",
+  "WON",
+  "LOST",
+  "ON_HOLD",
 ]);
 
-export const leadPrioritySchema = z.enum(['LOW', 'MEDIUM', 'HIGH', 'URGENT']);
+export const leadPrioritySchema = z.enum(["LOW", "MEDIUM", "HIGH", "URGENT"]);
 
 export const createLeadSchema = z.object({
-  firstName: z.string().min(1, 'First name is required'),
-  lastName: z.string().min(1, 'Last name is required'),
-  email: z.string().email('Invalid email address'),
+  firstName: z.string().min(1, "First name is required"),
+  lastName: z.string().min(1, "Last name is required"),
+  email: z.string().email("Invalid email address"),
   phone: z.string().optional(),
   company: z.string().optional(),
   jobTitle: z.string().optional(),
-  projectType: z.enum(['PALACE', 'VILLA', 'ESTATE', 'PENTHOUSE']).optional(),
+  projectType: z
+    .enum(["MODERN_WOODEN", "CLASSIC_WOODEN", "ALUMINUM", "BEDROOMS"])
+    .optional(),
   budget: z.string().optional(),
   timeline: z.string().optional(),
   location: z.string().optional(),
-  message: z.string().min(1, 'Message is required'),
-  source: leadSourceSchema.default('WEBSITE'),
-  status: leadStatusSchema.default('NEW'),
-  priority: leadPrioritySchema.default('MEDIUM'),
+  message: z.string().min(1, "Message is required"),
+  source: leadSourceSchema.default("WEBSITE"),
+  status: leadStatusSchema.default("NEW"),
+  priority: leadPrioritySchema.default("MEDIUM"),
   assignedTo: z.string().optional(),
   notes: z.string().optional(),
   tags: z.array(z.string()).default([]),

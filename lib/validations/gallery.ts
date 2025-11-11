@@ -1,14 +1,20 @@
-import { z } from 'zod';
+import { z } from "zod";
 
-export const gallerySizeSchema = z.enum(['SMALL', 'MEDIUM', 'LARGE', 'WIDE', 'TALL']);
+export const gallerySizeSchema = z.enum([
+  "SMALL",
+  "MEDIUM",
+  "LARGE",
+  "WIDE",
+  "TALL",
+]);
 
 export const createGalleryImageSchema = z.object({
-  title: z.string().min(1, 'Title is required'),
-  image: z.string().url('Invalid image URL'),
-  category: z.enum(['PALACE', 'VILLA', 'ESTATE', 'PENTHOUSE']),
-  location: z.string().min(1, 'Location is required'),
-  size: gallerySizeSchema.default('MEDIUM'),
-  description: z.string().min(1, 'Description is required'),
+  title: z.string().min(1, "Title is required"),
+  image: z.string().url("Invalid image URL"),
+  category: z.enum(["MODERN_WOODEN", "CLASSIC_WOODEN", "ALUMINUM", "BEDROOMS"]),
+  location: z.string().min(1, "Location is required"),
+  size: gallerySizeSchema.default("MEDIUM"),
+  description: z.string().min(1, "Description is required"),
   order: z.number().int().default(0),
   published: z.boolean().default(true),
 });
@@ -16,7 +22,9 @@ export const createGalleryImageSchema = z.object({
 export const updateGalleryImageSchema = createGalleryImageSchema.partial();
 
 export const galleryQuerySchema = z.object({
-  category: z.enum(['PALACE', 'VILLA', 'ESTATE', 'PENTHOUSE']).optional(),
+  category: z
+    .enum(["MODERN_WOODEN", "CLASSIC_WOODEN", "ALUMINUM", "BEDROOMS"])
+    .optional(),
   size: gallerySizeSchema.optional(),
   published: z.coerce.boolean().optional(),
   page: z.coerce.number().int().min(1).default(1),
