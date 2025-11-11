@@ -78,7 +78,7 @@ export async function generateMetadata(props: {
       "luxury kitchen design",
       "about kitchen core",
       "kitchen design company",
-      "italian craftsmanship",
+      "innovative design solutions",
       "bespoke kitchens",
       "kitchen specialists",
       companyName,
@@ -142,7 +142,9 @@ export default async function AboutPage(props: {
       )}
 
       {/* Founder Section */}
-      {data.founder && <FounderShowcase founder={data.founder} locale={locale} />}
+      {data.founder && (
+        <FounderShowcase founder={data.founder} locale={locale} />
+      )}
 
       {/* Team Grid */}
       {data.teamMembers.length > 0 && (
