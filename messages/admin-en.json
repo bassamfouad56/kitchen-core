@@ -83,6 +83,8 @@
       "employeeCount": "Number of Employees",
       "projectsCompleted": "Projects Completed",
       "clientsSatisfied": "Clients Satisfied",
+      "countriesServed": "Countries Served",
+      "yearsOfExperience": "Years of Experience",
       "contactInfo": "Contact Information",
       "phone": "Phone Number",
       "email": "Email Address",
