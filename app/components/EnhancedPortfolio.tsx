@@ -34,7 +34,8 @@ const fallbackProjects: Project[] = [
     appliances: ["Sub-Zero", "Wolf Range", "Miele Dishwasher"],
     features: ["Smart Home Integration", "Custom Lighting", "Island Design"],
     duration: "20 weeks",
-    challenges: "Integrated modern technology while maintaining clean aesthetic",
+    challenges:
+      "Integrated modern technology while maintaining clean aesthetic",
     innovations: ["Hidden storage", "Smart lighting", "Custom cabinetry"],
   },
   {
@@ -54,7 +55,13 @@ const fallbackProjects: Project[] = [
   },
 ];
 
-const categoryKeys = ["all", "modernWooden", "classicWooden", "aluminum", "bedrooms"];
+const categoryKeys = [
+  "all",
+  "modernWooden",
+  "classicWooden",
+  "aluminum",
+  "bedrooms",
+];
 
 export default function EnhancedPortfolio() {
   const locale = useLocale();
@@ -77,7 +84,7 @@ export default function EnhancedPortfolio() {
           }
         }
       } catch (error) {
-        console.error('Error fetching projects from CMS:', error);
+        console.error("Error fetching projects from CMS:", error);
         // Keep fallback data on error
       } finally {
         setLoading(false);
@@ -101,14 +108,13 @@ export default function EnhancedPortfolio() {
             viewport={{ once: true }}
           >
             <p className="text-green-vibrant text-sm tracking-[0.3em] mb-4 font-light">
-              FEATURED PROJECTS
+              {t("Portfolio.badge").toUpperCase()}
             </p>
             <h2 className="font-serif text-5xl md:text-6xl text-white mb-6">
-              Engineering Excellence
+              {t("Portfolio.title")}
             </h2>
             <p className="text-lg text-gray-light max-w-2xl mx-auto font-light leading-relaxed">
-              Each project showcases our technical expertise, innovative solutions, and
-              uncompromising commitment to quality. Explore the details.
+              {t("Portfolio.description")}
             </p>
           </motion.div>
         </div>
@@ -186,17 +192,34 @@ export default function EnhancedPortfolio() {
                       {project.title}
                     </h3>
                     <p className="text-sm text-gray-light mb-4 flex items-center gap-2">
-                      <svg className="w-4 h-4 text-green-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <svg
+                        className="w-4 h-4 text-green-primary"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                        />
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                        />
                       </svg>
                       {project.location}
                     </p>
-                    <p className="text-gray-light text-sm mb-4 flex-1">{project.description}</p>
+                    <p className="text-gray-light text-sm mb-4 flex-1">
+                      {project.description}
+                    </p>
 
                     {/* View Details CTA */}
                     <button className="mt-4 w-full py-2.5 border border-green-primary/50 text-green-primary text-xs tracking-wider font-medium group-hover:bg-green-primary group-hover:text-black transition-all duration-300">
-                      VIEW DETAILS
+                      {t("Portfolio.viewDetails").toUpperCase()}
                     </button>
                   </div>
                 </div>
@@ -228,8 +251,18 @@ export default function EnhancedPortfolio() {
                     onClick={() => setSelectedProject(null)}
                     className="absolute top-4 right-4 z-10 p-2 bg-black/80 border border-green-primary text-green-vibrant hover:bg-green-primary hover:text-black transition-colors"
                   >
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    <svg
+                      className="w-6 h-6"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M6 18L18 6M6 6l12 12"
+                      />
                     </svg>
                   </button>
 
@@ -237,7 +270,9 @@ export default function EnhancedPortfolio() {
                   <div className="relative h-96 overflow-hidden">
                     <div
                       className="w-full h-full bg-cover bg-center"
-                      style={{ backgroundImage: `url(${selectedProject.image})` }}
+                      style={{
+                        backgroundImage: `url(${selectedProject.image})`,
+                      }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-background-card via-transparent to-transparent" />
                   </div>
@@ -249,14 +284,26 @@ export default function EnhancedPortfolio() {
                         <span className="bg-green-primary text-black px-4 py-1 text-sm tracking-wider font-medium">
                           {t(`${selectedProject.category}.title`)}
                         </span>
-                        <span className="text-gray-light">{selectedProject.year}</span>
+                        <span className="text-gray-light">
+                          {selectedProject.year}
+                        </span>
                       </div>
                       <h2 className="font-serif text-4xl md:text-5xl text-white mb-4">
                         {selectedProject.title}
                       </h2>
                       <p className="text-lg text-gray-light flex items-center gap-2 mb-4">
-                        <svg className="w-5 h-5 text-green-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <svg
+                          className="w-5 h-5 text-green-primary"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                          />
                         </svg>
                         {selectedProject.location}
                       </p>
@@ -268,21 +315,32 @@ export default function EnhancedPortfolio() {
                     {/* Project Overview */}
                     <div className="grid md:grid-cols-1 gap-6 mb-12 pb-12 border-b border-gray-dark">
                       <div className="bg-background-elevated border border-gray-dark p-6">
-                        <div className="text-green-vibrant text-sm tracking-wider mb-2">COMPLETION TIME</div>
-                        <div className="text-white text-2xl font-serif">{selectedProject.duration}</div>
+                        <div className="text-green-vibrant text-sm tracking-wider mb-2">
+                          {t("Portfolio.completionTime").toUpperCase()}
+                        </div>
+                        <div className="text-white text-2xl font-serif">
+                          {selectedProject.duration}
+                        </div>
                       </div>
                     </div>
 
                     {/* Technical Specifications */}
                     <div className="mb-12">
-                      <h3 className="font-serif text-3xl text-white mb-6">Technical Specifications</h3>
+                      <h3 className="font-serif text-3xl text-white mb-6">
+                        {t("Portfolio.technicalSpecs")}
+                      </h3>
                       <div className="grid md:grid-cols-2 gap-8">
                         {/* Materials */}
                         <div>
-                          <h4 className="text-green-vibrant text-sm tracking-wider mb-4">MATERIALS</h4>
+                          <h4 className="text-green-vibrant text-sm tracking-wider mb-4">
+                            {t("Portfolio.materials").toUpperCase()}
+                          </h4>
                           <ul className="space-y-2">
                             {selectedProject.materials.map((material, i) => (
-                              <li key={i} className="flex items-start gap-3 text-gray-light">
+                              <li
+                                key={i}
+                                className="flex items-start gap-3 text-gray-light"
+                              >
                                 <span className="w-1.5 h-1.5 bg-green-vibrant mt-2 flex-shrink-0" />
                                 <span>{material}</span>
                               </li>
@@ -292,10 +350,15 @@ export default function EnhancedPortfolio() {
 
                         {/* Appliances */}
                         <div>
-                          <h4 className="text-green-vibrant text-sm tracking-wider mb-4">APPLIANCES</h4>
+                          <h4 className="text-green-vibrant text-sm tracking-wider mb-4">
+                            {t("Portfolio.appliances").toUpperCase()}
+                          </h4>
                           <ul className="space-y-2">
                             {selectedProject.appliances.map((appliance, i) => (
-                              <li key={i} className="flex items-start gap-3 text-gray-light">
+                              <li
+                                key={i}
+                                className="flex items-start gap-3 text-gray-light"
+                              >
                                 <span className="w-1.5 h-1.5 bg-green-vibrant mt-2 flex-shrink-0" />
                                 <span>{appliance}</span>
                               </li>
@@ -305,10 +368,15 @@ export default function EnhancedPortfolio() {
 
                         {/* Features */}
                         <div>
-                          <h4 className="text-green-vibrant text-sm tracking-wider mb-4">KEY FEATURES</h4>
+                          <h4 className="text-green-vibrant text-sm tracking-wider mb-4">
+                            {t("Portfolio.keyFeatures").toUpperCase()}
+                          </h4>
                           <ul className="space-y-2">
                             {selectedProject.features.map((feature, i) => (
-                              <li key={i} className="flex items-start gap-3 text-gray-light">
+                              <li
+                                key={i}
+                                className="flex items-start gap-3 text-gray-light"
+                              >
                                 <span className="w-1.5 h-1.5 bg-green-vibrant mt-2 flex-shrink-0" />
                                 <span>{feature}</span>
                               </li>
@@ -318,14 +386,21 @@ export default function EnhancedPortfolio() {
 
                         {/* Innovations */}
                         <div>
-                          <h4 className="text-green-vibrant text-sm tracking-wider mb-4">INNOVATIONS</h4>
+                          <h4 className="text-green-vibrant text-sm tracking-wider mb-4">
+                            {t("Portfolio.innovations").toUpperCase()}
+                          </h4>
                           <ul className="space-y-2">
-                            {selectedProject.innovations.map((innovation, i) => (
-                              <li key={i} className="flex items-start gap-3 text-gray-light">
-                                <span className="w-1.5 h-1.5 bg-green-vibrant mt-2 flex-shrink-0" />
-                                <span>{innovation}</span>
-                              </li>
-                            ))}
+                            {selectedProject.innovations.map(
+                              (innovation, i) => (
+                                <li
+                                  key={i}
+                                  className="flex items-start gap-3 text-gray-light"
+                                >
+                                  <span className="w-1.5 h-1.5 bg-green-vibrant mt-2 flex-shrink-0" />
+                                  <span>{innovation}</span>
+                                </li>
+                              ),
+                            )}
                           </ul>
                         </div>
                       </div>
@@ -333,8 +408,12 @@ export default function EnhancedPortfolio() {
 
                     {/* Engineering Challenge */}
                     <div className="bg-background-elevated border border-gray-dark p-8">
-                      <h4 className="text-green-vibrant text-sm tracking-wider mb-4">ENGINEERING CHALLENGE</h4>
-                      <p className="text-gray-light leading-relaxed">{selectedProject.challenges}</p>
+                      <h4 className="text-green-vibrant text-sm tracking-wider mb-4">
+                        {t("Portfolio.engineeringChallenge").toUpperCase()}
+                      </h4>
+                      <p className="text-gray-light leading-relaxed">
+                        {selectedProject.challenges}
+                      </p>
                     </div>
                   </div>
                 </motion.div>

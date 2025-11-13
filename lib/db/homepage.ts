@@ -1,4 +1,5 @@
 import { prisma } from "../prisma";
+import { getUITranslations } from "./ui-translations";
 
 /**
  * Fetch all CMS data needed for the homepage
@@ -14,6 +15,7 @@ export async function getHomepageData(locale: string = "en") {
       processSteps,
       statistics,
       innovations,
+      uiTranslations,
     ] = await Promise.all([
       // Projects - published and ordered
       prisma.project.findMany({
@@ -143,6 +145,9 @@ export async function getHomepageData(locale: string = "en") {
           order: true,
         },
       }),
+
+      // UI Translations
+      getUITranslations(locale as "en" | "ar"),
     ]);
 
     // Helper function to convert database enum to frontend category key
@@ -209,6 +214,7 @@ export async function getHomepageData(locale: string = "en") {
       processSteps: localizedProcessSteps,
       statistics: localizedStatistics,
       innovations: localizedInnovations,
+      ui: uiTranslations,
     };
   } catch (error) {
     console.error("Error fetching homepage data:", error);
@@ -221,6 +227,7 @@ export async function getHomepageData(locale: string = "en") {
       processSteps: [],
       statistics: [],
       innovations: [],
+      ui: {},
     };
   }
 }

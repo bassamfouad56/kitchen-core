@@ -838,3 +838,21 @@ model ContactSubmission {
   @@index([processed])
   @@index([createdAt])
 }
+
+// UI Translations - Bilingual interface labels
+model UITranslation {
+  id              String   @id @default(cuid())
+  key             String   @unique // Unique key for the translation (e.g., "portfolio.viewDetails")
+  category        String   // Category for organization (e.g., "portfolio", "navigation", "footer")
+  textEn          String   @db.Text
+  textAr          String   @db.Text
+  description     String?  // Optional description for context
+  order           Int      @default(0)
+  published       Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([key])
+  @@index([category])
+  @@index([order])
+}
