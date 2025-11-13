@@ -79,16 +79,41 @@ export default async function AdminDashboard() {
           ))}
         </div>
 
-        {/* Quick Actions */}
-        <div>
-          <h2 className="text-2xl font-serif mb-6">Quick Actions</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {/* Content Management */}
+        <div className="mb-12">
+          <h2 className="text-2xl font-serif mb-6">Content Management</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <Link
               href="/admin/company"
               className="bg-green-primary text-black p-6 hover:bg-green-vibrant transition-colors font-medium"
             >
-              Company & About Page
+              Company & About
             </Link>
+            <Link
+              href="/admin/founder"
+              className="bg-background-card border border-green-primary p-6 hover:bg-green-primary/10 transition-colors text-green-vibrant font-medium"
+            >
+              Founder Profile
+            </Link>
+            <Link
+              href="/admin/statistics"
+              className="bg-background-card border border-green-primary p-6 hover:bg-green-primary/10 transition-colors text-green-vibrant font-medium"
+            >
+              Statistics/Trust
+            </Link>
+            <Link
+              href="/admin/settings"
+              className="bg-background-card border border-gray-dark p-6 hover:border-green-primary transition-colors"
+            >
+              Site Settings
+            </Link>
+          </div>
+        </div>
+
+        {/* Quick Actions */}
+        <div>
+          <h2 className="text-2xl font-serif mb-6">Quick Actions</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <Link
               href="/admin/projects/new"
               className="bg-background-card border border-gray-dark p-6 hover:border-green-primary transition-colors"
@@ -106,12 +131,6 @@ export default async function AdminDashboard() {
               className="bg-background-card border border-gray-dark p-6 hover:border-green-primary transition-colors"
             >
               CRM Leads
-            </Link>
-            <Link
-              href="/admin/settings"
-              className="bg-background-card border border-gray-dark p-6 hover:border-green-primary transition-colors"
-            >
-              Site Settings
             </Link>
           </div>
         </div>
