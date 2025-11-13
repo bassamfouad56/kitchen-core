@@ -5,6 +5,7 @@ import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import LanguageSwitcher from "../../components/LanguageSwitcher";
+import TranslateButton from "../../components/TranslateButton";
 
 interface Statistic {
   id: string;
@@ -29,6 +30,10 @@ export default function EditStatisticClient() {
   const [error, setError] = useState("");
   const [statistic, setStatistic] = useState<Statistic | null>(null);
 
+  // Controlled form state
+  const [labelEn, setLabelEn] = useState("");
+  const [labelAr, setLabelAr] = useState("");
+
   useEffect(() => {
     fetchStatistic();
   }, [id]);
@@ -39,6 +44,8 @@ export default function EditStatisticClient() {
       if (!res.ok) throw new Error("Failed to fetch statistic");
       const data = await res.json();
       setStatistic(data);
+      setLabelEn(data.labelEn || "");
+      setLabelAr(data.labelAr || "");
       setLoading(false);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load statistic");
@@ -54,8 +61,8 @@ export default function EditStatisticClient() {
     const formData = new FormData(e.currentTarget);
     const data = {
       number: formData.get("number"),
-      labelEn: formData.get("labelEn"),
-      labelAr: formData.get("labelAr"),
+      labelEn,
+      labelAr,
       section: formData.get("section"),
       order: parseInt(formData.get("order") as string),
     };
@@ -184,20 +191,30 @@ export default function EditStatisticClient() {
                   type="text"
                   name="labelEn"
                   required
-                  defaultValue={statistic.labelEn}
+                  value={labelEn}
+                  onChange={(e) => setLabelEn(e.target.value)}
                   className="w-full bg-black border border-gray-dark text-white px-4 py-3 focus:border-green-primary focus:outline-none"
                   placeholder={t("labelPlaceholderEn")}
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-light mb-2">
-                  {t("labelAr")} *
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label className="block text-sm font-medium text-gray-light">
+                    {t("labelAr")} *
+                  </label>
+                  <TranslateButton
+                    sourceText={labelEn}
+                    onTranslated={(translated) => setLabelAr(translated)}
+                    from="en"
+                    to="ar"
+                  />
+                </div>
                 <input
                   type="text"
                   name="labelAr"
                   required
-                  defaultValue={statistic.labelAr}
+                  value={labelAr}
+                  onChange={(e) => setLabelAr(e.target.value)}
                   dir="rtl"
                   className="w-full bg-black border border-gray-dark text-white px-4 py-3 focus:border-green-primary focus:outline-none"
                   placeholder={t("labelPlaceholderAr")}

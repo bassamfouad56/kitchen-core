@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import LanguageSwitcher from "../../components/LanguageSwitcher";
+import TranslateButton from "../../components/TranslateButton";
 
 export default function NewTeamMemberClient() {
   const router = useRouter();
@@ -15,7 +16,13 @@ export default function NewTeamMemberClient() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
-  // Form state for dynamic arrays
+  // Controlled form state
+  const [nameEn, setNameEn] = useState("");
+  const [nameAr, setNameAr] = useState("");
+  const [roleEn, setRoleEn] = useState("");
+  const [roleAr, setRoleAr] = useState("");
+  const [bioEn, setBioEn] = useState("");
+  const [bioAr, setBioAr] = useState("");
   const [specialtiesEn, setSpecialtiesEn] = useState<string[]>([""]);
   const [specialtiesAr, setSpecialtiesAr] = useState<string[]>([""]);
 
@@ -26,12 +33,12 @@ export default function NewTeamMemberClient() {
 
     const formData = new FormData(e.currentTarget);
     const data = {
-      nameEn: formData.get("nameEn"),
-      nameAr: formData.get("nameAr"),
-      roleEn: formData.get("roleEn"),
-      roleAr: formData.get("roleAr"),
-      bioEn: formData.get("bioEn"),
-      bioAr: formData.get("bioAr"),
+      nameEn,
+      nameAr,
+      roleEn,
+      roleAr,
+      bioEn,
+      bioAr,
       image: formData.get("image"),
       email: formData.get("email") || null,
       linkedin: formData.get("linkedin") || null,
@@ -125,19 +132,31 @@ export default function NewTeamMemberClient() {
                   type="text"
                   name="nameEn"
                   required
+                  value={nameEn}
+                  onChange={(e) => setNameEn(e.target.value)}
                   className="w-full bg-black border border-gray-dark text-white px-4 py-3 focus:border-green-primary focus:outline-none"
                   placeholder="John Doe"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-light mb-2">
-                  {t("nameAr")} *
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label className="block text-sm font-medium text-gray-light">
+                    {t("nameAr")} *
+                  </label>
+                  <TranslateButton
+                    sourceText={nameEn}
+                    onTranslated={(translated) => setNameAr(translated)}
+                    from="en"
+                    to="ar"
+                  />
+                </div>
                 <input
                   type="text"
                   name="nameAr"
                   required
                   dir="rtl"
+                  value={nameAr}
+                  onChange={(e) => setNameAr(e.target.value)}
                   className="w-full bg-black border border-gray-dark text-white px-4 py-3 focus:border-green-primary focus:outline-none"
                   placeholder="جون دو"
                 />
@@ -150,19 +169,31 @@ export default function NewTeamMemberClient() {
                   type="text"
                   name="roleEn"
                   required
+                  value={roleEn}
+                  onChange={(e) => setRoleEn(e.target.value)}
                   className="w-full bg-black border border-gray-dark text-white px-4 py-3 focus:border-green-primary focus:outline-none"
                   placeholder="Senior Designer"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-light mb-2">
-                  {t("roleAr")} *
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label className="block text-sm font-medium text-gray-light">
+                    {t("roleAr")} *
+                  </label>
+                  <TranslateButton
+                    sourceText={roleEn}
+                    onTranslated={(translated) => setRoleAr(translated)}
+                    from="en"
+                    to="ar"
+                  />
+                </div>
                 <input
                   type="text"
                   name="roleAr"
                   required
                   dir="rtl"
+                  value={roleAr}
+                  onChange={(e) => setRoleAr(e.target.value)}
                   className="w-full bg-black border border-gray-dark text-white px-4 py-3 focus:border-green-primary focus:outline-none"
                   placeholder="مصمم أول"
                 />
@@ -184,19 +215,31 @@ export default function NewTeamMemberClient() {
                   name="bioEn"
                   required
                   rows={6}
+                  value={bioEn}
+                  onChange={(e) => setBioEn(e.target.value)}
                   className="w-full bg-black border border-gray-dark text-white px-4 py-3 focus:border-green-primary focus:outline-none resize-none"
                   placeholder={t("bioPlaceholder")}
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-light mb-2">
-                  {t("bioAr")} *
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label className="block text-sm font-medium text-gray-light">
+                    {t("bioAr")} *
+                  </label>
+                  <TranslateButton
+                    sourceText={bioEn}
+                    onTranslated={(translated) => setBioAr(translated)}
+                    from="en"
+                    to="ar"
+                  />
+                </div>
                 <textarea
                   name="bioAr"
                   required
                   rows={6}
                   dir="rtl"
+                  value={bioAr}
+                  onChange={(e) => setBioAr(e.target.value)}
                   className="w-full bg-black border border-gray-dark text-white px-4 py-3 focus:border-green-primary focus:outline-none resize-none"
                   placeholder={t("bioPlaceholderAr")}
                 />
@@ -286,26 +329,38 @@ export default function NewTeamMemberClient() {
                 </div>
                 <div className="space-y-3">
                   {specialtiesAr.map((specialty, index) => (
-                    <div key={index} className="flex gap-2">
-                      <input
-                        type="text"
-                        value={specialty}
-                        onChange={(e) =>
-                          updateSpecialtyAr(index, e.target.value)
-                        }
-                        dir="rtl"
-                        className="flex-1 bg-black border border-gray-dark text-white px-4 py-2 focus:border-green-primary focus:outline-none"
-                        placeholder={t("specialtyPlaceholderAr")}
-                      />
-                      {specialtiesAr.length > 1 && (
-                        <button
-                          type="button"
-                          onClick={() => removeSpecialtyAr(index)}
-                          className="px-3 border border-red-500 text-red-500 hover:bg-red-500/10"
-                        >
-                          ×
-                        </button>
-                      )}
+                    <div key={index}>
+                      <div className="flex justify-between items-center mb-1">
+                        <TranslateButton
+                          sourceText={specialtiesEn[index] || ""}
+                          onTranslated={(translated) =>
+                            updateSpecialtyAr(index, translated)
+                          }
+                          from="en"
+                          to="ar"
+                        />
+                      </div>
+                      <div className="flex gap-2">
+                        <input
+                          type="text"
+                          value={specialty}
+                          onChange={(e) =>
+                            updateSpecialtyAr(index, e.target.value)
+                          }
+                          dir="rtl"
+                          className="flex-1 bg-black border border-gray-dark text-white px-4 py-2 focus:border-green-primary focus:outline-none"
+                          placeholder={t("specialtyPlaceholderAr")}
+                        />
+                        {specialtiesAr.length > 1 && (
+                          <button
+                            type="button"
+                            onClick={() => removeSpecialtyAr(index)}
+                            className="px-3 border border-red-500 text-red-500 hover:bg-red-500/10"
+                          >
+                            ×
+                          </button>
+                        )}
+                      </div>
                     </div>
                   ))}
                 </div>

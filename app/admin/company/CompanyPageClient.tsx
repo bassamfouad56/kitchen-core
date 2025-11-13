@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import LanguageSwitcher from "../components/LanguageSwitcher";
+import TranslateButton from "../components/TranslateButton";
 
 interface CompanyData {
   id?: string;
@@ -43,6 +44,18 @@ export default function CompanyPageClient() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [company, setCompany] = useState<CompanyData | null>(null);
+
+  // Controlled form state
+  const [nameEn, setNameEn] = useState("");
+  const [nameAr, setNameAr] = useState("");
+  const [taglineEn, setTaglineEn] = useState("");
+  const [taglineAr, setTaglineAr] = useState("");
+  const [descriptionEn, setDescriptionEn] = useState("");
+  const [descriptionAr, setDescriptionAr] = useState("");
+  const [missionEn, setMissionEn] = useState("");
+  const [missionAr, setMissionAr] = useState("");
+  const [visionEn, setVisionEn] = useState("");
+  const [visionAr, setVisionAr] = useState("");
   const [valuesEn, setValuesEn] = useState<string[]>([""]);
   const [valuesAr, setValuesAr] = useState<string[]>([""]);
 
@@ -58,6 +71,16 @@ export default function CompanyPageClient() {
 
       if (data.company) {
         setCompany(data.company);
+        setNameEn(data.company.nameEn || "");
+        setNameAr(data.company.nameAr || "");
+        setTaglineEn(data.company.taglineEn || "");
+        setTaglineAr(data.company.taglineAr || "");
+        setDescriptionEn(data.company.descriptionEn || "");
+        setDescriptionAr(data.company.descriptionAr || "");
+        setMissionEn(data.company.missionEn || "");
+        setMissionAr(data.company.missionAr || "");
+        setVisionEn(data.company.visionEn || "");
+        setVisionAr(data.company.visionAr || "");
         setValuesEn(
           data.company.valuesEn && data.company.valuesEn.length > 0
             ? data.company.valuesEn
@@ -83,16 +106,16 @@ export default function CompanyPageClient() {
 
     const formData = new FormData(e.currentTarget);
     const data = {
-      nameEn: formData.get("nameEn"),
-      nameAr: formData.get("nameAr"),
-      taglineEn: formData.get("taglineEn") || null,
-      taglineAr: formData.get("taglineAr") || null,
-      descriptionEn: formData.get("descriptionEn"),
-      descriptionAr: formData.get("descriptionAr"),
-      missionEn: formData.get("missionEn") || null,
-      missionAr: formData.get("missionAr") || null,
-      visionEn: formData.get("visionEn") || null,
-      visionAr: formData.get("visionAr") || null,
+      nameEn,
+      nameAr,
+      taglineEn: taglineEn || null,
+      taglineAr: taglineAr || null,
+      descriptionEn,
+      descriptionAr,
+      missionEn: missionEn || null,
+      missionAr: missionAr || null,
+      visionEn: visionEn || null,
+      visionAr: visionAr || null,
       valuesEn: valuesEn.filter((v) => v.trim()),
       valuesAr: valuesAr.filter((v) => v.trim()),
       foundedYear: formData.get("foundedYear") || null,
@@ -170,20 +193,30 @@ export default function CompanyPageClient() {
                   type="text"
                   name="nameEn"
                   required
-                  defaultValue={company?.nameEn}
+                  value={nameEn}
+                  onChange={(e) => setNameEn(e.target.value)}
                   className="w-full bg-background-card border border-gray-dark px-4 py-2 text-white focus:border-green-primary focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-light mb-2">
-                  {t("nameAr")} *
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label className="block text-sm font-medium text-gray-light">
+                    {t("nameAr")} *
+                  </label>
+                  <TranslateButton
+                    sourceText={nameEn}
+                    onTranslated={(translated) => setNameAr(translated)}
+                    from="en"
+                    to="ar"
+                  />
+                </div>
                 <input
                   type="text"
                   name="nameAr"
                   required
-                  defaultValue={company?.nameAr}
+                  value={nameAr}
+                  onChange={(e) => setNameAr(e.target.value)}
                   className="w-full bg-background-card border border-gray-dark px-4 py-2 text-white focus:border-green-primary focus:outline-none"
                   dir="rtl"
                 />
@@ -196,19 +229,29 @@ export default function CompanyPageClient() {
                 <input
                   type="text"
                   name="taglineEn"
-                  defaultValue={company?.taglineEn || ""}
+                  value={taglineEn}
+                  onChange={(e) => setTaglineEn(e.target.value)}
                   className="w-full bg-background-card border border-gray-dark px-4 py-2 text-white focus:border-green-primary focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-light mb-2">
-                  {t("taglineAr")}
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label className="block text-sm font-medium text-gray-light">
+                    {t("taglineAr")}
+                  </label>
+                  <TranslateButton
+                    sourceText={taglineEn}
+                    onTranslated={(translated) => setTaglineAr(translated)}
+                    from="en"
+                    to="ar"
+                  />
+                </div>
                 <input
                   type="text"
                   name="taglineAr"
-                  defaultValue={company?.taglineAr || ""}
+                  value={taglineAr}
+                  onChange={(e) => setTaglineAr(e.target.value)}
                   className="w-full bg-background-card border border-gray-dark px-4 py-2 text-white focus:border-green-primary focus:outline-none"
                   dir="rtl"
                 />
@@ -224,20 +267,30 @@ export default function CompanyPageClient() {
                   name="descriptionEn"
                   required
                   rows={4}
-                  defaultValue={company?.descriptionEn}
+                  value={descriptionEn}
+                  onChange={(e) => setDescriptionEn(e.target.value)}
                   className="w-full bg-background-card border border-gray-dark px-4 py-2 text-white focus:border-green-primary focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-light mb-2">
-                  {t("descriptionAr")} *
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label className="block text-sm font-medium text-gray-light">
+                    {t("descriptionAr")} *
+                  </label>
+                  <TranslateButton
+                    sourceText={descriptionEn}
+                    onTranslated={(translated) => setDescriptionAr(translated)}
+                    from="en"
+                    to="ar"
+                  />
+                </div>
                 <textarea
                   name="descriptionAr"
                   required
                   rows={4}
-                  defaultValue={company?.descriptionAr}
+                  value={descriptionAr}
+                  onChange={(e) => setDescriptionAr(e.target.value)}
                   className="w-full bg-background-card border border-gray-dark px-4 py-2 text-white focus:border-green-primary focus:outline-none"
                   dir="rtl"
                 />
@@ -257,19 +310,29 @@ export default function CompanyPageClient() {
                 <textarea
                   name="missionEn"
                   rows={4}
-                  defaultValue={company?.missionEn || ""}
+                  value={missionEn}
+                  onChange={(e) => setMissionEn(e.target.value)}
                   className="w-full bg-background-card border border-gray-dark px-4 py-2 text-white focus:border-green-primary focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-light mb-2">
-                  {t("missionAr")}
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label className="block text-sm font-medium text-gray-light">
+                    {t("missionAr")}
+                  </label>
+                  <TranslateButton
+                    sourceText={missionEn}
+                    onTranslated={(translated) => setMissionAr(translated)}
+                    from="en"
+                    to="ar"
+                  />
+                </div>
                 <textarea
                   name="missionAr"
                   rows={4}
-                  defaultValue={company?.missionAr || ""}
+                  value={missionAr}
+                  onChange={(e) => setMissionAr(e.target.value)}
                   className="w-full bg-background-card border border-gray-dark px-4 py-2 text-white focus:border-green-primary focus:outline-none"
                   dir="rtl"
                 />
@@ -282,19 +345,29 @@ export default function CompanyPageClient() {
                 <textarea
                   name="visionEn"
                   rows={4}
-                  defaultValue={company?.visionEn || ""}
+                  value={visionEn}
+                  onChange={(e) => setVisionEn(e.target.value)}
                   className="w-full bg-background-card border border-gray-dark px-4 py-2 text-white focus:border-green-primary focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-light mb-2">
-                  {t("visionAr")}
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label className="block text-sm font-medium text-gray-light">
+                    {t("visionAr")}
+                  </label>
+                  <TranslateButton
+                    sourceText={visionEn}
+                    onTranslated={(translated) => setVisionAr(translated)}
+                    from="en"
+                    to="ar"
+                  />
+                </div>
                 <textarea
                   name="visionAr"
                   rows={4}
-                  defaultValue={company?.visionAr || ""}
+                  value={visionAr}
+                  onChange={(e) => setVisionAr(e.target.value)}
                   className="w-full bg-background-card border border-gray-dark px-4 py-2 text-white focus:border-green-primary focus:outline-none"
                   dir="rtl"
                 />
@@ -320,7 +393,7 @@ export default function CompanyPageClient() {
                     {t("addValue")}
                   </button>
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-3">
                   {valuesEn.map((value, index) => (
                     <div key={index} className="flex gap-2">
                       <input
@@ -362,31 +435,47 @@ export default function CompanyPageClient() {
                     {t("addValue")}
                   </button>
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-3">
                   {valuesAr.map((value, index) => (
-                    <div key={index} className="flex gap-2">
-                      <input
-                        type="text"
-                        value={value}
-                        onChange={(e) => {
-                          const newValues = [...valuesAr];
-                          newValues[index] = e.target.value;
-                          setValuesAr(newValues);
-                        }}
-                        className="flex-1 bg-background-card border border-gray-dark px-4 py-2 text-white focus:border-green-primary focus:outline-none"
-                        dir="rtl"
-                      />
-                      {valuesAr.length > 1 && (
-                        <button
-                          type="button"
-                          onClick={() =>
-                            setValuesAr(valuesAr.filter((_, i) => i !== index))
-                          }
-                          className="px-3 py-2 border border-red-500 text-red-500 hover:bg-red-500/10"
-                        >
-                          ×
-                        </button>
-                      )}
+                    <div key={index}>
+                      <div className="flex justify-between items-center mb-1">
+                        <TranslateButton
+                          sourceText={valuesEn[index] || ""}
+                          onTranslated={(translated) => {
+                            const newValues = [...valuesAr];
+                            newValues[index] = translated;
+                            setValuesAr(newValues);
+                          }}
+                          from="en"
+                          to="ar"
+                        />
+                      </div>
+                      <div className="flex gap-2">
+                        <input
+                          type="text"
+                          value={value}
+                          onChange={(e) => {
+                            const newValues = [...valuesAr];
+                            newValues[index] = e.target.value;
+                            setValuesAr(newValues);
+                          }}
+                          className="flex-1 bg-background-card border border-gray-dark px-4 py-2 text-white focus:border-green-primary focus:outline-none"
+                          dir="rtl"
+                        />
+                        {valuesAr.length > 1 && (
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setValuesAr(
+                                valuesAr.filter((_, i) => i !== index),
+                              )
+                            }
+                            className="px-3 py-2 border border-red-500 text-red-500 hover:bg-red-500/10"
+                          >
+                            ×
+                          </button>
+                        )}
+                      </div>
                     </div>
                   ))}
                 </div>

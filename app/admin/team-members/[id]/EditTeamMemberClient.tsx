@@ -5,6 +5,7 @@ import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import LanguageSwitcher from "../../components/LanguageSwitcher";
+import TranslateButton from "../../components/TranslateButton";
 
 interface TeamMember {
   id: string;
@@ -38,7 +39,13 @@ export default function EditTeamMemberClient() {
   const [error, setError] = useState("");
   const [teamMember, setTeamMember] = useState<TeamMember | null>(null);
 
-  // Form state for dynamic arrays
+  // Controlled form state
+  const [nameEn, setNameEn] = useState("");
+  const [nameAr, setNameAr] = useState("");
+  const [roleEn, setRoleEn] = useState("");
+  const [roleAr, setRoleAr] = useState("");
+  const [bioEn, setBioEn] = useState("");
+  const [bioAr, setBioAr] = useState("");
   const [specialtiesEn, setSpecialtiesEn] = useState<string[]>([""]);
   const [specialtiesAr, setSpecialtiesAr] = useState<string[]>([""]);
 
@@ -52,6 +59,12 @@ export default function EditTeamMemberClient() {
       if (!res.ok) throw new Error("Failed to fetch team member");
       const data = await res.json();
       setTeamMember(data);
+      setNameEn(data.nameEn || "");
+      setNameAr(data.nameAr || "");
+      setRoleEn(data.roleEn || "");
+      setRoleAr(data.roleAr || "");
+      setBioEn(data.bioEn || "");
+      setBioAr(data.bioAr || "");
       setSpecialtiesEn(
         data.specialtiesEn && data.specialtiesEn.length > 0
           ? data.specialtiesEn
@@ -78,12 +91,12 @@ export default function EditTeamMemberClient() {
 
     const formData = new FormData(e.currentTarget);
     const data = {
-      nameEn: formData.get("nameEn"),
-      nameAr: formData.get("nameAr"),
-      roleEn: formData.get("roleEn"),
-      roleAr: formData.get("roleAr"),
-      bioEn: formData.get("bioEn"),
-      bioAr: formData.get("bioAr"),
+      nameEn,
+      nameAr,
+      roleEn,
+      roleAr,
+      bioEn,
+      bioAr,
       image: formData.get("image"),
       email: formData.get("email") || null,
       linkedin: formData.get("linkedin") || null,
@@ -221,19 +234,29 @@ export default function EditTeamMemberClient() {
                   type="text"
                   name="nameEn"
                   required
-                  defaultValue={teamMember.nameEn}
+                  value={nameEn}
+                  onChange={(e) => setNameEn(e.target.value)}
                   className="w-full bg-black border border-gray-dark text-white px-4 py-3 focus:border-green-primary focus:outline-none"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-light mb-2">
-                  {t("nameAr")} *
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label className="block text-sm font-medium text-gray-light">
+                    {t("nameAr")} *
+                  </label>
+                  <TranslateButton
+                    sourceText={nameEn}
+                    onTranslated={(translated) => setNameAr(translated)}
+                    from="en"
+                    to="ar"
+                  />
+                </div>
                 <input
                   type="text"
                   name="nameAr"
                   required
-                  defaultValue={teamMember.nameAr}
+                  value={nameAr}
+                  onChange={(e) => setNameAr(e.target.value)}
                   dir="rtl"
                   className="w-full bg-black border border-gray-dark text-white px-4 py-3 focus:border-green-primary focus:outline-none"
                 />
@@ -246,19 +269,29 @@ export default function EditTeamMemberClient() {
                   type="text"
                   name="roleEn"
                   required
-                  defaultValue={teamMember.roleEn}
+                  value={roleEn}
+                  onChange={(e) => setRoleEn(e.target.value)}
                   className="w-full bg-black border border-gray-dark text-white px-4 py-3 focus:border-green-primary focus:outline-none"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-light mb-2">
-                  {t("roleAr")} *
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label className="block text-sm font-medium text-gray-light">
+                    {t("roleAr")} *
+                  </label>
+                  <TranslateButton
+                    sourceText={roleEn}
+                    onTranslated={(translated) => setRoleAr(translated)}
+                    from="en"
+                    to="ar"
+                  />
+                </div>
                 <input
                   type="text"
                   name="roleAr"
                   required
-                  defaultValue={teamMember.roleAr}
+                  value={roleAr}
+                  onChange={(e) => setRoleAr(e.target.value)}
                   dir="rtl"
                   className="w-full bg-black border border-gray-dark text-white px-4 py-3 focus:border-green-primary focus:outline-none"
                 />
@@ -280,19 +313,29 @@ export default function EditTeamMemberClient() {
                   name="bioEn"
                   required
                   rows={6}
-                  defaultValue={teamMember.bioEn}
+                  value={bioEn}
+                  onChange={(e) => setBioEn(e.target.value)}
                   className="w-full bg-black border border-gray-dark text-white px-4 py-3 focus:border-green-primary focus:outline-none resize-none"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-light mb-2">
-                  {t("bioAr")} *
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label className="block text-sm font-medium text-gray-light">
+                    {t("bioAr")} *
+                  </label>
+                  <TranslateButton
+                    sourceText={bioEn}
+                    onTranslated={(translated) => setBioAr(translated)}
+                    from="en"
+                    to="ar"
+                  />
+                </div>
                 <textarea
                   name="bioAr"
                   required
                   rows={6}
-                  defaultValue={teamMember.bioAr}
+                  value={bioAr}
+                  onChange={(e) => setBioAr(e.target.value)}
                   dir="rtl"
                   className="w-full bg-black border border-gray-dark text-white px-4 py-3 focus:border-green-primary focus:outline-none resize-none"
                 />
@@ -380,25 +423,37 @@ export default function EditTeamMemberClient() {
                 </div>
                 <div className="space-y-3">
                   {specialtiesAr.map((specialty, index) => (
-                    <div key={index} className="flex gap-2">
-                      <input
-                        type="text"
-                        value={specialty}
-                        onChange={(e) =>
-                          updateSpecialtyAr(index, e.target.value)
-                        }
-                        dir="rtl"
-                        className="flex-1 bg-black border border-gray-dark text-white px-4 py-2 focus:border-green-primary focus:outline-none"
-                      />
-                      {specialtiesAr.length > 1 && (
-                        <button
-                          type="button"
-                          onClick={() => removeSpecialtyAr(index)}
-                          className="px-3 border border-red-500 text-red-500 hover:bg-red-500/10"
-                        >
-                          ×
-                        </button>
-                      )}
+                    <div key={index}>
+                      <div className="flex justify-between items-center mb-1">
+                        <TranslateButton
+                          sourceText={specialtiesEn[index] || ""}
+                          onTranslated={(translated) =>
+                            updateSpecialtyAr(index, translated)
+                          }
+                          from="en"
+                          to="ar"
+                        />
+                      </div>
+                      <div className="flex gap-2">
+                        <input
+                          type="text"
+                          value={specialty}
+                          onChange={(e) =>
+                            updateSpecialtyAr(index, e.target.value)
+                          }
+                          dir="rtl"
+                          className="flex-1 bg-black border border-gray-dark text-white px-4 py-2 focus:border-green-primary focus:outline-none"
+                        />
+                        {specialtiesAr.length > 1 && (
+                          <button
+                            type="button"
+                            onClick={() => removeSpecialtyAr(index)}
+                            className="px-3 border border-red-500 text-red-500 hover:bg-red-500/10"
+                          >
+                            ×
+                          </button>
+                        )}
+                      </div>
                     </div>
                   ))}
                 </div>
