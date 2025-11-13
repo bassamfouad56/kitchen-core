@@ -5,12 +5,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { useTranslations, useLocale } from "next-intl";
 import { motion } from "framer-motion";
+import { usePathname } from "next/navigation";
 import MobileMenu from "./MobileMenu";
 import LanguageSwitcher from "./LanguageSwitcher";
 
 export default function Navigation() {
   const t = useTranslations();
   const locale = useLocale();
+  const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -21,6 +23,24 @@ export default function Navigation() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Handle smooth scroll to section
+  const handleSectionClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    sectionId: string,
+  ) => {
+    // Check if we're on the homepage
+    const isHomePage = pathname === `/${locale}` || pathname === `/${locale}/`;
+
+    if (isHomePage) {
+      e.preventDefault();
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+    // If not on homepage, let the link navigate normally
+  };
 
   return (
     <>
@@ -66,6 +86,7 @@ export default function Navigation() {
               </Link>
               <Link
                 href={`/${locale}#portfolio`}
+                onClick={(e) => handleSectionClick(e, "portfolio")}
                 className="text-sm tracking-wide font-light text-gray-light hover:text-green-vibrant transition-colors duration-300 relative group whitespace-nowrap"
               >
                 {t("Navigation.portfolio")}
@@ -80,6 +101,7 @@ export default function Navigation() {
               </Link>
               <Link
                 href={`/${locale}#contact`}
+                onClick={(e) => handleSectionClick(e, "contact")}
                 className="text-sm tracking-wide font-light text-gray-light hover:text-green-vibrant transition-colors duration-300 relative group whitespace-nowrap"
               >
                 {t("Navigation.contact")}
@@ -92,6 +114,7 @@ export default function Navigation() {
               <LanguageSwitcher />
               <Link
                 href={`/${locale}#contact`}
+                onClick={(e) => handleSectionClick(e, "contact")}
                 className="px-5 py-2.5 border border-green-primary text-green-primary hover:bg-green-primary hover:text-black transition-all duration-300 text-xs tracking-wider font-medium whitespace-nowrap"
               >
                 {t("Navigation.scheduleConsultation").toUpperCase()}
@@ -130,6 +153,7 @@ export default function Navigation() {
             </Link>
             <Link
               href={`/${locale}#portfolio`}
+              onClick={(e) => handleSectionClick(e, "portfolio")}
               className="text-xs tracking-wide font-light text-gray-light hover:text-green-vibrant transition-colors duration-300 relative group px-2"
             >
               {t("Navigation.portfolio")}
@@ -144,6 +168,7 @@ export default function Navigation() {
             </Link>
             <Link
               href={`/${locale}#contact`}
+              onClick={(e) => handleSectionClick(e, "contact")}
               className="text-xs tracking-wide font-light text-gray-light hover:text-green-vibrant transition-colors duration-300 relative group px-2"
             >
               {t("Navigation.contact")}
