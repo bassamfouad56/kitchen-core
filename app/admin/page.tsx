@@ -21,6 +21,10 @@ export default async function AdminDashboard() {
     innovationsCount,
     leadsCount,
     teamMembersCount,
+    nassGalleryCount,
+    blogPostsCount,
+    publishedPostsCount,
+    draftPostsCount,
   ] = await Promise.all([
     prisma.project.count(),
     prisma.galleryImage.count(),
@@ -30,6 +34,10 @@ export default async function AdminDashboard() {
     prisma.innovation.count(),
     prisma.lead.count(),
     prisma.teamMember.count(),
+    prisma.nassGallery.count(),
+    prisma.blogPost.count(),
+    prisma.blogPost.count({ where: { published: true } }),
+    prisma.blogPost.count({ where: { published: false } }),
   ]);
 
   const stats = [
@@ -60,6 +68,26 @@ export default async function AdminDashboard() {
       labelKey: "teamMembers",
       count: teamMembersCount,
       href: "/admin/team-members",
+    },
+    {
+      labelKey: "nassGallery",
+      count: nassGalleryCount,
+      href: "/admin/nass-gallery",
+    },
+    {
+      labelKey: "blogPosts",
+      count: blogPostsCount,
+      href: "/admin/blog",
+    },
+    {
+      labelKey: "publishedPosts",
+      count: publishedPostsCount,
+      href: "/admin/blog",
+    },
+    {
+      labelKey: "draftPosts",
+      count: draftPostsCount,
+      href: "/admin/blog",
     },
   ];
 

@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useTranslations, useLocale } from "next-intl";
-import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import MobileMenu from "./MobileMenu";
 import LanguageSwitcher from "./LanguageSwitcher";
@@ -93,6 +92,13 @@ export default function Navigation() {
                 <span className="absolute -bottom-1 left-0 w-0 h-px bg-green-primary transition-all duration-300 group-hover:w-full" />
               </Link>
               <Link
+                href={`/${locale}/blog`}
+                className="text-sm tracking-wide font-light text-gray-light hover:text-green-vibrant transition-colors duration-300 relative group whitespace-nowrap"
+              >
+                {t("Navigation.blog")}
+                <span className="absolute -bottom-1 left-0 w-0 h-px bg-green-primary transition-all duration-300 group-hover:w-full" />
+              </Link>
+              <Link
                 href={`/${locale}/about`}
                 className="text-sm tracking-wide font-light text-gray-light hover:text-green-vibrant transition-colors duration-300 relative group whitespace-nowrap"
               >
@@ -157,6 +163,13 @@ export default function Navigation() {
               className="text-xs tracking-wide font-light text-gray-light hover:text-green-vibrant transition-colors duration-300 relative group px-2"
             >
               {t("Navigation.portfolio")}
+              <span className="absolute -bottom-1 left-0 w-0 h-px bg-green-primary transition-all duration-300 group-hover:w-full" />
+            </Link>
+            <Link
+              href={`/${locale}/blog`}
+              className="text-xs tracking-wide font-light text-gray-light hover:text-green-vibrant transition-colors duration-300 relative group px-2"
+            >
+              {t("Navigation.blog")}
               <span className="absolute -bottom-1 left-0 w-0 h-px bg-green-primary transition-all duration-300 group-hover:w-full" />
             </Link>
             <Link
