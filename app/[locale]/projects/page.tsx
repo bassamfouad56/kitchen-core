@@ -47,8 +47,8 @@ export default async function ProjectsPage({ params }: Props) {
         <div className="absolute top-1/2 right-0 w-64 h-64 bg-green-glow rounded-full filter blur-3xl opacity-10 -translate-y-1/2" />
       </section>
 
-      {/* Portfolio Section - Reusing the EnhancedPortfolio component */}
-      <EnhancedPortfolio />
+      {/* Portfolio Section - Hide "View All" button since we're already on projects page */}
+      <EnhancedPortfolio showViewAllButton={false} />
     </main>
   );
 }
