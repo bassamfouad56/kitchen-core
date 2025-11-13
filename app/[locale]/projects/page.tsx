@@ -3,12 +3,11 @@ import { getTranslations } from "next-intl/server";
 import EnhancedPortfolio from "../../components/EnhancedPortfolio";
 
 type Props = {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 };
 
-export async function generateMetadata({
-  params: { locale },
-}: Props): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Metadata" });
 
   return {
@@ -17,7 +16,8 @@ export async function generateMetadata({
   };
 }
 
-export default function ProjectsPage({ params: { locale } }: Props) {
+export default async function ProjectsPage({ params }: Props) {
+  const { locale } = await params;
   return (
     <main className="min-h-screen bg-black pt-28">
       {/* Hero Section */}
