@@ -18,7 +18,10 @@ export default function TeamGrid({ teamMembers, locale }: TeamGridProps) {
   if (teamMembers.length === 0) return null;
 
   return (
-    <section ref={ref} className="py-32 bg-background-card relative overflow-hidden">
+    <section
+      ref={ref}
+      className="py-32 bg-background-card relative overflow-hidden"
+    >
       {/* Background Elements */}
       <div className="absolute inset-0 opacity-5">
         <div
@@ -163,9 +166,13 @@ function TeamMemberCard({
           {/* Animated Border on Hover */}
           <motion.div
             className="absolute inset-0 border-2 border-green-vibrant/0 group-hover:border-green-vibrant/30 transition-all duration-500 z-20"
-            animate={isHovered ? {
-              boxShadow: "inset 0 0 30px rgba(74, 222, 128, 0.1)"
-            } : {}}
+            animate={
+              isHovered
+                ? {
+                    boxShadow: "inset 0 0 30px rgba(74, 222, 128, 0.1)",
+                  }
+                : {}
+            }
           />
 
           {/* Hover Info Overlay */}
@@ -257,9 +264,13 @@ function TeamMemberCard({
           {/* Name Overlay (always visible) */}
           <motion.div
             className="absolute bottom-0 left-0 right-0 p-6 z-40 backdrop-blur-md bg-gradient-to-t from-black/90 via-black/70 to-transparent"
-            animate={isHovered ? {
-              paddingBottom: "2rem"
-            } : {}}
+            animate={
+              isHovered
+                ? {
+                    paddingBottom: "2rem",
+                  }
+                : {}
+            }
             transition={{ duration: 0.3 }}
           >
             {/* Decorative top border */}
@@ -269,10 +280,10 @@ function TeamMemberCard({
               className="text-2xl font-serif text-white mb-1 group-hover:text-green-vibrant transition-colors duration-300"
               animate={isHovered ? { x: 5 } : { x: 0 }}
             >
-              (name)
+              {isArabic ? member.nameAr : member.nameEn}
             </motion.h3>
             <p className="text-green-vibrant text-sm tracking-wide uppercase font-light">
-              (title)
+              {isArabic ? member.roleAr : member.roleEn}
             </p>
             {member.yearsOfExperience && (
               <motion.div
