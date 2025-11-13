@@ -35,10 +35,11 @@ export default function Navigation() {
         className={`fixed top-0 w-full z-50 transition-all duration-500 ${
           isScrolled
             ? "bg-black/95 backdrop-blur-md shadow-lg shadow-green-primary/10 border-b border-green-primary/20"
-            : "bg-transparent"
+            : "bg-black/80 backdrop-blur-sm"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        {/* Desktop Navigation */}
+        <div className="hidden lg:block max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
             {/* Logo */}
             <Link
@@ -54,8 +55,8 @@ export default function Navigation() {
               />
             </Link>
 
-            {/* Desktop Menu - Simplified to main sections only */}
-            <div className="hidden lg:flex items-center gap-8">
+            {/* Desktop Menu */}
+            <div className="flex items-center gap-8">
               <Link
                 href={`/${locale}`}
                 className="text-sm tracking-wide font-light text-gray-light hover:text-green-vibrant transition-colors duration-300 relative group whitespace-nowrap"
@@ -87,7 +88,7 @@ export default function Navigation() {
             </div>
 
             {/* CTA & Language Switcher */}
-            <div className="hidden lg:flex items-center gap-3">
+            <div className="flex items-center gap-3">
               <LanguageSwitcher />
               <Link
                 href={`/${locale}#contact`}
@@ -96,27 +97,58 @@ export default function Navigation() {
                 {t("Navigation.scheduleConsultation").toUpperCase()}
               </Link>
             </div>
+          </div>
+        </div>
 
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsMobileMenuOpen(true)}
-              className="lg:hidden p-2 text-gray-light hover:text-green-vibrant transition-colors"
-              aria-label="Open menu"
+        {/* Mobile Navigation - Always Visible Links */}
+        <div className="lg:hidden">
+          {/* Top Row: Logo + Language Switcher */}
+          <div className="flex justify-between items-center h-16 px-4 border-b border-green-primary/20">
+            <Link
+              href={`/${locale}`}
+              className="hover:opacity-80 transition-opacity relative w-32 h-10"
             >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
-            </button>
+              <Image
+                src="/logo.png"
+                alt="Kitchen Core Logo"
+                fill
+                className="h-full w-full absolute object-cover"
+                priority
+              />
+            </Link>
+            <LanguageSwitcher />
+          </div>
+
+          {/* Bottom Row: Navigation Links - Always Visible */}
+          <div className="flex justify-around items-center h-12 px-2 border-b border-green-primary/10">
+            <Link
+              href={`/${locale}`}
+              className="text-xs tracking-wide font-light text-gray-light hover:text-green-vibrant transition-colors duration-300 relative group px-2"
+            >
+              {t("Navigation.home")}
+              <span className="absolute -bottom-1 left-0 w-0 h-px bg-green-primary transition-all duration-300 group-hover:w-full" />
+            </Link>
+            <Link
+              href={`/${locale}#portfolio`}
+              className="text-xs tracking-wide font-light text-gray-light hover:text-green-vibrant transition-colors duration-300 relative group px-2"
+            >
+              {t("Navigation.portfolio")}
+              <span className="absolute -bottom-1 left-0 w-0 h-px bg-green-primary transition-all duration-300 group-hover:w-full" />
+            </Link>
+            <Link
+              href={`/${locale}/about`}
+              className="text-xs tracking-wide font-light text-gray-light hover:text-green-vibrant transition-colors duration-300 relative group px-2"
+            >
+              {t("Navigation.about")}
+              <span className="absolute -bottom-1 left-0 w-0 h-px bg-green-primary transition-all duration-300 group-hover:w-full" />
+            </Link>
+            <Link
+              href={`/${locale}#contact`}
+              className="text-xs tracking-wide font-light text-gray-light hover:text-green-vibrant transition-colors duration-300 relative group px-2"
+            >
+              {t("Navigation.contact")}
+              <span className="absolute -bottom-1 left-0 w-0 h-px bg-green-primary transition-all duration-300 group-hover:w-full" />
+            </Link>
           </div>
         </div>
       </nav>
