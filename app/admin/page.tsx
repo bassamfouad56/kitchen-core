@@ -96,6 +96,12 @@ export default async function AdminDashboard() {
               Founder Profile
             </Link>
             <Link
+              href="/admin/team-members"
+              className="bg-background-card border border-green-primary p-6 hover:bg-green-primary/10 transition-colors text-green-vibrant font-medium"
+            >
+              Team Members
+            </Link>
+            <Link
               href="/admin/statistics"
               className="bg-background-card border border-green-primary p-6 hover:bg-green-primary/10 transition-colors text-green-vibrant font-medium"
             >
