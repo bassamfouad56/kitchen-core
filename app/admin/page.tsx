@@ -84,8 +84,14 @@ export default async function AdminDashboard() {
           <h2 className="text-2xl font-serif mb-6">Quick Actions</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <Link
-              href="/admin/projects/new"
+              href="/admin/company"
               className="bg-green-primary text-black p-6 hover:bg-green-vibrant transition-colors font-medium"
+            >
+              Company & About Page
+            </Link>
+            <Link
+              href="/admin/projects/new"
+              className="bg-background-card border border-gray-dark p-6 hover:border-green-primary transition-colors"
             >
               + New Project
             </Link>

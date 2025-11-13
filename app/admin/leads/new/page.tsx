@@ -58,15 +58,23 @@ export default function NewLeadPage() {
       const res = await fetch("/api/leads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include", // Include authentication cookies
         body: JSON.stringify(lead),
       });
 
-      if (!res.ok) throw new Error("Failed to create lead");
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.error || "Failed to create lead");
+      }
 
       router.push("/admin/leads");
       router.refresh();
     } catch (err) {
-      setError("Failed to create lead. Please try again.");
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Failed to create lead. Please try again.",
+      );
     } finally {
       setSaving(false);
     }
@@ -309,10 +317,3 @@ export default function NewLeadPage() {
     </div>
   );
 }
-
-
-
-
-
-
-
