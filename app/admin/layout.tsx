@@ -1,5 +1,6 @@
 import { Inter, Playfair_Display } from "next/font/google";
 import { Providers } from "../providers";
+import AdminIntlProvider from "./components/AdminIntlProvider";
 import "../globals.css";
 
 const inter = Inter({
@@ -21,9 +22,14 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" dir="ltr">
-      <body className={`${inter.variable} ${playfair.variable} antialiased`}>
-        <Providers>{children}</Providers>
+    <html lang="en" dir="ltr" suppressHydrationWarning>
+      <body
+        className={`${inter.variable} ${playfair.variable} antialiased`}
+        suppressHydrationWarning
+      >
+        <Providers>
+          <AdminIntlProvider>{children}</AdminIntlProvider>
+        </Providers>
       </body>
     </html>
   );
