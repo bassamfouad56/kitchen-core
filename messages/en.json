@@ -296,5 +296,11 @@
       "description": "Let's create a space that reflects your unique style and elevates your culinary experience.",
       "button": "Schedule Consultation"
     }
+  },
+  "Metadata": {
+    "projects": {
+      "title": "Our Projects | Kitchen Core",
+      "description": "Explore our portfolio of luxury kitchen designs for palaces, villas, and premium estates across the Middle East."
+    }
   }
 }

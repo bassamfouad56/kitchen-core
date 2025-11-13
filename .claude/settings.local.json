@@ -63,7 +63,21 @@
       "Bash(git config:*)",
       "Bash(pnpm db:migrate-bilingual:*)",
       "Bash(git push:*)",
-      "Bash(python:*)"
+      "Bash(python:*)",
+      "Bash(gh api:*)",
+      "Bash(xargs:*)",
+      "Bash(git checkout:*)",
+      "Bash(git restore:*)",
+      "Bash(tsx scripts/clean-old-projects.ts:*)",
+      "Bash(pnpm tsx:*)",
+      "Bash(pnpm db:seed:*)",
+      "Bash(pnpm test:*)",
+      "Bash(pnpm prisma migrate reset:*)",
+      "Bash(set PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=Yes, reset and reseed the database)",
+      "Bash(powershell -Command \"$env:PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=''Yes, reset and reseed the database''; pnpm prisma migrate reset --force\")",
+      "Bash(cmd.exe /c reset-db.bat)",
+      "Bash(powershell -ExecutionPolicy Bypass -File .reset-and-seed.ps1)",
+      "Bash(powershell -ExecutionPolicy Bypass -File \"d:\\wbsite\\kitchen-core\\reset-and-seed.ps1\")"
     ],
     "deny": [],
     "ask": []

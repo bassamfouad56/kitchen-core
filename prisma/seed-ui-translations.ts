@@ -113,6 +113,13 @@ const uiTranslations = [
     textAr: "التحدي الهندسي",
     description: "Engineering challenge section label",
   },
+  {
+    key: "portfolio.viewAllProjects",
+    category: "portfolio",
+    textEn: "View All Projects",
+    textAr: "عرض جميع المشاريع",
+    description: "Button to view all projects page",
+  },
 
   // Project Categories
   {
@@ -406,6 +413,24 @@ const uiTranslations = [
     textEn: "Let's Create Your Dream Kitchen",
     textAr: "لنصنع مطبخ أحلامك",
     description: "Contact section title",
+  },
+
+  // Metadata - Projects Page
+  {
+    key: "metadata.projects.title",
+    category: "metadata",
+    textEn: "Our Projects | Kitchen Core",
+    textAr: "مشاريعنا | Kitchen Core",
+    description: "Projects page meta title",
+  },
+  {
+    key: "metadata.projects.description",
+    category: "metadata",
+    textEn:
+      "Explore our portfolio of luxury kitchen designs for palaces, villas, and premium estates across the Middle East.",
+    textAr:
+      "استكشف مجموعة مشاريعنا من تصاميم المطابخ الفاخرة للقصور والفلل والعقارات الراقية في جميع أنحاء الشرق الأوسط.",
+    description: "Projects page meta description",
   },
 ];
 

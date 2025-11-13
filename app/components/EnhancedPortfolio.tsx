@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 
 interface Project {
   id: string;
@@ -226,6 +227,37 @@ export default function EnhancedPortfolio() {
               </motion.div>
             ))}
           </AnimatePresence>
+        </motion.div>
+
+        {/* View All Projects Button */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="flex justify-center mt-16"
+        >
+          <Link
+            href={`/${locale}/projects`}
+            className="group relative px-8 py-4 border-2 border-green-primary text-green-primary hover:bg-green-primary hover:text-black transition-all duration-300 text-sm tracking-wider font-medium overflow-hidden"
+          >
+            <span className="relative z-10 flex items-center gap-2">
+              {t("Portfolio.viewAllProjects").toUpperCase()}
+              <svg
+                className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M13 7l5 5m0 0l-5 5m5-5H6"
+                />
+              </svg>
+            </span>
+            <div className="absolute inset-0 bg-green-glow opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
+          </Link>
         </motion.div>
 
         {/* Project Detail Modal */}
