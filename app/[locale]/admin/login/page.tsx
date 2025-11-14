@@ -2,12 +2,14 @@
 
 import { useState } from "react";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
+import { useLocale } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function LoginPage() {
   const router = useRouter();
+  const locale = useLocale();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -28,7 +30,7 @@ export default function LoginPage() {
       if (result?.error) {
         setError("Invalid email or password");
       } else {
-        router.push("/admin");
+        router.push(`/${locale}/admin`);
         router.refresh();
       }
     } catch {
@@ -119,7 +121,7 @@ export default function LoginPage() {
         </div>
 
         <div className="mt-8 text-center text-xs text-gray-dark">
-          <Link href="/" className="hover:text-green-primary transition-colors">
+          <Link href={`/${locale}`} className="hover:text-green-primary transition-colors">
             ← Back to Website
           </Link>
         </div>
