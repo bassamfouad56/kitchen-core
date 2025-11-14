@@ -119,7 +119,7 @@ export default function LoginPage() {
         </div>
 
         <div className="mt-8 text-center text-xs text-gray-dark">
-          <Link href="/" className="hover:text-green-primary transition-colors">
+          <Link href={`/${locale}`} className="hover:text-green-primary transition-colors">
             ← Back to Website
           </Link>
         </div>

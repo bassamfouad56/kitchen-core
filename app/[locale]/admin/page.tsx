@@ -41,53 +41,53 @@ export default async function AdminDashboard() {
   ]);
 
   const stats = [
-    { labelKey: "projects", count: projectsCount, href: "/admin/projects" },
+    { labelKey: "projects", count: projectsCount, href: `/${locale}/admin/projects` },
     {
       labelKey: "galleryImages",
       count: galleryCount,
-      href: "/admin/gallery",
+      href: `/${locale}/admin/gallery`,
     },
     {
       labelKey: "testimonials",
       count: testimonialsCount,
-      href: "/admin/testimonials",
+      href: `/${locale}/admin/testimonials`,
     },
-    { labelKey: "services", count: servicesCount, href: "/admin/services" },
-    { labelKey: "videos", count: videosCount, href: "/admin/videos" },
+    { labelKey: "services", count: servicesCount, href: `/${locale}/admin/services` },
+    { labelKey: "videos", count: videosCount, href: `/${locale}/admin/videos` },
     {
       labelKey: "innovations",
       count: innovationsCount,
-      href: "/admin/innovations",
+      href: `/${locale}/admin/innovations`,
     },
     {
       labelKey: "leadsCRM",
       count: leadsCount,
-      href: "/admin/leads",
+      href: `/${locale}/admin/leads`,
     },
     {
       labelKey: "teamMembers",
       count: teamMembersCount,
-      href: "/admin/team-members",
+      href: `/${locale}/admin/team-members`,
     },
     {
       labelKey: "nassGallery",
       count: nassGalleryCount,
-      href: "/admin/nass-gallery",
+      href: `/${locale}/admin/nass-gallery`,
     },
     {
       labelKey: "blogPosts",
       count: blogPostsCount,
-      href: "/admin/blog",
+      href: `/${locale}/admin/blog`,
     },
     {
       labelKey: "publishedPosts",
       count: publishedPostsCount,
-      href: "/admin/blog",
+      href: `/${locale}/admin/blog`,
     },
     {
       labelKey: "draftPosts",
       count: draftPostsCount,
-      href: "/admin/blog",
+      href: `/${locale}/admin/blog`,
     },
   ];
 
