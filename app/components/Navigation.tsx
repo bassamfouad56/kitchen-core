@@ -75,7 +75,7 @@ export default function Navigation() {
             </Link>
 
             {/* Desktop Menu */}
-            <div className="flex items-center gap-8">
+            <div className="flex items-center gap-6">
               <Link
                 href={`/${locale}`}
                 className="text-sm tracking-wide font-light text-gray-light hover:text-green-vibrant transition-colors duration-300 relative group whitespace-nowrap"
@@ -84,11 +84,24 @@ export default function Navigation() {
                 <span className="absolute -bottom-1 left-0 w-0 h-px bg-green-primary transition-all duration-300 group-hover:w-full" />
               </Link>
               <Link
-                href={`/${locale}#portfolio`}
-                onClick={(e) => handleSectionClick(e, "portfolio")}
+                href={`/${locale}/services`}
+                className="text-sm tracking-wide font-light text-gray-light hover:text-green-vibrant transition-colors duration-300 relative group whitespace-nowrap"
+              >
+                {t("Navigation.services")}
+                <span className="absolute -bottom-1 left-0 w-0 h-px bg-green-primary transition-all duration-300 group-hover:w-full" />
+              </Link>
+              <Link
+                href={`/${locale}/projects`}
                 className="text-sm tracking-wide font-light text-gray-light hover:text-green-vibrant transition-colors duration-300 relative group whitespace-nowrap"
               >
                 {t("Navigation.portfolio")}
+                <span className="absolute -bottom-1 left-0 w-0 h-px bg-green-primary transition-all duration-300 group-hover:w-full" />
+              </Link>
+              <Link
+                href={`/${locale}/gallery`}
+                className="text-sm tracking-wide font-light text-gray-light hover:text-green-vibrant transition-colors duration-300 relative group whitespace-nowrap"
+              >
+                {t("Navigation.gallery")}
                 <span className="absolute -bottom-1 left-0 w-0 h-px bg-green-primary transition-all duration-300 group-hover:w-full" />
               </Link>
               <Link
@@ -149,43 +162,42 @@ export default function Navigation() {
           </div>
 
           {/* Bottom Row: Navigation Links - Always Visible */}
-          <div className="flex justify-around items-center h-12 px-2 border-b border-green-primary/10">
+          <div className="grid grid-cols-4 gap-1 p-2 border-b border-green-primary/10">
             <Link
               href={`/${locale}`}
-              className="text-xs tracking-wide font-light text-gray-light hover:text-green-vibrant transition-colors duration-300 relative group px-2"
+              className="text-xs text-center tracking-wide font-light text-gray-light hover:text-green-vibrant transition-colors duration-300 py-2"
             >
               {t("Navigation.home")}
-              <span className="absolute -bottom-1 left-0 w-0 h-px bg-green-primary transition-all duration-300 group-hover:w-full" />
             </Link>
             <Link
-              href={`/${locale}#portfolio`}
-              onClick={(e) => handleSectionClick(e, "portfolio")}
-              className="text-xs tracking-wide font-light text-gray-light hover:text-green-vibrant transition-colors duration-300 relative group px-2"
+              href={`/${locale}/services`}
+              className="text-xs text-center tracking-wide font-light text-gray-light hover:text-green-vibrant transition-colors duration-300 py-2"
+            >
+              {t("Navigation.services")}
+            </Link>
+            <Link
+              href={`/${locale}/projects`}
+              className="text-xs text-center tracking-wide font-light text-gray-light hover:text-green-vibrant transition-colors duration-300 py-2"
             >
               {t("Navigation.portfolio")}
-              <span className="absolute -bottom-1 left-0 w-0 h-px bg-green-primary transition-all duration-300 group-hover:w-full" />
+            </Link>
+            <Link
+              href={`/${locale}/gallery`}
+              className="text-xs text-center tracking-wide font-light text-gray-light hover:text-green-vibrant transition-colors duration-300 py-2"
+            >
+              {t("Navigation.gallery")}
             </Link>
             <Link
               href={`/${locale}/blog`}
-              className="text-xs tracking-wide font-light text-gray-light hover:text-green-vibrant transition-colors duration-300 relative group px-2"
+              className="text-xs text-center tracking-wide font-light text-gray-light hover:text-green-vibrant transition-colors duration-300 py-2 col-span-2"
             >
               {t("Navigation.blog")}
-              <span className="absolute -bottom-1 left-0 w-0 h-px bg-green-primary transition-all duration-300 group-hover:w-full" />
             </Link>
             <Link
               href={`/${locale}/about`}
-              className="text-xs tracking-wide font-light text-gray-light hover:text-green-vibrant transition-colors duration-300 relative group px-2"
+              className="text-xs text-center tracking-wide font-light text-gray-light hover:text-green-vibrant transition-colors duration-300 py-2 col-span-2"
             >
               {t("Navigation.about")}
-              <span className="absolute -bottom-1 left-0 w-0 h-px bg-green-primary transition-all duration-300 group-hover:w-full" />
-            </Link>
-            <Link
-              href={`/${locale}#contact`}
-              onClick={(e) => handleSectionClick(e, "contact")}
-              className="text-xs tracking-wide font-light text-gray-light hover:text-green-vibrant transition-colors duration-300 relative group px-2"
-            >
-              {t("Navigation.contact")}
-              <span className="absolute -bottom-1 left-0 w-0 h-px bg-green-primary transition-all duration-300 group-hover:w-full" />
             </Link>
           </div>
         </div>
