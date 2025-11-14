@@ -60,7 +60,7 @@ export default function Home() {
       {/* Hero Section - Full Screen with Parallax */}
       <motion.section
         style={{ opacity: heroOpacity, scale: heroScale }}
-        className="relative min-h-screen flex items-center justify-center overflow-hidden pt-32 lg:pt-0"
+        className="relative min-h-screen flex items-center justify-center overflow-hidden pt-32"
       >
         {/* Hero Video Background */}
         <div className="absolute inset-0 w-full h-full">
