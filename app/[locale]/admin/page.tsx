@@ -4,11 +4,16 @@ import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import AdminDashboardClient from "./components/AdminDashboardClient";
 
-export default async function AdminDashboard() {
+type Props = {
+  params: Promise<{ locale: string }>;
+};
+
+export default async function AdminDashboard({ params }: Props) {
+  const { locale } = await params;
   const session = await getServerSession(authOptions);
 
   if (!session) {
-    redirect("/admin/login");
+    redirect(`/${locale}/admin/login`);
   }
 
   // Get content stats
@@ -41,7 +46,11 @@ export default async function AdminDashboard() {
   ]);
 
   const stats = [
-    { labelKey: "projects", count: projectsCount, href: `/${locale}/admin/projects` },
+    {
+      labelKey: "projects",
+      count: projectsCount,
+      href: `/${locale}/admin/projects`,
+    },
     {
       labelKey: "galleryImages",
       count: galleryCount,
@@ -52,7 +61,11 @@ export default async function AdminDashboard() {
       count: testimonialsCount,
       href: `/${locale}/admin/testimonials`,
     },
-    { labelKey: "services", count: servicesCount, href: `/${locale}/admin/services` },
+    {
+      labelKey: "services",
+      count: servicesCount,
+      href: `/${locale}/admin/services`,
+    },
     { labelKey: "videos", count: videosCount, href: `/${locale}/admin/videos` },
     {
       labelKey: "innovations",
