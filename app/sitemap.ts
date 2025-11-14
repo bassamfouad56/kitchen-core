@@ -1,83 +1,68 @@
-import { MetadataRoute } from 'next'
-import { prisma } from '@/lib/prisma'
+import { MetadataRoute } from "next";
+import { prisma } from "@/lib/prisma";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://kitchencore.com'
+  const baseUrl = "https://kitchen-core.com";
+  const locales = ["en", "ar"];
 
-  // Static pages
-  const staticPages: MetadataRoute.Sitemap = [
-    {
-      url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 1,
-    },
-    {
-      url: `${baseUrl}/about`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/services`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/portfolio`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/process`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/contact`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-  ]
+  // Static pages (bilingual)
+  const staticPages: MetadataRoute.Sitemap = [];
+  const pages = [
+    { path: "", priority: 1.0, freq: "daily" as const },
+    { path: "/about", priority: 0.8, freq: "monthly" as const },
+    { path: "/projects", priority: 0.9, freq: "weekly" as const },
+    { path: "/blog", priority: 0.7, freq: "daily" as const },
+  ];
 
-  // Dynamic project pages
+  // Generate bilingual static pages
+  locales.forEach((locale) => {
+    pages.forEach((page) => {
+      staticPages.push({
+        url: `${baseUrl}/${locale}${page.path}`,
+        lastModified: new Date(),
+        changeFrequency: page.freq,
+        priority: page.priority,
+      });
+    });
+  });
+
+  // Dynamic project pages (bilingual)
   const projects = await prisma.project.findMany({
     where: { published: true },
     select: { slug: true, updatedAt: true },
-    orderBy: { updatedAt: 'desc' },
-  })
+    orderBy: { updatedAt: "desc" },
+  });
 
-  const projectPages: MetadataRoute.Sitemap = projects.map((project) => ({
-    url: `${baseUrl}/projects/${project.slug}`,
-    lastModified: project.updatedAt,
-    changeFrequency: 'monthly' as const,
-    priority: 0.8,
-  }))
+  const projectPages: MetadataRoute.Sitemap = projects.flatMap((project) =>
+    locales.map((locale) => ({
+      url: `${baseUrl}/${locale}/projects/${project.slug}`,
+      lastModified: project.updatedAt,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    })),
+  );
 
-  // Dynamic blog posts (if available)
-  let blogPages: MetadataRoute.Sitemap = []
+  // Dynamic blog posts (bilingual)
+  let blogPages: MetadataRoute.Sitemap = [];
   try {
     const blogPosts = await prisma.blogPost.findMany({
       where: { published: true },
       select: { slug: true, updatedAt: true },
-      orderBy: { publishedAt: 'desc' },
-    })
+      orderBy: { publishedAt: "desc" },
+    });
 
-    blogPages = blogPosts.map((post) => ({
-      url: `${baseUrl}/blog/${post.slug}`,
-      lastModified: post.updatedAt,
-      changeFrequency: 'weekly' as const,
-      priority: 0.7,
-    }))
+    blogPages = blogPosts.flatMap((post) =>
+      locales.map((locale) => ({
+        url: `${baseUrl}/${locale}/blog/${post.slug}`,
+        lastModified: post.updatedAt,
+        changeFrequency: "weekly" as const,
+        priority: 0.6,
+      })),
+    );
   } catch (error) {
-    // Blog model might not exist yet
-    console.log('Blog posts not available for sitemap')
+    console.log("Blog posts not available for sitemap:", error);
   }
 
   // Combine all pages
-  return [...staticPages, ...projectPages, ...blogPages]
+  return [...staticPages, ...projectPages, ...blogPages];
 }
