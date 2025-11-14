@@ -54,16 +54,7 @@ export async function middleware(request: NextRequest) {
     return response;
   }
 
-  // For admin routes, skip intl middleware
-  if (pathname.startsWith('/admin')) {
-    const response = NextResponse.next();
-    response.headers.set('X-Content-Type-Options', 'nosniff');
-    response.headers.set('X-Frame-Options', 'SAMEORIGIN');
-    response.headers.set('X-XSS-Protection', '1; mode=block');
-    return response;
-  }
-
-  // Apply next-intl middleware for all other routes
+  // Apply next-intl middleware for all routes (including admin)
   const intlResponse = intlMiddleware(request);
 
   // Add security headers
