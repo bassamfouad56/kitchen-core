@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import EnhancedPortfolio from "../../components/EnhancedPortfolio";
+import BeforeAfterSlider from "../../components/BeforeAfterSlider";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -49,6 +50,9 @@ export default async function ProjectsPage({ params }: Props) {
 
       {/* Portfolio Section - Hide "View All" button since we're already on projects page */}
       <EnhancedPortfolio showViewAllButton={false} />
+
+      {/* Before & After Section - Transformation showcase */}
+      <BeforeAfterSlider />
     </main>
   );
 }

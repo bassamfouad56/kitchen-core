@@ -5,6 +5,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useTranslations, useLocale } from "next-intl";
 import EnhancedPortfolio from "../components/EnhancedPortfolio";
 import VideoShowcase from "../components/VideoShowcase";
+import BeforeAfterSlider from "../components/BeforeAfterSlider";
 
 interface Statistic {
   id: string;
@@ -177,6 +178,9 @@ export default function Home() {
 
       {/* Enhanced Portfolio Section - Most Important */}
       <EnhancedPortfolio />
+
+      {/* Before & After Section - Transformation showcase */}
+      <BeforeAfterSlider />
 
       {/* Video Showcase - Visual demonstration of work */}
       <VideoShowcase />
