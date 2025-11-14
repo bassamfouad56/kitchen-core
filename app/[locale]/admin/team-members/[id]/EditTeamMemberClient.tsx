@@ -190,7 +190,7 @@ export default function EditTeamMemberClient() {
             {t("notFound")}
           </div>
           <Link
-            href={`/${locale}/admin/team-members"
+            href="/admin/team-members"
             className="text-gray-light hover:text-white transition-colors"
           >
             {tActions("backToDashboard")}
@@ -547,7 +547,7 @@ export default function EditTeamMemberClient() {
                 {saving ? tCommon("saving") : t("saveChanges")}
               </button>
               <Link
-                href={`/${locale}/admin/team-members"
+                href="/admin/team-members"
                 className="border border-gray-dark text-white px-8 py-3 hover:border-green-primary/50 transition-colors font-medium inline-block text-center"
               >
                 {tActions("cancel")}

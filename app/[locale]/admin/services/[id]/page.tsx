@@ -112,7 +112,7 @@ export default function EditServicePage() {
           <div className="bg-red-500/10 border border-red-500 text-red-500 p-4">
             Service not found
           </div>
-          <Link href={`/${locale}/admin/services" className="text-green-primary hover:text-green-vibrant mt-4 inline-block">
+          <Link href="/admin/services" className="text-green-primary hover:text-green-vibrant mt-4 inline-block">
             ← Back to Services
           </Link>
         </div>
@@ -239,7 +239,7 @@ export default function EditServicePage() {
             </button>
             <div className="flex gap-4">
               <Link
-                href={`/${locale}/admin/services"
+                href="/admin/services"
                 className="bg-background-card border border-gray-dark px-6 py-3 hover:border-green-primary transition-colors"
               >
                 Cancel

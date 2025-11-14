@@ -25,7 +25,7 @@ export default async function ServicesPage() {
             <p className="text-gray-light">Manage service offerings</p>
           </div>
           <Link
-            href={`/${locale}/admin/services/new"
+            href="/admin/services/new"
             className="bg-green-primary text-black px-6 py-3 hover:bg-green-vibrant transition-colors font-medium"
           >
             + New Service
@@ -87,7 +87,7 @@ export default async function ServicesPage() {
 
         {/* Back Link */}
         <div className="mt-8">
-          <Link href={`/${locale}/admin" className="text-gray-light hover:text-green-primary text-sm">
+          <Link href="/admin" className="text-gray-light hover:text-green-primary text-sm">
             ← Back to Dashboard
           </Link>
         </div>

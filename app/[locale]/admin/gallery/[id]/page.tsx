@@ -102,7 +102,7 @@ export default function EditGalleryImagePage({ params }: { params: Promise<{ id:
       <div className="min-h-screen bg-black text-white flex items-center justify-center">
         <div>
           <div className="text-xl mb-4">Image not found</div>
-          <Link href={`/${locale}/admin/gallery" className="text-green-primary hover:text-green-vibrant">
+          <Link href="/admin/gallery" className="text-green-primary hover:text-green-vibrant">
             ← Back to Gallery
           </Link>
         </div>
@@ -259,7 +259,7 @@ export default function EditGalleryImagePage({ params }: { params: Promise<{ id:
           {/* Actions */}
           <div className="flex justify-between items-center pt-4">
             <Link
-              href={`/${locale}/admin/gallery"
+              href="/admin/gallery"
               className="text-gray-light hover:text-green-primary"
             >
               ← Cancel

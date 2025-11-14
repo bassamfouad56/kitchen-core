@@ -306,7 +306,7 @@ export default function NewLeadPage() {
               {saving ? "Creating..." : "Create Lead"}
             </button>
             <Link
-              href={`/${locale}/admin/leads"
+              href="/admin/leads"
               className="px-6 py-3 border border-gray-dark text-gray-light hover:text-white hover:border-white transition-colors"
             >
               Cancel

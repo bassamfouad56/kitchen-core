@@ -164,7 +164,7 @@ export default function NewServicePage() {
               {loading ? 'Creating...' : 'Create Service'}
             </button>
             <Link
-              href={`/${locale}/admin/services"
+              href="/admin/services"
               className="bg-background-card border border-gray-dark px-6 py-3 hover:border-green-primary transition-colors"
             >
               Cancel

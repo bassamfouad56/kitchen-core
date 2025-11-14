@@ -253,7 +253,7 @@ export default function EditBlogPostClient({ id }: { id: string }) {
           <div className="text-center py-12">
             <p className="text-gray-light mb-4">Post not found</p>
             <Link
-              href={`/${locale}/admin/blog"
+              href="/admin/blog"
               className="text-green-primary hover:text-green-vibrant"
             >
               {tActions("backToDashboard")}
@@ -683,7 +683,7 @@ export default function EditBlogPostClient({ id }: { id: string }) {
                 {saving ? tCommon("updating") : tActions("update")}
               </button>
               <Link
-                href={`/${locale}/admin/blog"
+                href="/admin/blog"
                 className="border border-gray-dark text-white px-8 py-3 hover:border-green-primary/50 transition-colors font-medium inline-block text-center"
               >
                 {tActions("cancel")}

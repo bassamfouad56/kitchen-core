@@ -92,7 +92,7 @@ export default function TeamMembersListClient() {
 
         <div className="flex justify-end mb-8">
           <Link
-            href={`/${locale}/admin/team-members/new"
+            href="/admin/team-members/new"
             className="bg-green-primary text-black px-6 py-3 hover:bg-green-vibrant transition-colors font-medium"
           >
             {t("addTeamMember")}
@@ -109,7 +109,7 @@ export default function TeamMembersListClient() {
           <div className="text-center py-12 border border-gray-dark">
             <p className="text-gray-light mb-4">{t("noMembers")}</p>
             <Link
-              href={`/${locale}/admin/team-members/new"
+              href="/admin/team-members/new"
               className="text-green-primary hover:text-green-vibrant"
             >
               {t("addFirst")}
@@ -185,7 +185,7 @@ export default function TeamMembersListClient() {
 
         <div className="mt-8">
           <Link
-            href={`/${locale}/admin"
+            href="/admin"
             className="text-gray-light hover:text-white transition-colors"
           >
             {tActions("backToDashboard")}

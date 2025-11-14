@@ -25,7 +25,7 @@ export default async function VideosPage() {
             <p className="text-gray-light">Manage video showcase content</p>
           </div>
           <Link
-            href={`/${locale}/admin/videos/new"
+            href="/admin/videos/new"
             className="bg-green-primary text-black px-6 py-3 hover:bg-green-vibrant transition-colors font-medium"
           >
             + New Video
@@ -83,7 +83,7 @@ export default async function VideosPage() {
 
         {/* Back Link */}
         <div className="mt-8">
-          <Link href={`/${locale}/admin" className="text-gray-light hover:text-green-primary text-sm">
+          <Link href="/admin" className="text-gray-light hover:text-green-primary text-sm">
             ← Back to Dashboard
           </Link>
         </div>

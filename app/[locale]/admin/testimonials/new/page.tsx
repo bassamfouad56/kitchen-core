@@ -212,7 +212,7 @@ export default function NewTestimonialPage() {
               {saving ? 'Creating...' : 'Create Testimonial'}
             </button>
             <Link
-              href={`/${locale}/admin/testimonials"
+              href="/admin/testimonials"
               className="px-6 py-3 border border-gray-dark text-gray-light hover:text-white hover:border-white transition-colors"
             >
               Cancel

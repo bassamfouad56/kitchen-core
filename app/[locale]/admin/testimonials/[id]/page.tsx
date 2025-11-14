@@ -102,7 +102,7 @@ export default function EditTestimonialPage({ params }: { params: Promise<{ id: 
       <div className="min-h-screen bg-black text-white p-8">
         <div className="max-w-4xl mx-auto">
           <p className="text-red-400">Testimonial not found</p>
-          <Link href={`/${locale}/admin/testimonials" className="text-green-primary hover:underline">
+          <Link href="/admin/testimonials" className="text-green-primary hover:underline">
             Back to testimonials
           </Link>
         </div>
@@ -260,7 +260,7 @@ export default function EditTestimonialPage({ params }: { params: Promise<{ id: 
                 {saving ? 'Saving...' : 'Save Changes'}
               </button>
               <Link
-                href={`/${locale}/admin/testimonials"
+                href="/admin/testimonials"
                 className="px-6 py-3 border border-gray-dark text-gray-light hover:text-white hover:border-white transition-colors"
               >
                 Cancel

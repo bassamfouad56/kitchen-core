@@ -25,7 +25,7 @@ export default async function InnovationsPage() {
             <p className="text-gray-light">Manage innovation & technology features</p>
           </div>
           <Link
-            href={`/${locale}/admin/innovations/new"
+            href="/admin/innovations/new"
             className="bg-green-primary text-black px-6 py-3 hover:bg-green-vibrant transition-colors font-medium"
           >
             + New Innovation
@@ -87,7 +87,7 @@ export default async function InnovationsPage() {
 
         {/* Back Link */}
         <div className="mt-8">
-          <Link href={`/${locale}/admin" className="text-gray-light hover:text-green-primary text-sm">
+          <Link href="/admin" className="text-gray-light hover:text-green-primary text-sm">
             ← Back to Dashboard
           </Link>
         </div>

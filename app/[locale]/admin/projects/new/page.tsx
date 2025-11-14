@@ -371,7 +371,7 @@ export default function NewProjectPage() {
           {/* Actions */}
           <div className="flex justify-between items-center pt-4">
             <Link
-              href={`/${locale}/admin/projects"
+              href="/admin/projects"
               className="text-gray-light hover:text-green-primary"
             >
               ← Cancel

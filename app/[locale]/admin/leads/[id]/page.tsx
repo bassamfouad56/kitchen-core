@@ -224,7 +224,7 @@ export default function LeadDetailPage({ params }: { params: Promise<{ id: strin
               {isEditing ? "Cancel" : "Edit"}
             </button>
             <Link
-              href={`/${locale}/admin/leads"
+              href="/admin/leads"
               className="px-4 py-2 border border-gray-dark text-gray-light hover:text-white hover:border-white transition-colors"
             >
               Back to Leads

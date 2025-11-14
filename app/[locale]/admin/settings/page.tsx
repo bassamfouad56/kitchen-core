@@ -473,7 +473,7 @@ export default function SettingsPage() {
               {saving ? "Saving..." : "Save Settings"}
             </button>
             <Link
-              href={`/${locale}/admin"
+              href="/admin"
               className="bg-background-card border border-gray-dark px-6 py-3 hover:border-green-primary transition-colors"
             >
               Back to Dashboard

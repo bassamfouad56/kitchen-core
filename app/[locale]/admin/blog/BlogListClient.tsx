@@ -163,7 +163,7 @@ export default function BlogListClient() {
           </div>
 
           <Link
-            href={`/${locale}/admin/blog/new"
+            href="/admin/blog/new"
             className="bg-green-primary text-black px-6 py-2 hover:bg-green-vibrant transition-colors font-medium"
           >
             {t("addPost")}
@@ -179,7 +179,7 @@ export default function BlogListClient() {
           <div className="text-center py-12">
             <p className="text-gray-light mb-4">{t("noPosts")}</p>
             <Link
-              href={`/${locale}/admin/blog/new"
+              href="/admin/blog/new"
               className="inline-block bg-green-primary text-black px-6 py-3 hover:bg-green-vibrant transition-colors font-medium"
             >
               {t("addPost")}
@@ -275,7 +275,7 @@ export default function BlogListClient() {
         {/* Back to Dashboard */}
         <div className="mt-8">
           <Link
-            href={`/${locale}/admin"
+            href="/admin"
             className="text-green-primary hover:text-green-vibrant transition-colors"
           >
             {tActions("backToDashboard")}

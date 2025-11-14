@@ -23,7 +23,7 @@ export default async function TestimonialsPage() {
             <p className="text-gray-light">Manage client testimonials</p>
           </div>
           <Link
-            href={`/${locale}/admin/testimonials/new"
+            href="/admin/testimonials/new"
             className="bg-green-primary text-black px-6 py-3 font-medium hover:bg-green-vibrant transition-colors"
           >
             + New Testimonial
@@ -93,7 +93,7 @@ export default async function TestimonialsPage() {
           <div className="text-center py-12">
             <p className="text-gray-light mb-4">No testimonials yet</p>
             <Link
-              href={`/${locale}/admin/testimonials/new"
+              href="/admin/testimonials/new"
               className="inline-block px-6 py-3 bg-green-primary text-black font-medium hover:bg-green-vibrant transition-colors"
             >
               Add Your First Testimonial
@@ -103,7 +103,7 @@ export default async function TestimonialsPage() {
 
         {/* Back Link */}
         <div className="mt-8">
-          <Link href={`/${locale}/admin" className="text-gray-light hover:text-green-primary text-sm">
+          <Link href="/admin" className="text-gray-light hover:text-green-primary text-sm">
             ← Back to Dashboard
           </Link>
         </div>

@@ -316,7 +316,7 @@ export default function EditNassGalleryClient() {
             {t("notFound")}
           </div>
           <Link
-            href={`/${locale}/admin/nass-gallery"
+            href="/admin/nass-gallery"
             className="text-gray-light hover:text-white transition-colors"
           >
             {tActions("backToDashboard")}
@@ -813,7 +813,7 @@ export default function EditNassGalleryClient() {
                 {saving ? tCommon("saving") : t("saveChanges")}
               </button>
               <Link
-                href={`/${locale}/admin/nass-gallery"
+                href="/admin/nass-gallery"
                 className="border border-gray-dark text-white px-8 py-3 hover:border-green-primary/50 transition-colors font-medium inline-block text-center"
               >
                 {tActions("cancel")}

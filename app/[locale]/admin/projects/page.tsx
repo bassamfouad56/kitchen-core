@@ -22,7 +22,7 @@ export default async function ProjectsPage() {
             <p className="text-gray-light">Manage your project portfolio</p>
           </div>
           <Link
-            href={`/${locale}/admin/projects/new"
+            href="/admin/projects/new"
             className="bg-green-primary text-black px-6 py-3 font-medium hover:bg-green-vibrant transition-colors"
           >
             + New Project
@@ -79,7 +79,7 @@ export default async function ProjectsPage() {
 
         {/* Back Link */}
         <div className="mt-8">
-          <Link href={`/${locale}/admin" className="text-gray-light hover:text-green-primary text-sm">
+          <Link href="/admin" className="text-gray-light hover:text-green-primary text-sm">
             ← Back to Dashboard
           </Link>
         </div>

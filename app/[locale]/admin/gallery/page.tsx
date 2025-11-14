@@ -23,7 +23,7 @@ export default async function GalleryPage() {
             <p className="text-gray-light">Manage your gallery collection</p>
           </div>
           <Link
-            href={`/${locale}/admin/gallery/new"
+            href="/admin/gallery/new"
             className="bg-green-primary text-black px-6 py-3 font-medium hover:bg-green-vibrant transition-colors"
           >
             + New Image
@@ -78,7 +78,7 @@ export default async function GalleryPage() {
           <div className="text-center py-12">
             <p className="text-gray-light mb-4">No gallery images yet</p>
             <Link
-              href={`/${locale}/admin/gallery/new"
+              href="/admin/gallery/new"
               className="inline-block px-6 py-3 bg-green-primary text-black font-medium hover:bg-green-vibrant transition-colors"
             >
               Add Your First Image
@@ -88,7 +88,7 @@ export default async function GalleryPage() {
 
         {/* Back Link */}
         <div className="mt-8">
-          <Link href={`/${locale}/admin" className="text-gray-light hover:text-green-primary text-sm">
+          <Link href="/admin" className="text-gray-light hover:text-green-primary text-sm">
             ← Back to Dashboard
           </Link>
         </div>

@@ -680,7 +680,7 @@ export default function NewNassGalleryClient() {
               {saving ? tCommon("creating") : t("createGallery")}
             </button>
             <Link
-              href={`/${locale}/admin/nass-gallery"
+              href="/admin/nass-gallery"
               className="border border-gray-dark text-white px-8 py-3 hover:border-green-primary/50 transition-colors font-medium inline-block text-center"
             >
               {tActions("cancel")}

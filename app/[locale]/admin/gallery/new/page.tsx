@@ -189,7 +189,7 @@ export default function NewGalleryImagePage() {
           {/* Actions */}
           <div className="flex justify-between items-center pt-4">
             <Link
-              href={`/${locale}/admin/gallery"
+              href="/admin/gallery"
               className="text-gray-light hover:text-green-primary"
             >
               ← Cancel

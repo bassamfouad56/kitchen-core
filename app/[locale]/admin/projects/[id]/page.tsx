@@ -118,7 +118,7 @@ export default function EditProjectPage({ params }: { params: Promise<{ id: stri
       <div className="min-h-screen bg-black text-white flex items-center justify-center">
         <div>
           <div className="text-xl mb-4">Project not found</div>
-          <Link href={`/${locale}/admin/projects" className="text-green-primary hover:text-green-vibrant">
+          <Link href="/admin/projects" className="text-green-primary hover:text-green-vibrant">
             ← Back to Projects
           </Link>
         </div>
@@ -400,7 +400,7 @@ export default function EditProjectPage({ params }: { params: Promise<{ id: stri
           {/* Actions */}
           <div className="flex justify-between items-center pt-4">
             <Link
-              href={`/${locale}/admin/projects"
+              href="/admin/projects"
               className="text-gray-light hover:text-green-primary"
             >
               ← Cancel

@@ -88,7 +88,7 @@ export default function StatisticsListClient() {
 
         <div className="flex justify-end mb-8">
           <Link
-            href={`/${locale}/admin/statistics/new"
+            href="/admin/statistics/new"
             className="bg-green-primary text-black px-6 py-3 hover:bg-green-vibrant transition-colors font-medium"
           >
             {t("addStatistic")}
@@ -105,7 +105,7 @@ export default function StatisticsListClient() {
           <div className="text-center py-12 border border-gray-dark">
             <p className="text-gray-light mb-4">{t("noStatistics")}</p>
             <Link
-              href={`/${locale}/admin/statistics/new"
+              href="/admin/statistics/new"
               className="text-green-primary hover:text-green-vibrant"
             >
               {t("createFirst")}
@@ -165,7 +165,7 @@ export default function StatisticsListClient() {
 
         <div className="mt-8">
           <Link
-            href={`/${locale}/admin"
+            href="/admin"
             className="text-gray-light hover:text-white transition-colors"
           >
             {tActions("backToDashboard")}

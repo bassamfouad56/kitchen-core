@@ -1,6 +1,6 @@
 "use client";
 
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import LanguageSwitcher from "./LanguageSwitcher";
 
@@ -18,7 +18,6 @@ export default function AdminDashboardClient({
   stats,
 }: AdminDashboardClientProps) {
   const t = useTranslations("Admin");
-  const locale = useLocale();
 
   return (
     <div className="min-h-screen bg-black text-white p-8">
@@ -59,31 +58,31 @@ export default function AdminDashboardClient({
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <Link
-              href={`/${locale}/admin/company`}
+              href="/admin/company"
               className="bg-green-primary text-black p-6 hover:bg-green-vibrant transition-colors font-medium"
             >
               {t("contentLinks.companyAbout")}
             </Link>
             <Link
-              href={`/${locale}/admin/founder`}
+              href="/admin/founder"
               className="bg-background-card border border-green-primary p-6 hover:bg-green-primary/10 transition-colors text-green-vibrant font-medium"
             >
               {t("contentLinks.founderProfile")}
             </Link>
             <Link
-              href={`/${locale}/admin/team-members`}
+              href="/admin/team-members"
               className="bg-background-card border border-green-primary p-6 hover:bg-green-primary/10 transition-colors text-green-vibrant font-medium"
             >
               {t("contentLinks.teamMembers")}
             </Link>
             <Link
-              href={`/${locale}/admin/statistics`}
+              href="/admin/statistics"
               className="bg-background-card border border-green-primary p-6 hover:bg-green-primary/10 transition-colors text-green-vibrant font-medium"
             >
               {t("contentLinks.statisticsTrust")}
             </Link>
             <Link
-              href={`/${locale}/admin/settings`}
+              href="/admin/settings"
               className="bg-background-card border border-gray-dark p-6 hover:border-green-primary transition-colors"
             >
               {t("contentLinks.siteSettings")}
@@ -98,19 +97,19 @@ export default function AdminDashboardClient({
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <Link
-              href={`/${locale}/admin/projects/new`}
+              href="/admin/projects/new"
               className="bg-background-card border border-gray-dark p-6 hover:border-green-primary transition-colors"
             >
               {t("actions.newProject")}
             </Link>
             <Link
-              href={`/${locale}/admin/gallery`}
+              href="/admin/gallery"
               className="bg-background-card border border-gray-dark p-6 hover:border-green-primary transition-colors"
             >
               {t("actions.manageGallery")}
             </Link>
             <Link
-              href={`/${locale}/admin/leads`}
+              href="/admin/leads"
               className="bg-background-card border border-gray-dark p-6 hover:border-green-primary transition-colors"
             >
               {t("actions.crmLeads")}
@@ -123,7 +122,7 @@ export default function AdminDashboardClient({
           <div className="text-sm text-gray-dark">{t("dashboard.version")}</div>
           <div className="space-x-4">
             <Link
-              href={`/${locale}`}
+              href="/"
               className="text-sm text-gray-light hover:text-green-primary transition-colors"
             >
               {t("dashboard.viewWebsite")}

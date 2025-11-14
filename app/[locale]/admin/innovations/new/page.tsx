@@ -181,7 +181,7 @@ export default function NewInnovationPage() {
               {loading ? 'Creating...' : 'Create Innovation'}
             </button>
             <Link
-              href={`/${locale}/admin/innovations"
+              href="/admin/innovations"
               className="bg-background-card border border-gray-dark px-6 py-3 hover:border-green-primary transition-colors"
             >
               Cancel

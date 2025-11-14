@@ -556,7 +556,7 @@ export default function NewBlogPostClient() {
               {saving ? tCommon("creating") : tActions("create")}
             </button>
             <Link
-              href={`/${locale}/admin/blog"
+              href="/admin/blog"
               className="border border-gray-dark text-white px-8 py-3 hover:border-green-primary/50 transition-colors font-medium inline-block text-center"
             >
               {tActions("cancel")}

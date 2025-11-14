@@ -90,7 +90,7 @@ export default function NassGalleryListClient() {
 
         <div className="flex justify-end mb-8">
           <Link
-            href={`/${locale}/admin/nass-gallery/new"
+            href="/admin/nass-gallery/new"
             className="bg-green-primary text-black px-6 py-3 hover:bg-green-vibrant transition-colors font-medium"
           >
             {t("addGallery")}
@@ -107,7 +107,7 @@ export default function NassGalleryListClient() {
           <div className="text-center py-12 border border-gray-dark">
             <p className="text-gray-light mb-4">{t("noGalleries")}</p>
             <Link
-              href={`/${locale}/admin/nass-gallery/new"
+              href="/admin/nass-gallery/new"
               className="text-green-primary hover:text-green-vibrant"
             >
               {t("addFirst")}
@@ -194,7 +194,7 @@ export default function NassGalleryListClient() {
 
         <div className="mt-8">
           <Link
-            href={`/${locale}/admin"
+            href="/admin"
             className="text-gray-light hover:text-white transition-colors"
           >
             {tActions("backToDashboard")}
