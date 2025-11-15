@@ -95,7 +95,10 @@
       "Bash(powershell -Command \"$env:PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=''proceed''; pnpm prisma migrate reset --force\")",
       "Bash(reset-db.bat)",
       "Bash(git show:*)",
-      "Bash(pnpm run db:init-company:*)"
+      "Bash(pnpm run db:init-company:*)",
+      "Bash(bug-reports/README.md)",
+      "Bash(pnpm run fix-images:*)",
+      "Bash(pnpm run audit-images:*)"
     ],
     "deny": [],
     "ask": []

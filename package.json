@@ -17,6 +17,8 @@
     "db:update-social": "tsx scripts/update-social-media.ts",
     "db:migrate-bilingual": "tsx scripts/migrate-to-bilingual.ts",
     "db:init-company": "tsx scripts/init-company-settings.ts",
+    "fix-images": "tsx fix-images.ts",
+    "audit-images": "tsx audit-images.ts",
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest run --coverage",
