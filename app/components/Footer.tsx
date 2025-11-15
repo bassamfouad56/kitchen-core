@@ -35,12 +35,30 @@ export default function Footer() {
             <h4 className="text-green-vibrant text-sm tracking-widest mb-4 uppercase font-medium">
               {t("Footer.quickLinks")}
             </h4>
-            <div className="flex flex-col gap-3 text-sm font-light">
+            <div className="grid grid-cols-2 gap-x-8 gap-y-3 text-sm font-light">
               <Link
                 href={`/${locale}`}
                 className="hover:text-green-primary transition-colors"
               >
                 {t("Navigation.home")}
+              </Link>
+              <Link
+                href={`/${locale}/projects`}
+                className="hover:text-green-primary transition-colors"
+              >
+                {t("Navigation.portfolio")}
+              </Link>
+              <Link
+                href={`/${locale}/services`}
+                className="hover:text-green-primary transition-colors"
+              >
+                {t("Navigation.services")}
+              </Link>
+              <Link
+                href={`/${locale}/gallery`}
+                className="hover:text-green-primary transition-colors"
+              >
+                {t("Navigation.gallery")}
               </Link>
               <Link
                 href={`/${locale}/about`}
@@ -55,16 +73,22 @@ export default function Footer() {
                 {t("Navigation.blog")}
               </Link>
               <Link
-                href={`/${locale}#portfolio`}
-                className="hover:text-green-primary transition-colors"
-              >
-                {t("Navigation.portfolio")}
-              </Link>
-              <Link
                 href={`/${locale}#contact`}
                 className="hover:text-green-primary transition-colors"
               >
                 {t("Navigation.contact")}
+              </Link>
+              <Link
+                href={`/${locale}/privacy`}
+                className="hover:text-green-primary transition-colors text-xs opacity-70"
+              >
+                {locale === "ar" ? "الخصوصية" : "Privacy"}
+              </Link>
+              <Link
+                href={`/${locale}/terms`}
+                className="hover:text-green-primary transition-colors text-xs opacity-70 col-span-2"
+              >
+                {locale === "ar" ? "الشروط والأحكام" : "Terms & Conditions"}
               </Link>
             </div>
           </div>

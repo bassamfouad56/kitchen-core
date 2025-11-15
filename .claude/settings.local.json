@@ -88,7 +88,14 @@
       "Bash(set +a)",
       "Bash(npx prisma db execute:*)",
       "Bash(export PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=\"yes\")",
-      "Bash(npx tsx:*)"
+      "Bash(npx tsx:*)",
+      "Bash(tree:*)",
+      "Bash(powershell -ExecutionPolicy Bypass -Command \"$env:PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=''Yes, reset and reseed the database''; pnpm prisma migrate reset --force\")",
+      "Bash($env:PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=\"proceed\")",
+      "Bash(powershell -Command \"$env:PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=''proceed''; pnpm prisma migrate reset --force\")",
+      "Bash(reset-db.bat)",
+      "Bash(git show:*)",
+      "Bash(pnpm run db:init-company:*)"
     ],
     "deny": [],
     "ask": []

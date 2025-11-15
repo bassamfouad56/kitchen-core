@@ -28,7 +28,13 @@ interface CompanyData {
   yearsOfExperience?: string;
   phone?: string;
   email?: string;
+  whatsappNumber?: string;
   instagramUrl?: string;
+  facebookUrl?: string;
+  linkedinUrl?: string;
+  twitterUrl?: string;
+  youtubeUrl?: string;
+  tiktokUrl?: string;
   featuredImage?: string;
   backgroundVideo?: string;
   published: boolean;
@@ -125,7 +131,13 @@ export default function CompanyPageClient() {
       yearsOfExperience: formData.get("yearsOfExperience") || null,
       phone: formData.get("phone") || null,
       email: formData.get("email") || null,
+      whatsappNumber: formData.get("whatsappNumber") || null,
       instagramUrl: formData.get("instagramUrl") || null,
+      facebookUrl: formData.get("facebookUrl") || null,
+      linkedinUrl: formData.get("linkedinUrl") || null,
+      twitterUrl: formData.get("twitterUrl") || null,
+      youtubeUrl: formData.get("youtubeUrl") || null,
+      tiktokUrl: formData.get("tiktokUrl") || null,
       featuredImage: formData.get("featuredImage") || null,
       backgroundVideo: formData.get("backgroundVideo") || null,
       published: formData.get("published") === "on",
@@ -550,21 +562,41 @@ export default function CompanyPageClient() {
             </div>
           </div>
 
-          {/* Contact & Media */}
+          {/* Contact Information */}
           <div className="border border-gray-dark p-6">
             <h2 className="text-2xl font-serif mb-6">{t("contactInfo")}</h2>
 
             <div className="grid md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium text-gray-light mb-2">
-                  {t("phone")}
+                  {t("phone")} <span className="text-green-primary">*</span>
                 </label>
                 <input
-                  type="text"
+                  type="tel"
                   name="phone"
-                  defaultValue={company?.phone || ""}
+                  placeholder="+971 55 999 0501"
+                  defaultValue={company?.phone || "+971 55 999 0501"}
                   className="w-full bg-background-card border border-gray-dark px-4 py-2 text-white focus:border-green-primary focus:outline-none"
                 />
+                <p className="text-xs text-gray-light mt-1">
+                  Main contact number (displayed sitewide)
+                </p>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-light mb-2">
+                  WhatsApp Number <span className="text-green-primary">*</span>
+                </label>
+                <input
+                  type="tel"
+                  name="whatsappNumber"
+                  placeholder="+971559990501"
+                  defaultValue={company?.whatsappNumber || "+971559990501"}
+                  className="w-full bg-background-card border border-gray-dark px-4 py-2 text-white focus:border-green-primary focus:outline-none"
+                />
+                <p className="text-xs text-gray-light mt-1">
+                  Format: +971XXXXXXXXX (no spaces for WhatsApp link)
+                </p>
               </div>
 
               <div>
@@ -574,18 +606,27 @@ export default function CompanyPageClient() {
                 <input
                   type="email"
                   name="email"
+                  placeholder="info@kitchencore.com"
                   defaultValue={company?.email || ""}
                   className="w-full bg-background-card border border-gray-dark px-4 py-2 text-white focus:border-green-primary focus:outline-none"
                 />
               </div>
+            </div>
+          </div>
 
+          {/* Social Media Links */}
+          <div className="border border-gray-dark p-6">
+            <h2 className="text-2xl font-serif mb-6">Social Media</h2>
+
+            <div className="grid md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium text-gray-light mb-2">
-                  {t("instagram")}
+                  Instagram URL
                 </label>
                 <input
                   type="url"
                   name="instagramUrl"
+                  placeholder="https://instagram.com/kitchen_core_uae"
                   defaultValue={company?.instagramUrl || ""}
                   className="w-full bg-background-card border border-gray-dark px-4 py-2 text-white focus:border-green-primary focus:outline-none"
                 />
@@ -593,23 +634,97 @@ export default function CompanyPageClient() {
 
               <div>
                 <label className="block text-sm font-medium text-gray-light mb-2">
+                  Facebook URL
+                </label>
+                <input
+                  type="url"
+                  name="facebookUrl"
+                  placeholder="https://facebook.com/kitchencore"
+                  defaultValue={company?.facebookUrl || ""}
+                  className="w-full bg-background-card border border-gray-dark px-4 py-2 text-white focus:border-green-primary focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-light mb-2">
+                  LinkedIn URL
+                </label>
+                <input
+                  type="url"
+                  name="linkedinUrl"
+                  placeholder="https://linkedin.com/company/kitchencore"
+                  defaultValue={company?.linkedinUrl || ""}
+                  className="w-full bg-background-card border border-gray-dark px-4 py-2 text-white focus:border-green-primary focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-light mb-2">
+                  Twitter/X URL
+                </label>
+                <input
+                  type="url"
+                  name="twitterUrl"
+                  placeholder="https://twitter.com/kitchencore"
+                  defaultValue={company?.twitterUrl || ""}
+                  className="w-full bg-background-card border border-gray-dark px-4 py-2 text-white focus:border-green-primary focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-light mb-2">
+                  YouTube URL
+                </label>
+                <input
+                  type="url"
+                  name="youtubeUrl"
+                  placeholder="https://youtube.com/@kitchencore"
+                  defaultValue={company?.youtubeUrl || ""}
+                  className="w-full bg-background-card border border-gray-dark px-4 py-2 text-white focus:border-green-primary focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-light mb-2">
+                  TikTok URL
+                </label>
+                <input
+                  type="url"
+                  name="tiktokUrl"
+                  placeholder="https://tiktok.com/@kitchencore"
+                  defaultValue={company?.tiktokUrl || ""}
+                  className="w-full bg-background-card border border-gray-dark px-4 py-2 text-white focus:border-green-primary focus:outline-none"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Media Assets */}
+          <div className="border border-gray-dark p-6">
+            <h2 className="text-2xl font-serif mb-6">Media Assets</h2>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-light mb-2">
                   {t("featuredImage")}
                 </label>
                 <input
                   type="url"
                   name="featuredImage"
+                  placeholder="Image URL"
                   defaultValue={company?.featuredImage || ""}
                   className="w-full bg-background-card border border-gray-dark px-4 py-2 text-white focus:border-green-primary focus:outline-none"
                 />
               </div>
 
-              <div className="md:col-span-2">
+              <div>
                 <label className="block text-sm font-medium text-gray-light mb-2">
                   {t("backgroundVideo")}
                 </label>
                 <input
                   type="url"
                   name="backgroundVideo"
+                  placeholder="Video URL"
                   defaultValue={company?.backgroundVideo || ""}
                   className="w-full bg-background-card border border-gray-dark px-4 py-2 text-white focus:border-green-primary focus:outline-none"
                 />

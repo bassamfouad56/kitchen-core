@@ -74,20 +74,13 @@ export default function Navigation() {
               />
             </Link>
 
-            {/* Desktop Menu */}
+            {/* Desktop Menu - Optimized SEO Order: Lead with Visual Proof */}
             <div className="flex items-center gap-6">
               <Link
                 href={`/${locale}`}
                 className="text-sm tracking-wide font-light text-gray-light hover:text-green-vibrant transition-colors duration-300 relative group whitespace-nowrap"
               >
                 {t("Navigation.home")}
-                <span className="absolute -bottom-1 left-0 w-0 h-px bg-green-primary transition-all duration-300 group-hover:w-full" />
-              </Link>
-              <Link
-                href={`/${locale}/services`}
-                className="text-sm tracking-wide font-light text-gray-light hover:text-green-vibrant transition-colors duration-300 relative group whitespace-nowrap"
-              >
-                {t("Navigation.services")}
                 <span className="absolute -bottom-1 left-0 w-0 h-px bg-green-primary transition-all duration-300 group-hover:w-full" />
               </Link>
               <Link
@@ -98,6 +91,13 @@ export default function Navigation() {
                 <span className="absolute -bottom-1 left-0 w-0 h-px bg-green-primary transition-all duration-300 group-hover:w-full" />
               </Link>
               <Link
+                href={`/${locale}/services`}
+                className="text-sm tracking-wide font-light text-gray-light hover:text-green-vibrant transition-colors duration-300 relative group whitespace-nowrap"
+              >
+                {t("Navigation.services")}
+                <span className="absolute -bottom-1 left-0 w-0 h-px bg-green-primary transition-all duration-300 group-hover:w-full" />
+              </Link>
+              <Link
                 href={`/${locale}/gallery`}
                 className="text-sm tracking-wide font-light text-gray-light hover:text-green-vibrant transition-colors duration-300 relative group whitespace-nowrap"
               >
@@ -105,17 +105,17 @@ export default function Navigation() {
                 <span className="absolute -bottom-1 left-0 w-0 h-px bg-green-primary transition-all duration-300 group-hover:w-full" />
               </Link>
               <Link
-                href={`/${locale}/blog`}
-                className="text-sm tracking-wide font-light text-gray-light hover:text-green-vibrant transition-colors duration-300 relative group whitespace-nowrap"
-              >
-                {t("Navigation.blog")}
-                <span className="absolute -bottom-1 left-0 w-0 h-px bg-green-primary transition-all duration-300 group-hover:w-full" />
-              </Link>
-              <Link
                 href={`/${locale}/about`}
                 className="text-sm tracking-wide font-light text-gray-light hover:text-green-vibrant transition-colors duration-300 relative group whitespace-nowrap"
               >
                 {t("Navigation.about")}
+                <span className="absolute -bottom-1 left-0 w-0 h-px bg-green-primary transition-all duration-300 group-hover:w-full" />
+              </Link>
+              <Link
+                href={`/${locale}/blog`}
+                className="text-sm tracking-wide font-light text-gray-light hover:text-green-vibrant transition-colors duration-300 relative group whitespace-nowrap"
+              >
+                {t("Navigation.blog")}
                 <span className="absolute -bottom-1 left-0 w-0 h-px bg-green-primary transition-all duration-300 group-hover:w-full" />
               </Link>
               <Link
@@ -161,7 +161,7 @@ export default function Navigation() {
             <LanguageSwitcher />
           </div>
 
-          {/* Bottom Row: Navigation Links - Always Visible */}
+          {/* Bottom Row: Navigation Links - Always Visible - Optimized SEO Order */}
           <div className="grid grid-cols-4 gap-1 p-2 border-b border-green-primary/10">
             <Link
               href={`/${locale}`}
@@ -170,16 +170,16 @@ export default function Navigation() {
               {t("Navigation.home")}
             </Link>
             <Link
-              href={`/${locale}/services`}
-              className="text-xs text-center tracking-wide font-light text-gray-light hover:text-green-vibrant transition-colors duration-300 py-2"
-            >
-              {t("Navigation.services")}
-            </Link>
-            <Link
               href={`/${locale}/projects`}
               className="text-xs text-center tracking-wide font-light text-gray-light hover:text-green-vibrant transition-colors duration-300 py-2"
             >
               {t("Navigation.portfolio")}
+            </Link>
+            <Link
+              href={`/${locale}/services`}
+              className="text-xs text-center tracking-wide font-light text-gray-light hover:text-green-vibrant transition-colors duration-300 py-2"
+            >
+              {t("Navigation.services")}
             </Link>
             <Link
               href={`/${locale}/gallery`}
@@ -188,16 +188,16 @@ export default function Navigation() {
               {t("Navigation.gallery")}
             </Link>
             <Link
-              href={`/${locale}/blog`}
-              className="text-xs text-center tracking-wide font-light text-gray-light hover:text-green-vibrant transition-colors duration-300 py-2 col-span-2"
-            >
-              {t("Navigation.blog")}
-            </Link>
-            <Link
               href={`/${locale}/about`}
               className="text-xs text-center tracking-wide font-light text-gray-light hover:text-green-vibrant transition-colors duration-300 py-2 col-span-2"
             >
               {t("Navigation.about")}
+            </Link>
+            <Link
+              href={`/${locale}/blog`}
+              className="text-xs text-center tracking-wide font-light text-gray-light hover:text-green-vibrant transition-colors duration-300 py-2 col-span-2"
+            >
+              {t("Navigation.blog")}
             </Link>
           </div>
         </div>

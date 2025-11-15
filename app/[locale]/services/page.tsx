@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
 import { Check } from "lucide-react";
+import BeforeAfterSlider from "../../components/BeforeAfterSlider";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -120,6 +121,9 @@ export default async function ServicesPage({ params }: Props) {
           </div>
         )}
       </section>
+
+      {/* Before & After Section - Interactive Transformation Showcase */}
+      <BeforeAfterSlider />
 
       {/* CTA Section */}
       <section className="max-w-7xl mx-auto px-6 lg:px-8 py-20">
