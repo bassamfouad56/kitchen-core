@@ -93,14 +93,14 @@ Under his leadership, Kitchen Core has completed over 150 prestigious projects f
   const teamMembers = [
     {
       id: "team-1",
-      nameEn: "Sarah Al-Mansouri",
-      nameAr: "سارة المنصوري",
+      nameEn: "Team Member",
+      nameAr: "عضو الفريق",
       roleEn: "Chief Design Officer",
       roleAr: "مديرة التصميم التنفيذية",
       bioEn:
-        "With 12 years of experience in luxury interior design, Sarah leads our design team in creating innovative kitchen concepts. Her portfolio includes work with Forbes Top 100 residences across the Middle East.",
+        "With 12 years of experience in luxury interior design, our Chief Design Officer leads the design team in creating innovative kitchen concepts. The portfolio includes work with Forbes Top 100 residences across the Middle East.",
       bioAr:
-        "مع 12 عاماً من الخبرة في التصميم الداخلي الفاخر، تقود سارة فريق التصميم لدينا في إنشاء مفاهيم مطبخ مبتكرة. تشمل محفظتها العمل مع أفضل 100 مقر إقامة من فوربس في جميع أنحاء الشرق الأوسط.",
+        "مع 12 عاماً من الخبرة في التصميم الداخلي الفاخر، تقود مديرة التصميم التنفيذية فريق التصميم في إنشاء مفاهيم مطبخ مبتكرة. تشمل المحفظة العمل مع أفضل 100 مقر إقامة من فوربس في جميع أنحاء الشرق الأوسط.",
       image: "/team/sarah.jpg",
       specialtiesEn: ["Concept Design", "3D Visualization", "Client Relations"],
       specialtiesAr: [
@@ -108,22 +108,22 @@ Under his leadership, Kitchen Core has completed over 150 prestigious projects f
         "التصور ثلاثي الأبعاد",
         "العلاقات مع العملاء",
       ],
-      email: "sarah@kitchencore.com",
-      linkedin: "https://linkedin.com/in/sarah-almansouri",
+      email: "design@kitchencore.com",
+      linkedin: null,
       yearsOfExperience: "12",
       order: 1,
       published: true,
     },
     {
       id: "team-2",
-      nameEn: "Marco Rossi",
-      nameAr: "ماركو روسي",
+      nameEn: "Team Member",
+      nameAr: "عضو الفريق",
       roleEn: "Master Craftsman",
       roleAr: "حرفي خبير",
       bioEn:
-        "Trained in Florence, Italy, Marco brings three generations of Italian woodworking mastery to Kitchen Core. His attention to detail and traditional techniques ensure every cabinet is a work of art.",
+        "Trained in Florence, Italy, our Master Craftsman brings three generations of Italian woodworking mastery to Kitchen Core. The attention to detail and traditional techniques ensure every cabinet is a work of art.",
       bioAr:
-        "تدرب في فلورنسا، إيطاليا، يجلب ماركو ثلاثة أجيال من إتقان الأعمال الخشبية الإيطالية إلى كيتشن كور. اهتمامه بالتفاصيل والتقنيات التقليدية يضمن أن كل خزانة هي عمل فني.",
+        "تدرب في فلورنسا، إيطاليا، يجلب الحرفي الخبير ثلاثة أجيال من إتقان الأعمال الخشبية الإيطالية إلى كيتشن كور. الاهتمام بالتفاصيل والتقنيات التقليدية يضمن أن كل خزانة هي عمل فني.",
       image: "/team/marco.jpg",
       specialtiesEn: [
         "Italian Craftsmanship",
@@ -135,48 +135,44 @@ Under his leadership, Kitchen Core has completed over 150 prestigious projects f
         "الخزائن المخصصة",
         "التقنيات التراثية",
       ],
-      email: "marco@kitchencore.com",
+      email: "crafts@kitchencore.com",
       yearsOfExperience: "18",
       order: 2,
       published: true,
     },
     {
       id: "team-3",
-      nameEn: "Fatima Al-Dosari",
-      nameAr: "فاطمة الدوسري",
+      nameEn: "Team Member",
+      nameAr: "عضو الفريق",
       roleEn: "Project Manager",
       roleAr: "مديرة المشاريع",
       bioEn:
-        "Fatima orchestrates every project from concept to completion, ensuring seamless execution and client satisfaction. Her expertise in luxury project management has delivered on-time, on-budget excellence for over 50 high-end projects.",
+        "Our Project Manager orchestrates every project from concept to completion, ensuring seamless execution and client satisfaction. The expertise in luxury project management has delivered on-time, on-budget excellence for over 50 high-end projects.",
       bioAr:
-        "تنسق فاطمة كل مشروع من المفهوم إلى الإنجاز، مما يضمن التنفيذ السلس ورضا العملاء. خبرتها في إدارة المشاريع الفاخرة قدمت التميز في الوقت المحدد وضمن الميزانية لأكثر من 50 مشروعاً راقياً.",
+        "تنسق مديرة المشاريع كل مشروع من المفهوم إلى الإنجاز، مما يضمن التنفيذ السلس ورضا العملاء. الخبرة في إدارة المشاريع الفاخرة قدمت التميز في الوقت المحدد وضمن الميزانية لأكثر من 50 مشروعاً راقياً.",
       image: "/team/fatima.jpg",
       specialtiesEn: [
         "Project Management",
         "Client Coordination",
         "Quality Control",
       ],
-      specialtiesAr: [
-        "إدارة المشاريع",
-        "تنسيق العملاء",
-        "مراقبة الجودة",
-      ],
-      email: "fatima@kitchencore.com",
-      linkedin: "https://linkedin.com/in/fatima-aldosari",
+      specialtiesAr: ["إدارة المشاريع", "تنسيق العملاء", "مراقبة الجودة"],
+      email: "projects@kitchencore.com",
+      linkedin: null,
       yearsOfExperience: "10",
       order: 3,
       published: true,
     },
     {
       id: "team-4",
-      nameEn: "David Chen",
-      nameAr: "ديفيد تشن",
+      nameEn: "Team Member",
+      nameAr: "عضو الفريق",
       roleEn: "Smart Technology Specialist",
       roleAr: "أخصائي التكنولوجيا الذكية",
       bioEn:
-        "David integrates cutting-edge smart home technology into every kitchen, creating seamless experiences. His expertise in IoT and automation ensures our kitchens are as intelligent as they are beautiful.",
+        "Our Smart Technology Specialist integrates cutting-edge smart home technology into every kitchen, creating seamless experiences. The expertise in IoT and automation ensures our kitchens are as intelligent as they are beautiful.",
       bioAr:
-        "يدمج ديفيد أحدث تقنيات المنزل الذكي في كل مطبخ، مما يخلق تجارب سلسة. خبرته في إنترنت الأشياء والأتمتة تضمن أن مطابخنا ذكية بقدر ما هي جميلة.",
+        "يدمج أخصائي التكنولوجيا الذكية أحدث تقنيات المنزل الذكي في كل مطبخ، مما يخلق تجارب سلسة. الخبرة في إنترنت الأشياء والأتمتة تضمن أن مطابخنا ذكية بقدر ما هي جميلة.",
       image: "/team/david.jpg",
       specialtiesEn: [
         "Smart Home Integration",
@@ -188,59 +184,51 @@ Under his leadership, Kitchen Core has completed over 150 prestigious projects f
         "أنظمة إنترنت الأشياء",
         "تصميم الأتمتة",
       ],
-      email: "david@kitchencore.com",
+      email: "tech@kitchencore.com",
       yearsOfExperience: "8",
       order: 4,
       published: true,
     },
     {
       id: "team-5",
-      nameEn: "Layla Hassan",
-      nameAr: "ليلى حسن",
+      nameEn: "Team Member",
+      nameAr: "عضو الفريق",
       roleEn: "Materials Specialist",
       roleAr: "أخصائية المواد",
       bioEn:
-        "Layla sources the finest materials from around the world—from Carrara marble to rare woods. Her global network and discerning eye ensure every Kitchen Core project features only premium, sustainable materials.",
+        "Our Materials Specialist sources the finest materials from around the world—from Carrara marble to rare woods. The global network and discerning eye ensure every Kitchen Core project features only premium, sustainable materials.",
       bioAr:
-        "تستورد ليلى أجود المواد من جميع أنحاء العالم - من رخام كارارا إلى الأخشاب النادرة. شبكتها العالمية وعينها الثاقبة تضمن أن كل مشروع كيتشن كور يتميز فقط بمواد متميزة ومستدامة.",
+        "تستورد أخصائية المواد أجود المواد من جميع أنحاء العالم - من رخام كارارا إلى الأخشاب النادرة. الشبكة العالمية والعين الثاقبة تضمن أن كل مشروع كيتشن كور يتميز فقط بمواد متميزة ومستدامة.",
       image: "/team/layla.jpg",
       specialtiesEn: [
         "Material Sourcing",
         "Sustainability",
         "Quality Assurance",
       ],
-      specialtiesAr: [
-        "توريد المواد",
-        "الاستدامة",
-        "ضمان الجودة",
-      ],
-      email: "layla@kitchencore.com",
+      specialtiesAr: ["توريد المواد", "الاستدامة", "ضمان الجودة"],
+      email: "materials@kitchencore.com",
       yearsOfExperience: "9",
       order: 5,
       published: true,
     },
     {
       id: "team-6",
-      nameEn: "Ahmed Khalil",
-      nameAr: "أحمد خليل",
+      nameEn: "Team Member",
+      nameAr: "عضو الفريق",
       roleEn: "Installation Director",
       roleAr: "مدير التركيب",
       bioEn:
-        "Ahmed leads our installation teams with precision and care. His 15 years of experience ensure flawless execution, transforming designs into reality with meticulous attention to every detail.",
+        "Our Installation Director leads the installation teams with precision and care. The 15 years of experience ensure flawless execution, transforming designs into reality with meticulous attention to every detail.",
       bioAr:
-        "يقود أحمد فرق التركيب لدينا بدقة وعناية. خبرته التي تبلغ 15 عاماً تضمن التنفيذ الخالي من العيوب، وتحويل التصاميم إلى واقع مع اهتمام دقيق بكل التفاصيل.",
+        "يقود مدير التركيب فرق التركيب بدقة وعناية. الخبرة التي تبلغ 15 عاماً تضمن التنفيذ الخالي من العيوب، وتحويل التصاميم إلى واقع مع اهتمام دقيق بكل التفاصيل.",
       image: "/team/ahmed.jpg",
       specialtiesEn: [
         "Installation Management",
         "Quality Control",
         "Team Leadership",
       ],
-      specialtiesAr: [
-        "إدارة التركيب",
-        "مراقبة الجودة",
-        "قيادة الفريق",
-      ],
-      email: "ahmed@kitchencore.com",
+      specialtiesAr: ["إدارة التركيب", "مراقبة الجودة", "قيادة الفريق"],
+      email: "installation@kitchencore.com",
       yearsOfExperience: "15",
       order: 6,
       published: true,
@@ -273,8 +261,7 @@ async function main() {
   }
 }
 
-main()
-  .catch((error) => {
-    console.error(error);
-    process.exit(1);
-  });
+main().catch((error) => {
+  console.error(error);
+  process.exit(1);
+});
