@@ -32,9 +32,11 @@ export default function AdminIntlProvider({
   const loadMessages = async (locale: "en" | "ar") => {
     try {
       const adminMessages = await import(
-        `../../../messages/admin-${locale}.json`
+        `../../../../messages/admin-${locale}.json`
       );
-      const publicMessages = await import(`../../../messages/${locale}.json`);
+      const publicMessages = await import(
+        `../../../../messages/${locale}.json`
+      );
 
       // Merge admin and public messages
       setMessages({
