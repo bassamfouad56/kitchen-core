@@ -23,16 +23,23 @@ export async function GET() {
       orderBy: { createdAt: "desc" },
     });
 
-    return NextResponse.json({
-      company,
-      teamMembers,
-      founder,
-    });
+    return NextResponse.json(
+      {
+        company,
+        teamMembers,
+        founder,
+      },
+      {
+        headers: {
+          "Cache-Control": "no-store, must-revalidate",
+        },
+      },
+    );
   } catch (error) {
     console.error("Error fetching about data:", error);
     return NextResponse.json(
       { error: "Failed to fetch about data" },
-      { status: 500 }
+      { status: 500 },
     );
   } finally {
     await prisma.$disconnect();

@@ -15,6 +15,10 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+// Force dynamic rendering to prevent caching issues
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 async function getAboutData(): Promise<AboutPageData> {
   try {
     // Fetch company information
