@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter, usePathname } from "@/i18n/routing";
+import { useParams } from "next/navigation";
 import { useLocale } from "next-intl";
 import { useTransition } from "react";
 
@@ -8,13 +9,18 @@ export default function LanguageSwitcher() {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
+  const params = useParams();
   const [isPending, startTransition] = useTransition();
 
   const switchToLocale = (newLocale: string) => {
     startTransition(() => {
       // Use next-intl's router.replace with locale override
-      // This properly handles locale switching while maintaining the current page
-      router.replace(pathname, { locale: newLocale });
+      // Pass both pathname and params to preserve navigation state
+      router.replace(
+        // @ts-expect-error -- TypeScript will validate that only known params are used
+        { pathname, params },
+        { locale: newLocale },
+      );
     });
   };
 
