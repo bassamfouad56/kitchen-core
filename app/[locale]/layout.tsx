@@ -4,10 +4,7 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { Inter, Playfair_Display, Cairo, Amiri } from "next/font/google";
 import { Providers } from "../providers";
-import Navigation from "@/app/components/Navigation";
-import Footer from "@/app/components/Footer";
-import ContactForm from "@/app/components/ContactForm";
-import FloatingSocialWrapper from "@/app/components/FloatingSocialWrapper";
+import PublicLayoutWrapper from "@/app/components/PublicLayoutWrapper";
 import "../globals.css";
 
 const inter = Inter({
@@ -70,8 +67,7 @@ export default async function LocaleLayout({
       >
         <Providers>
           <NextIntlClientProvider messages={messages} locale={locale}>
-            {/* Content only - admin layout handles its own structure */}
-            {children}
+            <PublicLayoutWrapper>{children}</PublicLayoutWrapper>
           </NextIntlClientProvider>
         </Providers>
       </body>
