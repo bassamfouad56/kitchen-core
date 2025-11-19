@@ -26,8 +26,8 @@ export default function PublicLayoutWrapper({
     <>
       <Navigation />
       {children}
-      <Footer />
       <ContactForm />
+      <Footer />
       <FloatingSocialWrapper />
     </>
   );
