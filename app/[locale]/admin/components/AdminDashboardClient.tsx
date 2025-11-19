@@ -83,6 +83,72 @@ export default function AdminDashboardClient({
               {t("contentLinks.statisticsTrust")}
             </Link>
             <Link
+              href={`/${locale}/admin/hero`}
+              className="bg-background-card border border-green-primary p-6 hover:bg-green-primary/10 transition-colors text-green-vibrant font-medium"
+            >
+              Hero Section
+            </Link>
+            <Link
+              href={`/${locale}/admin/process-steps`}
+              className="bg-background-card border border-green-primary p-6 hover:bg-green-primary/10 transition-colors text-green-vibrant font-medium"
+            >
+              Process Steps
+            </Link>
+            <Link
+              href={`/${locale}/admin/contact-submissions`}
+              className="bg-background-card border border-green-primary p-6 hover:bg-green-primary/10 transition-colors text-green-vibrant font-medium"
+            >
+              Contact Submissions
+            </Link>
+            <Link
+              href={`/${locale}/admin/partnerships`}
+              className="bg-background-card border border-green-primary p-6 hover:bg-green-primary/10 transition-colors text-green-vibrant font-medium"
+            >
+              Brand Partnerships
+            </Link>
+            <Link
+              href={`/${locale}/admin/translations`}
+              className="bg-background-card border border-green-primary p-6 hover:bg-green-primary/10 transition-colors text-green-vibrant font-medium"
+            >
+              UI Translations
+            </Link>
+            <Link
+              href={`/${locale}/admin/credentials`}
+              className="bg-background-card border border-green-primary p-6 hover:bg-green-primary/10 transition-colors text-green-vibrant font-medium"
+            >
+              Credentials & Certifications
+            </Link>
+            <Link
+              href={`/${locale}/admin/engineering-metrics`}
+              className="bg-background-card border border-green-primary p-6 hover:bg-green-primary/10 transition-colors text-green-vibrant font-medium"
+            >
+              Engineering Metrics
+            </Link>
+            <Link
+              href={`/${locale}/admin/subscribers`}
+              className="bg-background-card border border-green-primary p-6 hover:bg-green-primary/10 transition-colors text-green-vibrant font-medium"
+            >
+              Newsletter Subscribers
+            </Link>
+            <Link
+              href={`/${locale}/admin/cta-section`}
+              className="bg-background-card border border-green-primary p-6 hover:bg-green-primary/10 transition-colors text-green-vibrant font-medium"
+            >
+              CTA Section
+            </Link>
+            <Link
+              href={`/${locale}/admin/before-after`}
+              className="bg-background-card border border-green-primary p-6 hover:bg-green-primary/10 transition-colors text-green-vibrant font-medium"
+            >
+              Before/After Gallery
+            </Link>
+            <Link
+              href={`/${locale}/admin/technical-specs`}
+              className="bg-background-card border border-green-primary p-6 hover:bg-green-primary/10 transition-colors text-green-vibrant font-medium"
+            >
+              Technical Specifications
+            </Link>
+            <Link
               href={`/${locale}/admin/settings`}
               className="bg-background-card border border-gray-dark p-6 hover:border-green-primary transition-colors"
             >
@@ -92,7 +158,7 @@ export default function AdminDashboardClient({
         </div>
 
         {/* Quick Actions */}
-        <div>
+        <div className="mb-12">
           <h2 className="text-2xl font-serif mb-6">
             {t("dashboard.quickActions")}
           </h2>
@@ -114,6 +180,37 @@ export default function AdminDashboardClient({
               className="bg-background-card border border-gray-dark p-6 hover:border-green-primary transition-colors"
             >
               {t("actions.crmLeads")}
+            </Link>
+            <Link
+              href={`/${locale}/admin/customers`}
+              className="bg-orange-600 text-white p-6 hover:bg-orange-700 transition-colors font-medium"
+            >
+              Customer Management
+            </Link>
+            <Link
+              href={`/${locale}/admin/customers/new`}
+              className="bg-background-card border border-orange-600 p-6 hover:bg-orange-600/10 transition-colors text-orange-400 font-medium"
+            >
+              + Add New Customer
+            </Link>
+          </div>
+        </div>
+
+        {/* System Administration */}
+        <div>
+          <h2 className="text-2xl font-serif mb-6">System Administration</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <Link
+              href={`/${locale}/admin/users`}
+              className="bg-purple-600 text-white p-6 hover:bg-purple-700 transition-colors font-medium"
+            >
+              User Management
+            </Link>
+            <Link
+              href={`/${locale}/admin/users/new`}
+              className="bg-background-card border border-purple-600 p-6 hover:bg-purple-600/10 transition-colors text-purple-400 font-medium"
+            >
+              + Create New User
             </Link>
           </div>
         </div>

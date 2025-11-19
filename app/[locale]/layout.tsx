@@ -1,7 +1,7 @@
-import { NextIntlClientProvider } from 'next-intl';
-import { getMessages } from 'next-intl/server';
-import { notFound } from 'next/navigation';
-import { routing } from '@/i18n/routing';
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages } from "next-intl/server";
+import { notFound } from "next/navigation";
+import { routing } from "@/i18n/routing";
 import { Inter, Playfair_Display, Cairo, Amiri } from "next/font/google";
 import { Providers } from "../providers";
 import Navigation from "@/app/components/Navigation";
@@ -43,7 +43,7 @@ export function generateStaticParams() {
 
 export default async function LocaleLayout({
   children,
-  params
+  params,
 }: {
   children: React.ReactNode;
   params: Promise<{ locale: string }>;
@@ -52,7 +52,7 @@ export default async function LocaleLayout({
   const { locale } = await params;
 
   // Ensure that the incoming `locale` is valid
-  if (!routing.locales.includes(locale as 'en' | 'ar')) {
+  if (!routing.locales.includes(locale as "en" | "ar")) {
     notFound();
   }
 
@@ -61,33 +61,17 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   // Determine if the locale is RTL
-  const isRTL = locale === 'ar';
+  const isRTL = locale === "ar";
 
   return (
-    <html lang={locale} dir={isRTL ? 'rtl' : 'ltr'} suppressHydrationWarning>
+    <html lang={locale} dir={isRTL ? "rtl" : "ltr"} suppressHydrationWarning>
       <body
         className={`${inter.variable} ${playfair.variable} ${cairo.variable} ${amiri.variable} antialiased bg-black text-white`}
       >
         <Providers>
           <NextIntlClientProvider messages={messages} locale={locale}>
-            {/* Navigation Bar */}
-            <Navigation />
-
-            {/* Main Content */}
-            <main className="min-h-screen">
-              {children}
-            </main>
-
-            {/* Contact Form Section */}
-            <section id="contact" className="relative">
-              <ContactForm />
-            </section>
-
-            {/* Footer */}
-            <Footer />
-
-            {/* Floating Social Media Widget */}
-            <FloatingSocialWrapper />
+            {/* Content only - admin layout handles its own structure */}
+            {children}
           </NextIntlClientProvider>
         </Providers>
       </body>
