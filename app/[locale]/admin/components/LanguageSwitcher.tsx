@@ -4,32 +4,38 @@ import { useState, useEffect } from "react";
 
 export default function LanguageSwitcher() {
   const [locale, setLocale] = useState<"en" | "ar">("en");
+  const [isChanging, setIsChanging] = useState(false);
 
   useEffect(() => {
     // Load saved language preference
     const saved = localStorage.getItem("adminLocale") as "en" | "ar" | null;
     if (saved) {
       setLocale(saved);
-      applyLanguage(saved);
     }
   }, []);
 
-  const applyLanguage = (newLocale: "en" | "ar") => {
-    // Update HTML attributes
-    document.documentElement.lang = newLocale;
-    document.documentElement.dir = newLocale === "ar" ? "rtl" : "ltr";
+  const toggleLanguage = () => {
+    if (isChanging) return; // Prevent multiple clicks
+
+    const newLocale = locale === "en" ? "ar" : "en";
+    setIsChanging(true);
 
     // Save preference
     localStorage.setItem("adminLocale", newLocale);
 
-    // Reload to apply translations
-    window.location.reload();
-  };
+    // Update HTML attributes
+    document.documentElement.lang = newLocale;
+    document.documentElement.dir = newLocale === "ar" ? "rtl" : "ltr";
 
-  const toggleLanguage = () => {
-    const newLocale = locale === "en" ? "ar" : "en";
+    // Dispatch custom event for AdminIntlProvider to listen to
+    window.dispatchEvent(
+      new CustomEvent("adminLocaleChange", {
+        detail: { locale: newLocale },
+      }),
+    );
+
     setLocale(newLocale);
-    applyLanguage(newLocale);
+    setIsChanging(false);
   };
 
   return (

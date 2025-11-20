@@ -27,6 +27,27 @@ export default function AdminIntlProvider({
 
     // Load messages
     loadMessages(currentLocale);
+
+    // Listen for language change events from LanguageSwitcher
+    const handleLocaleChange = (
+      event: CustomEvent<{ locale: "en" | "ar" }>,
+    ) => {
+      const newLocale = event.detail.locale;
+      setLocale(newLocale);
+      loadMessages(newLocale);
+    };
+
+    window.addEventListener(
+      "adminLocaleChange",
+      handleLocaleChange as EventListener,
+    );
+
+    return () => {
+      window.removeEventListener(
+        "adminLocaleChange",
+        handleLocaleChange as EventListener,
+      );
+    };
   }, []);
 
   const loadMessages = async (locale: "en" | "ar") => {
