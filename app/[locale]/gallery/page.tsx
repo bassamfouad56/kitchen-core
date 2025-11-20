@@ -1,8 +1,7 @@
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
-import Image from "next/image";
-import { MapPin } from "lucide-react";
+import { GalleryGrid } from "@/app/components/GalleryGrid";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -43,24 +42,6 @@ export default async function GalleryPage({ params }: Props) {
     { key: "ALUMINUM", labelEn: "Aluminum", labelAr: "ألمنيوم" },
     { key: "BEDROOMS", labelEn: "Bedrooms", labelAr: "غرف النوم" },
   ];
-
-  // Get size class for masonry layout
-  const getSizeClass = (size: string) => {
-    switch (size) {
-      case "SMALL":
-        return "col-span-1 row-span-1";
-      case "MEDIUM":
-        return "col-span-1 md:col-span-2 row-span-1";
-      case "LARGE":
-        return "col-span-1 md:col-span-2 row-span-2";
-      case "WIDE":
-        return "col-span-1 md:col-span-3 row-span-1";
-      case "TALL":
-        return "col-span-1 row-span-2";
-      default:
-        return "col-span-1 row-span-1";
-    }
-  };
 
   return (
     <main className="min-h-screen bg-black pt-28 pb-20">
@@ -123,70 +104,11 @@ export default async function GalleryPage({ params }: Props) {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-[300px]">
-            {galleryImages.map((image) => (
-              <div
-                key={image.id}
-                className={`group relative overflow-hidden bg-background-dark ${getSizeClass(
-                  image.size,
-                )}`}
-              >
-                {/* Image */}
-                <Image
-                  src={image.image}
-                  alt={
-                    isArabic ? image.titleAr || image.titleEn : image.titleEn
-                  }
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                />
-
-                {/* Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                {/* Content */}
-                <div className="absolute inset-0 p-6 flex flex-col justify-end translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                    <h3 className="font-serif text-2xl text-white mb-2">
-                      {isArabic
-                        ? image.titleAr || image.titleEn
-                        : image.titleEn}
-                    </h3>
-
-                    {image.location && (
-                      <div className="flex items-center gap-2 text-gray-light text-sm mb-3">
-                        <MapPin className="w-4 h-4 text-green-primary" />
-                        <span>{image.location}</span>
-                      </div>
-                    )}
-
-                    {(image.descriptionEn || image.descriptionAr) && (
-                      <p className="text-gray-light text-sm line-clamp-2">
-                        {isArabic
-                          ? image.descriptionAr || image.descriptionEn
-                          : image.descriptionEn}
-                      </p>
-                    )}
-
-                    {/* Category Badge */}
-                    <div className="mt-4">
-                      <span className="inline-block px-3 py-1 text-xs tracking-wider text-green-primary border border-green-primary/30 bg-green-primary/10">
-                        {
-                          categories.find((c) => c.key === image.category)?.[
-                            isArabic ? "labelAr" : "labelEn"
-                          ]
-                        }
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Green border on hover */}
-                <div className="absolute inset-0 border-2 border-green-primary opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-              </div>
-            ))}
-          </div>
+          <GalleryGrid
+            images={galleryImages}
+            locale={locale}
+            categories={categories}
+          />
         )}
       </section>
 

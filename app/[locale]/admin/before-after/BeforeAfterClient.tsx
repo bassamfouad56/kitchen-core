@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import ImageUpload from "@/app/components/ImageUpload";
 
 type BeforeAfterItem = {
   id: string;
@@ -212,34 +213,30 @@ export default function BeforeAfterClient({
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Before Image URL *
-                </label>
-                <input
-                  type="text"
+                <ImageUpload
+                  label="Before Image *"
+                  helperText="Upload the before transformation image"
                   value={formData.beforeImage}
-                  onChange={(e) =>
-                    setFormData({ ...formData, beforeImage: e.target.value })
+                  onChange={(url) =>
+                    setFormData({ ...formData, beforeImage: url })
                   }
-                  required
-                  placeholder="/images/before.jpg"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                  onDelete={() => setFormData({ ...formData, beforeImage: "" })}
+                  aspectRatio="4/3"
+                  maxSize={10}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  After Image URL *
-                </label>
-                <input
-                  type="text"
+                <ImageUpload
+                  label="After Image *"
+                  helperText="Upload the after transformation image"
                   value={formData.afterImage}
-                  onChange={(e) =>
-                    setFormData({ ...formData, afterImage: e.target.value })
+                  onChange={(url) =>
+                    setFormData({ ...formData, afterImage: url })
                   }
-                  required
-                  placeholder="/images/after.jpg"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                  onDelete={() => setFormData({ ...formData, afterImage: "" })}
+                  aspectRatio="4/3"
+                  maxSize={10}
                 />
               </div>
             </div>

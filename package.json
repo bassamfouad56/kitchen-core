@@ -19,6 +19,7 @@
     "db:init-company": "tsx scripts/init-company-settings.ts",
     "fix-images": "tsx fix-images.ts",
     "audit-images": "tsx audit-images.ts",
+    "audit-cms": "tsx audit-cms.ts",
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest run --coverage",

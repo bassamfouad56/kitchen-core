@@ -30,6 +30,16 @@ export default async function AdminDashboard({ params }: Props) {
     blogPostsCount,
     publishedPostsCount,
     draftPostsCount,
+    usersCount,
+    processStepsCount,
+    contactSubmissionsCount,
+    unprocessedSubmissionsCount,
+    partnershipsCount,
+    translationsCount,
+    customersCount,
+    credentialsCount,
+    engineeringMetricsCount,
+    subscribersCount,
   ] = await Promise.all([
     prisma.project.count(),
     prisma.galleryImage.count(),
@@ -43,6 +53,16 @@ export default async function AdminDashboard({ params }: Props) {
     prisma.blogPost.count(),
     prisma.blogPost.count({ where: { published: true } }),
     prisma.blogPost.count({ where: { published: false } }),
+    prisma.user.count(),
+    prisma.processStep.count(),
+    prisma.contactSubmission.count(),
+    prisma.contactSubmission.count({ where: { processed: false } }),
+    prisma.partnership.count(),
+    prisma.uITranslation.count(),
+    prisma.customer.count(),
+    prisma.credential.count(),
+    prisma.engineeringMetric.count(),
+    prisma.subscriber.count(),
   ]);
 
   const stats = [
@@ -101,6 +121,36 @@ export default async function AdminDashboard({ params }: Props) {
       labelKey: "draftPosts",
       count: draftPostsCount,
       href: `/${locale}/admin/blog`,
+    },
+    {
+      labelKey: "users",
+      count: usersCount,
+      href: `/${locale}/admin/users`,
+    },
+    {
+      labelKey: "processSteps",
+      count: processStepsCount,
+      href: `/${locale}/admin/process-steps`,
+    },
+    {
+      labelKey: "contactSubmissions",
+      count: contactSubmissionsCount,
+      href: `/${locale}/admin/contact-submissions`,
+    },
+    {
+      labelKey: "unprocessedSubmissions",
+      count: unprocessedSubmissionsCount,
+      href: `/${locale}/admin/contact-submissions`,
+    },
+    {
+      labelKey: "partnerships",
+      count: partnershipsCount,
+      href: `/${locale}/admin/partnerships`,
+    },
+    {
+      labelKey: "translations",
+      count: translationsCount,
+      href: `/${locale}/admin/translations`,
     },
   ];
 

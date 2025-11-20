@@ -98,7 +98,19 @@
       "Bash(pnpm run db:init-company:*)",
       "Bash(bug-reports/README.md)",
       "Bash(pnpm run fix-images:*)",
-      "Bash(pnpm run audit-images:*)"
+      "Bash(pnpm run audit-images:*)",
+      "Bash(pnpm run audit-cms:*)",
+      "Bash(pnpm add:*)",
+      "Bash(pnpm run seed:*)",
+      "Bash(rm:*)",
+      "Bash(python3:*)",
+      "Bash(cmd.exe /c \"dir /b public\\*.jpg\")",
+      "Bash(copy public10.jpg publicprojectsbedroom-1.jpg)",
+      "Bash(copy:*)",
+      "Bash(cmd.exe /c \"copy public\\10.jpg public\\projects\\bedroom-1.jpg && copy public\\2.jpg public\\projects\\modern-1.jpg && copy public\\3.jpg public\\projects\\classic-1.jpg && copy public\\4.jpg public\\projects\\aluminum-1.jpg\")",
+      "Bash(node copy-project-images.mjs:*)",
+      "Bash(find:*)",
+      "Bash(del nul 2)"
     ],
     "deny": [],
     "ask": []
