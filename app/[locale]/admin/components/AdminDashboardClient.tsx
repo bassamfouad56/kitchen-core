@@ -21,21 +21,23 @@ export default function AdminDashboardClient({
   const locale = useLocale();
 
   return (
-    <div className="min-h-screen bg-black text-white p-8">
+    <div className="min-h-screen bg-black text-white p-4 md:p-6 lg:p-8">
       <div className="max-w-7xl mx-auto">
         {/* Header with Language Switcher */}
-        <div className="mb-12 flex justify-between items-start">
+        <div className="mb-8 md:mb-12 flex flex-col sm:flex-row justify-between items-start gap-4">
           <div>
-            <h1 className="text-4xl font-serif text-white mb-2">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-serif text-white mb-2">
               {t("dashboard.welcome")}, {userName}
             </h1>
-            <p className="text-gray-light">{t("dashboard.manageContent")}</p>
+            <p className="text-sm md:text-base text-gray-light">
+              {t("dashboard.manageContent")}
+            </p>
           </div>
           <LanguageSwitcher />
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 mb-8 md:mb-12">
           {stats.map((stat) => (
             <Link
               key={stat.labelKey}
