@@ -1,7 +1,7 @@
 "use client";
 
 import { NextIntlClientProvider } from "next-intl";
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect, useState, useCallback, useRef } from "react";
 
 interface AdminIntlProviderProps {
   children: ReactNode;
@@ -14,43 +14,9 @@ export default function AdminIntlProvider({
   const [messages, setMessages] = useState<Record<string, unknown> | null>(
     null,
   );
+  const isInitialized = useRef(false);
 
-  useEffect(() => {
-    // Load saved language preference
-    const saved = localStorage.getItem("adminLocale") as "en" | "ar" | null;
-    const currentLocale = saved || "en";
-    setLocale(currentLocale);
-
-    // Update HTML attributes
-    document.documentElement.lang = currentLocale;
-    document.documentElement.dir = currentLocale === "ar" ? "rtl" : "ltr";
-
-    // Load messages
-    loadMessages(currentLocale);
-
-    // Listen for language change events from LanguageSwitcher
-    const handleLocaleChange = (
-      event: CustomEvent<{ locale: "en" | "ar" }>,
-    ) => {
-      const newLocale = event.detail.locale;
-      setLocale(newLocale);
-      loadMessages(newLocale);
-    };
-
-    window.addEventListener(
-      "adminLocaleChange",
-      handleLocaleChange as EventListener,
-    );
-
-    return () => {
-      window.removeEventListener(
-        "adminLocaleChange",
-        handleLocaleChange as EventListener,
-      );
-    };
-  }, []);
-
-  const loadMessages = async (locale: "en" | "ar") => {
+  const loadMessages = useCallback(async (locale: "en" | "ar") => {
     try {
       const adminMessages = await import(
         `../../../../messages/admin-${locale}.json`
@@ -69,7 +35,53 @@ export default function AdminIntlProvider({
       // Fallback to empty messages
       setMessages({});
     }
-  };
+  }, []);
+
+  // Initial load only
+  useEffect(() => {
+    if (!isInitialized.current) {
+      // Load saved language preference
+      const saved = localStorage.getItem("adminLocale") as "en" | "ar" | null;
+      const currentLocale = saved || "en";
+      setLocale(currentLocale);
+
+      // Update HTML attributes
+      document.documentElement.lang = currentLocale;
+      document.documentElement.dir = currentLocale === "ar" ? "rtl" : "ltr";
+
+      // Load messages
+      loadMessages(currentLocale);
+      isInitialized.current = true;
+    }
+  }, [loadMessages]);
+
+  // Listen for language change events
+  useEffect(() => {
+    const handleLocaleChange = (
+      event: CustomEvent<{ locale: "en" | "ar" }>,
+    ) => {
+      const newLocale = event.detail.locale;
+      setLocale(newLocale);
+
+      // Update HTML attributes
+      document.documentElement.lang = newLocale;
+      document.documentElement.dir = newLocale === "ar" ? "rtl" : "ltr";
+
+      loadMessages(newLocale);
+    };
+
+    window.addEventListener(
+      "adminLocaleChange",
+      handleLocaleChange as EventListener,
+    );
+
+    return () => {
+      window.removeEventListener(
+        "adminLocaleChange",
+        handleLocaleChange as EventListener,
+      );
+    };
+  }, [loadMessages]);
 
   if (!messages) {
     return (
