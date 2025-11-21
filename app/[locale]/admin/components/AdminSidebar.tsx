@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLocale } from "next-intl";
+import { useGlobalSearch } from "@/app/hooks/useGlobalSearch";
 
 interface NavItem {
   label: string;
@@ -165,6 +166,7 @@ export default function AdminSidebar() {
   const pathname = usePathname();
   const locale = useLocale();
   const isArabic = locale === "ar";
+  const { open: openGlobalSearch } = useGlobalSearch();
 
   const filteredSections = navigationSections
     .map((section) => ({
@@ -237,14 +239,42 @@ export default function AdminSidebar() {
           </p>
         </div>
 
-        {/* Search */}
+        {/* Global Search Button */}
+        <div className="p-4 border-b border-gray-dark/40">
+          <button
+            onClick={openGlobalSearch}
+            className="w-full flex items-center gap-3 px-4 py-2.5 bg-background-card border border-gray-dark hover:border-green-primary text-gray-light hover:text-white transition-all rounded-md group"
+          >
+            <svg
+              className="w-5 h-5 flex-shrink-0"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
+            </svg>
+            <span className="flex-1 text-start text-sm">
+              {isArabic ? "بحث سريع..." : "Quick Search..."}
+            </span>
+            <kbd className="hidden sm:inline-flex px-2 py-1 text-xs border border-gray-dark rounded">
+              ⌘K
+            </kbd>
+          </button>
+        </div>
+
+        {/* Navigation Filter */}
         <div className="p-4 border-b border-gray-dark/40">
           <div className="relative">
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder={isArabic ? "بحث..." : "Search..."}
+              placeholder={isArabic ? "تصفية القائمة..." : "Filter menu..."}
               className="w-full bg-background-card border border-gray-dark text-gray-light placeholder-gray-dark px-4 py-2 rounded-md focus:outline-none focus:border-green-primary text-sm"
             />
             <svg
@@ -257,7 +287,7 @@ export default function AdminSidebar() {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth={2}
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
               />
             </svg>
           </div>

@@ -1,5 +1,5 @@
 import AdminIntlProvider from "./components/AdminIntlProvider";
-import AdminSidebar from "./components/AdminSidebar";
+import AdminLayoutClient from "./components/AdminLayoutClient";
 import { ToastProvider } from "./components/Toast";
 
 export default function AdminLayout({
@@ -10,10 +10,7 @@ export default function AdminLayout({
   return (
     <AdminIntlProvider>
       <ToastProvider>
-        <div className="flex min-h-screen bg-black">
-          <AdminSidebar />
-          <main className="flex-1 min-w-0">{children}</main>
-        </div>
+        <AdminLayoutClient>{children}</AdminLayoutClient>
       </ToastProvider>
     </AdminIntlProvider>
   );
