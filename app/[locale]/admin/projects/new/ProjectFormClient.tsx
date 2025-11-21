@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import ImageUpload from "@/app/components/ImageUpload";
 import MultipleImageUpload from "@/app/components/MultipleImageUpload";
+import RichTextEditor from "@/app/components/RichTextEditor";
 
 interface ProjectFormData {
   title: string;
@@ -224,18 +225,14 @@ export default function ProjectFormClient({
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-light mb-2">
-                Description
-              </label>
-              <textarea
+              <RichTextEditor
+                label="Description"
                 value={project.description}
-                onChange={(e) =>
-                  setProject({ ...project, description: e.target.value })
+                onChange={(html) =>
+                  setProject({ ...project, description: html })
                 }
-                rows={3}
-                className="w-full px-4 py-2 bg-black border border-gray-dark text-white focus:border-green-primary focus:outline-none"
-                placeholder="Brief description of the project"
-                required
+                placeholder="Brief description of the project..."
+                minHeight="150px"
               />
             </div>
           </div>
@@ -382,17 +379,14 @@ export default function ProjectFormClient({
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-light mb-2">
-                Challenges
-              </label>
-              <textarea
+              <RichTextEditor
+                label="Challenges"
                 value={project.challenges}
-                onChange={(e) =>
-                  setProject({ ...project, challenges: e.target.value })
+                onChange={(html) =>
+                  setProject({ ...project, challenges: html })
                 }
-                rows={3}
-                className="w-full px-4 py-2 bg-black border border-gray-dark text-white focus:border-green-primary focus:outline-none"
-                placeholder="Key challenges faced during the project"
+                placeholder="Key challenges faced during the project..."
+                minHeight="120px"
               />
             </div>
 
