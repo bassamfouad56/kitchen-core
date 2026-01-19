@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import LanguageSwitcher from "../../components/LanguageSwitcher";
 import TranslateButton from "../../components/TranslateButton";
+import ImageUpload from "../../components/ImageUpload";
 
 interface TeamMember {
   id: string;
@@ -46,6 +47,7 @@ export default function EditTeamMemberClient() {
   const [roleAr, setRoleAr] = useState("");
   const [bioEn, setBioEn] = useState("");
   const [bioAr, setBioAr] = useState("");
+  const [image, setImage] = useState("");
   const [specialtiesEn, setSpecialtiesEn] = useState<string[]>([""]);
   const [specialtiesAr, setSpecialtiesAr] = useState<string[]>([""]);
 
@@ -65,6 +67,7 @@ export default function EditTeamMemberClient() {
       setRoleAr(data.roleAr || "");
       setBioEn(data.bioEn || "");
       setBioAr(data.bioAr || "");
+      setImage(data.image || "");
       setSpecialtiesEn(
         data.specialtiesEn && data.specialtiesEn.length > 0
           ? data.specialtiesEn
@@ -86,6 +89,12 @@ export default function EditTeamMemberClient() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!image) {
+      setError("Please upload a profile image");
+      return;
+    }
+
     setSaving(true);
     setError("");
 
@@ -97,7 +106,7 @@ export default function EditTeamMemberClient() {
       roleAr,
       bioEn,
       bioAr,
-      image: formData.get("image"),
+      image,
       email: formData.get("email") || null,
       linkedin: formData.get("linkedin") || null,
       yearsOfExperience: formData.get("yearsOfExperience") || null,
@@ -348,18 +357,13 @@ export default function EditTeamMemberClient() {
             <h2 className="text-xl font-serif text-white mb-4">
               {t("profileImage")}
             </h2>
-            <div>
-              <label className="block text-sm font-medium text-gray-light mb-2">
-                {t("imageURL")} *
-              </label>
-              <input
-                type="url"
-                name="image"
-                required
-                defaultValue={teamMember.image}
-                className="w-full bg-black border border-gray-dark text-white px-4 py-3 focus:border-green-primary focus:outline-none"
-              />
-            </div>
+            <ImageUpload
+              value={image}
+              onChange={setImage}
+              label={t("profileImage")}
+              required
+              helpText="Upload a professional headshot (JPEG, PNG, or WebP, max 10MB)"
+            />
           </div>
 
           {/* Specialties */}
