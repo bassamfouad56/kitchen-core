@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import LanguageSwitcher from "../components/LanguageSwitcher";
 import TranslateButton from "../components/TranslateButton";
+import { useToast } from "../components/Toast";
 
 interface CompanyData {
   id?: string;
@@ -42,6 +43,7 @@ interface CompanyData {
 
 export default function CompanyPageClient() {
   const router = useRouter();
+  const { showToast } = useToast();
   const t = useTranslations("Admin.company");
   const tCommon = useTranslations("Admin.common");
   const tActions = useTranslations("Admin.actions");
@@ -156,7 +158,7 @@ export default function CompanyPageClient() {
       const updated = await res.json();
       setCompany(updated);
       setSaving(false);
-      alert(t("dataSaved"));
+      showToast({ type: "success", message: t("dataSaved") || "Company data saved successfully" });
       router.refresh();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to save data");

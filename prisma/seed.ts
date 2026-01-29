@@ -531,7 +531,7 @@ async function main() {
   console.log("Seeding statistics...");
   const stats = [
     {
-      number: "150+",
+      number: "1000+",
       label: "Luxury Kitchens",
       section: "HOMEPAGE_TRUST" as StatSection,
       order: 1,
@@ -555,7 +555,7 @@ async function main() {
       order: 4,
     },
     {
-      number: "150+",
+      number: "1000+",
       label: "Projects Completed",
       section: "GALLERY_STATS" as StatSection,
       order: 1,
@@ -683,7 +683,7 @@ async function main() {
       ],
       foundedYear: "2010",
       employeeCount: "50+",
-      projectsCompleted: "150+",
+      projectsCompleted: "1000+",
       countriesServed: "25+",
       yearsOfExperience: "15",
       featuredImage: "/8.jpg",
@@ -705,7 +705,8 @@ async function main() {
         "With over 15 years of experience in luxury kitchen design and fit-out, Eng. Esam Odeh has established Kitchen Core as the premier choice for discerning clients. His vision combines traditional craftsmanship with cutting-edge technology to create culinary spaces that are both timeless and innovative.",
       bioAr:
         "مع أكثر من 15 عاماً من الخبرة في تصميم وتركيب المطابخ الفاخرة، أسس م. عصام عودة كيتشن كور كخيار أول للعملاء المميزين. تجمع رؤيته بين الحرفية التقليدية والتكنولوجيا المتطورة لإنشاء مساحات طهي خالدة ومبتكرة.",
-      image: "/team/WhatsApp_Image_2025-10-18_at_17.42.09_446c0a80-removebg-preview.png",
+      image:
+        "/team/WhatsApp_Image_2025-10-18_at_17.42.09_446c0a80-removebg-preview.png",
       specialtiesEn: [
         "Luxury Kitchen Design",
         "Project Management",
@@ -733,7 +734,8 @@ async function main() {
         "Sarah brings a fresh perspective to luxury kitchen design with her background in European architecture and interior design. She specializes in creating harmonious spaces that balance aesthetics with functionality.",
       bioAr:
         "تجلب سارة منظوراً جديداً لتصميم المطابخ الفاخرة بخلفيتها في الهندسة المعمارية الأوروبية والتصميم الداخلي. تتخصص في إنشاء مساحات متناغمة توازن بين الجماليات والوظيفة.",
-      image: "/team/WhatsApp_Image_2025-10-18_at_17.42.10_a00ed2b4-removebg-preview.png",
+      image:
+        "/team/WhatsApp_Image_2025-10-18_at_17.42.10_a00ed2b4-removebg-preview.png",
       specialtiesEn: [
         "Interior Design",
         "3D Visualization",
@@ -761,7 +763,8 @@ async function main() {
         "A third-generation Italian craftsman, Marco oversees all custom cabinetry and millwork. His expertise in traditional woodworking techniques ensures every Kitchen Core project meets the highest standards of quality.",
       bioAr:
         "حرفي إيطالي من الجيل الثالث، يشرف ماركو على جميع الخزائن والنجارة المخصصة. خبرته في تقنيات النجارة التقليدية تضمن أن كل مشروع من مشاريع كيتشن كور يلبي أعلى معايير الجودة.",
-      image: "/team/WhatsApp_Image_2025-10-18_at_17.42.11_23cae256-removebg-preview.png",
+      image:
+        "/team/WhatsApp_Image_2025-10-18_at_17.42.11_23cae256-removebg-preview.png",
       specialtiesEn: [
         "Custom Cabinetry",
         "Italian Millwork",
@@ -789,7 +792,8 @@ async function main() {
         "Ahmed leads our technical team, ensuring seamless integration of smart home systems, ventilation, plumbing, and electrical infrastructure in every kitchen project. His engineering expertise is crucial to our success.",
       bioAr:
         "يقود أحمد فريقنا الفني، مما يضمن التكامل السلس لأنظمة المنزل الذكي والتهوية والسباكة والبنية التحتية الكهربائية في كل مشروع مطبخ. خبرته الهندسية حاسمة لنجاحنا.",
-      image: "/team/WhatsApp_Image_2025-10-18_at_17.42.11_c3be06da-removebg-preview.png",
+      image:
+        "/team/WhatsApp_Image_2025-10-18_at_17.42.11_c3be06da-removebg-preview.png",
       specialtiesEn: [
         "MEP Engineering",
         "Smart Home Systems",
@@ -817,7 +821,8 @@ async function main() {
         "Elena coordinates all aspects of Kitchen Core projects from initial consultation to final handover. Her exceptional organizational skills and attention to detail ensure every project is delivered on time and exceeds expectations.",
       bioAr:
         "تنسق إيلينا جميع جوانب مشاريع كيتشن كور من الاستشارة الأولية إلى التسليم النهائي. مهاراتها التنظيمية الاستثنائية واهتمامها بالتفاصيل يضمنان تسليم كل مشروع في الوقت المحدد وتجاوز التوقعات.",
-      image: "/team/WhatsApp_Image_2025-10-18_at_17.42.12_09558bae-removebg-preview.png",
+      image:
+        "/team/WhatsApp_Image_2025-10-18_at_17.42.12_09558bae-removebg-preview.png",
       specialtiesEn: [
         "Project Coordination",
         "Client Relations",

@@ -6,6 +6,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import LanguageSwitcher from "../components/LanguageSwitcher";
+import { useToast } from "../components/Toast";
+import { useConfirm } from "../components/ConfirmModal";
 
 interface TeamMember {
   id: string;
@@ -21,6 +23,8 @@ interface TeamMember {
 
 export default function TeamMembersListClient() {
   const router = useRouter();
+  const { showToast } = useToast();
+  const { confirm } = useConfirm();
   const t = useTranslations("Admin.teamMembers");
   const tCommon = useTranslations("Admin.common");
   const tActions = useTranslations("Admin.actions");
@@ -48,8 +52,16 @@ export default function TeamMembersListClient() {
     }
   };
 
-  const deleteTeamMember = async (id: string) => {
-    if (!confirm(t("confirmDelete"))) return;
+  const deleteTeamMember = async (id: string, name: string) => {
+    const confirmed = await confirm({
+      title: t("confirmDeleteTitle") || "Delete Team Member",
+      message: t("confirmDelete") || `Are you sure you want to delete "${name}"? This action cannot be undone.`,
+      confirmText: tActions("delete") || "Delete",
+      cancelText: tActions("cancel") || "Cancel",
+      type: "danger",
+    });
+
+    if (!confirmed) return;
 
     try {
       const res = await fetch(`/api/team-members/${id}`, {
@@ -60,8 +72,10 @@ export default function TeamMembersListClient() {
       if (!res.ok) throw new Error("Failed to delete team member");
 
       setTeamMembers(teamMembers.filter((tm) => tm.id !== id));
+      showToast({ type: "success", message: t("memberDeleted") || "Team member deleted successfully" });
     } catch (err) {
-      alert(err instanceof Error ? err.message : "Failed to delete");
+      const errorMessage = err instanceof Error ? err.message : "Failed to delete";
+      showToast({ type: "error", message: errorMessage });
     }
   };
 
@@ -171,7 +185,7 @@ export default function TeamMembersListClient() {
                       {tActions("edit")}
                     </Link>
                     <button
-                      onClick={() => deleteTeamMember(member.id)}
+                      onClick={() => deleteTeamMember(member.id, member.nameEn)}
                       className="px-4 py-2 border border-red-500 text-red-500 hover:bg-red-500/10 transition-colors"
                     >
                       {tActions("delete")}

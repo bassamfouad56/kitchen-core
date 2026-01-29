@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useToast } from "../components/Toast";
+import { useConfirm } from "../components/ConfirmModal";
 
 type EngineeringMetric = {
   id: string;
@@ -27,6 +29,8 @@ export default function EngineeringMetricsClient({
   locale,
 }: EngineeringMetricsClientProps) {
   const router = useRouter();
+  const { showToast } = useToast();
+  const { confirm } = useConfirm();
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -124,9 +128,15 @@ export default function EngineeringMetricsClient({
   };
 
   const handleDelete = async (id: string, label: string) => {
-    if (!confirm(`Are you sure you want to delete "${label}"?`)) {
-      return;
-    }
+    const confirmed = await confirm({
+      title: "Delete Metric",
+      message: `Are you sure you want to delete "${label}"? This action cannot be undone.`,
+      confirmText: "Delete",
+      cancelText: "Cancel",
+      type: "danger",
+    });
+
+    if (!confirmed) return;
 
     try {
       const response = await fetch(
@@ -140,10 +150,11 @@ export default function EngineeringMetricsClient({
         throw new Error("Failed to delete metric");
       }
 
+      showToast({ type: "success", message: "Metric deleted successfully" });
       router.refresh();
     } catch (error) {
       console.error("Error deleting metric:", error);
-      alert("Failed to delete metric");
+      showToast({ type: "error", message: "Failed to delete metric" });
     }
   };
 

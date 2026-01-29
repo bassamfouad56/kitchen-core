@@ -1,7 +1,14 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextRequest } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
+import { updateGalleryImageSchema } from '@/lib/validations/gallery'
+import {
+  successResponse,
+  errorResponse,
+  validationErrorResponse,
+  notFoundResponse,
+} from '@/lib/api/response'
 
 // GET single gallery image
 export async function GET(
@@ -15,12 +22,13 @@ export async function GET(
     })
 
     if (!image) {
-      return NextResponse.json({ error: 'Image not found' }, { status: 404 })
+      return notFoundResponse('Gallery image')
     }
 
-    return NextResponse.json(image)
-  } catch {
-    return NextResponse.json({ error: 'Failed to fetch image' }, { status: 500 })
+    return successResponse(image)
+  } catch (error) {
+    console.error('Error fetching gallery image:', error)
+    return errorResponse('Failed to fetch image')
   }
 }
 
@@ -32,20 +40,36 @@ export async function PUT(
   try {
     const session = await getServerSession(authOptions)
     if (!session) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+      return errorResponse('Unauthorized', 401)
     }
 
     const { id } = await params
     const body = await request.json()
-    const image = await prisma.galleryImage.update({
+
+    // Validate request body
+    const validation = updateGalleryImageSchema.safeParse(body)
+    if (!validation.success) {
+      return validationErrorResponse(validation.error)
+    }
+
+    // Check if image exists
+    const existing = await prisma.galleryImage.findUnique({
       where: { id },
-      data: body,
     })
 
-    return NextResponse.json(image)
+    if (!existing) {
+      return notFoundResponse('Gallery image')
+    }
+
+    const image = await prisma.galleryImage.update({
+      where: { id },
+      data: validation.data,
+    })
+
+    return successResponse(image, 'Gallery image updated successfully')
   } catch (error) {
     console.error('Error updating gallery image:', error)
-    return NextResponse.json({ error: 'Failed to update image' }, { status: 500 })
+    return errorResponse('Failed to update image')
   }
 }
 
@@ -57,17 +81,27 @@ export async function DELETE(
   try {
     const session = await getServerSession(authOptions)
     if (!session) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+      return errorResponse('Unauthorized', 401)
     }
 
     const { id } = await params
+
+    // Check if image exists
+    const existing = await prisma.galleryImage.findUnique({
+      where: { id },
+    })
+
+    if (!existing) {
+      return notFoundResponse('Gallery image')
+    }
+
     await prisma.galleryImage.delete({
       where: { id },
     })
 
-    return NextResponse.json({ message: 'Image deleted successfully' })
+    return successResponse(null, 'Gallery image deleted successfully')
   } catch (error) {
     console.error('Error deleting gallery image:', error)
-    return NextResponse.json({ error: 'Failed to delete image' }, { status: 500 })
+    return errorResponse('Failed to delete image')
   }
 }

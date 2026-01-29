@@ -31,7 +31,6 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   const pageLinks = [
     { label: t("Navigation.home"), href: `/${locale}` },
     { label: t("Navigation.about"), href: `/${locale}/about` },
-    { label: t("Navigation.blog"), href: `/${locale}/blog` },
     { label: t("Navigation.contact"), href: "#contact" },
   ];
 

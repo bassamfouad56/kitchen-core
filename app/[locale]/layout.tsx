@@ -2,7 +2,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
-import { Inter, Playfair_Display, Cairo, Amiri } from "next/font/google";
+import { Inter, Playfair_Display, Amiri, Cairo } from "next/font/google";
 import { Providers } from "../providers";
 import PublicLayoutWrapper from "@/app/components/PublicLayoutWrapper";
 import "../globals.css";
@@ -21,10 +21,10 @@ const playfair = Playfair_Display({
 });
 
 const cairo = Cairo({
-  variable: "--font-cairo",
+  variable: "--font-dubai",
   subsets: ["arabic", "latin"],
   display: "swap",
-  weight: ["200", "300", "400", "500", "600", "700", "800"],
+  weight: ["300", "400", "500", "700"],
 });
 
 const amiri = Amiri({
@@ -61,9 +61,14 @@ export default async function LocaleLayout({
   const isRTL = locale === "ar";
 
   return (
-    <html lang={locale} dir={isRTL ? "rtl" : "ltr"} suppressHydrationWarning>
+    <html
+      lang={locale}
+      dir={isRTL ? "rtl" : "ltr"}
+      suppressHydrationWarning
+      className="max-w-screen overflow-x-hidden"
+    >
       <body
-        className={`${inter.variable} ${playfair.variable} ${cairo.variable} ${amiri.variable} antialiased bg-black text-white`}
+        className={`${inter.variable} ${playfair.variable} ${cairo.variable} ${amiri.variable} antialiased bg-black text-white `}
       >
         <Providers>
           <NextIntlClientProvider messages={messages} locale={locale}>

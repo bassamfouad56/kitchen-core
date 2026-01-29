@@ -201,11 +201,14 @@ export default function ArtisticGallery() {
             </motion.div>
             <h2 className="font-serif text-6xl md:text-7xl lg:text-8xl text-white mb-8 leading-tight">
               Visual
-              <span className="block text-green-vibrant italic mt-2">Masterpieces</span>
+              <span className="block text-green-vibrant italic mt-2">
+                Masterpieces
+              </span>
             </h2>
             <p className="text-xl md:text-2xl text-gray-light max-w-3xl mx-auto font-light leading-relaxed">
-              Explore our portfolio of extraordinary kitchens where art meets engineering.
-              Each space tells a unique story of luxury, innovation, and timeless design.
+              Explore our portfolio of extraordinary kitchens where art meets
+              engineering. Each space tells a unique story of luxury,
+              innovation, and timeless design.
             </p>
           </motion.div>
         </div>
@@ -327,7 +330,11 @@ export default function ArtisticGallery() {
                   className="absolute inset-0 border-2"
                   initial={{ borderColor: "rgba(38, 38, 38, 0.5)" }}
                   whileHover={{
-                    borderColor: ["rgba(5, 150, 105, 0.5)", "rgba(52, 211, 153, 0.8)", "rgba(5, 150, 105, 0.5)"],
+                    borderColor: [
+                      "rgba(5, 150, 105, 0.5)",
+                      "rgba(52, 211, 153, 0.8)",
+                      "rgba(5, 150, 105, 0.5)",
+                    ],
                   }}
                   transition={{
                     duration: 2,
@@ -366,7 +373,12 @@ export default function ArtisticGallery() {
                     animate={{ opacity: 1 }}
                     transition={{ delay: index * 0.1 + 0.4 }}
                   >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -455,7 +467,7 @@ export default function ArtisticGallery() {
           className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-6"
         >
           {[
-            { number: "150+", label: "Projects Completed" },
+            { number: "1000+", label: "Projects Completed" },
             { number: "25", label: "Countries" },
             { number: "$2B+", label: "Total Value" },
             { number: "100%", label: "Satisfaction" },
@@ -470,9 +482,7 @@ export default function ArtisticGallery() {
             >
               <div className="bg-background-card border border-gray-dark group-hover:border-green-primary transition-all duration-500 p-8 text-center relative overflow-hidden">
                 {/* Glow Effect */}
-                <motion.div
-                  className="absolute inset-0 bg-green-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                />
+                <motion.div className="absolute inset-0 bg-green-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <div className="relative z-10">
                   <motion.div
                     className="font-serif text-5xl text-green-vibrant mb-2"
@@ -514,7 +524,12 @@ export default function ArtisticGallery() {
                 onClick={() => setSelectedImage(null)}
                 className="absolute -top-12 right-0 p-3 bg-background-card border border-green-primary text-green-vibrant hover:bg-green-primary hover:text-black transition-all duration-300 z-10"
               >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -547,7 +562,12 @@ export default function ArtisticGallery() {
                       {selectedImage.title}
                     </h3>
                     <p className="text-green-primary flex items-center gap-2">
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
@@ -564,7 +584,9 @@ export default function ArtisticGallery() {
                     </span>
                   </div>
                 </div>
-                <p className="text-gray-light mt-4 text-lg">{selectedImage.description}</p>
+                <p className="text-gray-light mt-4 text-lg">
+                  {selectedImage.description}
+                </p>
               </motion.div>
             </motion.div>
           </motion.div>

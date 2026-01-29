@@ -3,6 +3,8 @@
 import { ProcessStep } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useToast } from "../components/Toast";
+import { useConfirm } from "../components/ConfirmModal";
 
 interface ProcessStepsListClientProps {
   processSteps: ProcessStep[];
@@ -14,12 +16,20 @@ export default function ProcessStepsListClient({
   locale,
 }: ProcessStepsListClientProps) {
   const router = useRouter();
+  const { showToast } = useToast();
+  const { confirm } = useConfirm();
   const [deleting, setDeleting] = useState<string | null>(null);
 
-  const handleDelete = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this process step?")) {
-      return;
-    }
+  const handleDelete = async (id: string, title: string) => {
+    const confirmed = await confirm({
+      title: "Delete Process Step",
+      message: `Are you sure you want to delete "${title}"? This action cannot be undone.`,
+      confirmText: "Delete",
+      cancelText: "Cancel",
+      type: "danger",
+    });
+
+    if (!confirmed) return;
 
     setDeleting(id);
     try {
@@ -29,10 +39,11 @@ export default function ProcessStepsListClient({
 
       if (!response.ok) throw new Error("Failed to delete");
 
+      showToast({ type: "success", message: "Process step deleted successfully" });
       router.refresh();
     } catch (error) {
       console.error("Error deleting process step:", error);
-      alert("Failed to delete process step");
+      showToast({ type: "error", message: "Failed to delete process step" });
     } finally {
       setDeleting(null);
     }
@@ -122,7 +133,7 @@ export default function ProcessStepsListClient({
                   Edit
                 </a>
                 <button
-                  onClick={() => handleDelete(step.id)}
+                  onClick={() => handleDelete(step.id, step.titleEn)}
                   disabled={deleting === step.id}
                   className="text-red-600 hover:text-red-900 disabled:text-gray-400"
                 >

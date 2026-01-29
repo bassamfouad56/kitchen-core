@@ -11,17 +11,23 @@
     },
     "stats": {
       "projects": "Projects",
-      "galleryImages": "Gallery Images",
+      "galleryImages": "Gallery",
       "testimonials": "Testimonials",
       "services": "Services",
       "videos": "Videos",
       "innovations": "Innovations",
-      "leadsCRM": "Leads (CRM)",
-      "teamMembers": "Team Members",
+      "leadsCRM": "Leads",
+      "teamMembers": "Team",
       "nassGallery": "Nass Gallery",
       "blogPosts": "Blog Posts",
-      "publishedPosts": "Published Posts",
-      "draftPosts": "Draft Posts"
+      "publishedPosts": "Published",
+      "draftPosts": "Drafts",
+      "users": "Users",
+      "processSteps": "Process Steps",
+      "contactSubmissions": "Contacts",
+      "unprocessedSubmissions": "Unprocessed",
+      "partnerships": "Partnerships",
+      "translations": "Translations"
     },
     "contentLinks": {
       "companyAbout": "Company & About",

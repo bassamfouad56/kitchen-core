@@ -4,11 +4,15 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
+import { useToast } from '../../components/Toast'
+import { useConfirm } from '../../components/ConfirmModal'
 
 export default function EditServicePage() {
   const router = useRouter()
   const params = useParams()
   const id = params.id as string
+  const { showToast } = useToast()
+  const { confirm } = useConfirm()
 
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
@@ -16,8 +20,10 @@ export default function EditServicePage() {
   const [error, setError] = useState('')
   const [service, setService] = useState<{
     id: string;
-    title: string;
-    description: string;
+    titleEn: string;
+    titleAr: string;
+    descriptionEn: string;
+    descriptionAr: string;
     features: string[];
     order: number;
     published: boolean;
@@ -49,8 +55,10 @@ export default function EditServicePage() {
 
     const formData = new FormData(e.currentTarget)
     const data = {
-      title: formData.get('title'),
-      description: formData.get('description'),
+      titleEn: formData.get('titleEn'),
+      titleAr: formData.get('titleAr') || '',
+      descriptionEn: formData.get('descriptionEn'),
+      descriptionAr: formData.get('descriptionAr') || '',
       features: features.filter(f => f.trim()),
       order: parseInt(formData.get('order') as string) || 0,
       published: formData.get('published') === 'on',
@@ -74,17 +82,28 @@ export default function EditServicePage() {
   }
 
   const handleDelete = async () => {
-    if (!confirm('Are you sure you want to delete this service?')) return
+    const confirmed = await confirm({
+      title: "Delete Service",
+      message: "Are you sure you want to delete this service? This action cannot be undone.",
+      confirmText: "Delete",
+      cancelText: "Cancel",
+      type: "danger",
+    })
+
+    if (!confirmed) return
 
     setDeleting(true)
     try {
       const res = await fetch(`/api/services/${id}`, { method: 'DELETE' })
       if (!res.ok) throw new Error('Failed to delete service')
 
+      showToast({ type: "success", message: "Service deleted successfully" })
       router.push('/admin/services')
       router.refresh()
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to delete service')
+      const errorMessage = err instanceof Error ? err.message : 'Failed to delete service'
+      setError(errorMessage)
+      showToast({ type: "error", message: errorMessage })
       setDeleting(false)
     }
   }
@@ -135,32 +154,62 @@ export default function EditServicePage() {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Title */}
+          {/* Title (English) */}
           <div>
-            <label htmlFor="title" className="block text-sm font-medium text-gray-light mb-2">
-              Title *
+            <label htmlFor="titleEn" className="block text-sm font-medium text-gray-light mb-2">
+              Title (English) *
             </label>
             <input
               type="text"
-              id="title"
-              name="title"
+              id="titleEn"
+              name="titleEn"
               required
-              defaultValue={service.title}
+              defaultValue={service.titleEn}
               className="w-full bg-background-card border border-gray-dark px-4 py-2 text-white focus:border-green-primary focus:outline-none"
             />
           </div>
 
-          {/* Description */}
+          {/* Title (Arabic) */}
           <div>
-            <label htmlFor="description" className="block text-sm font-medium text-gray-light mb-2">
-              Description *
+            <label htmlFor="titleAr" className="block text-sm font-medium text-gray-light mb-2">
+              Title (Arabic) - العنوان بالعربية
+            </label>
+            <input
+              type="text"
+              id="titleAr"
+              name="titleAr"
+              dir="rtl"
+              defaultValue={service.titleAr}
+              className="w-full bg-background-card border border-gray-dark px-4 py-2 text-white focus:border-green-primary focus:outline-none"
+            />
+          </div>
+
+          {/* Description (English) */}
+          <div>
+            <label htmlFor="descriptionEn" className="block text-sm font-medium text-gray-light mb-2">
+              Description (English) *
             </label>
             <textarea
-              id="description"
-              name="description"
+              id="descriptionEn"
+              name="descriptionEn"
               required
               rows={4}
-              defaultValue={service.description}
+              defaultValue={service.descriptionEn}
+              className="w-full bg-background-card border border-gray-dark px-4 py-2 text-white focus:border-green-primary focus:outline-none"
+            />
+          </div>
+
+          {/* Description (Arabic) */}
+          <div>
+            <label htmlFor="descriptionAr" className="block text-sm font-medium text-gray-light mb-2">
+              Description (Arabic) - الوصف بالعربية
+            </label>
+            <textarea
+              id="descriptionAr"
+              name="descriptionAr"
+              dir="rtl"
+              rows={4}
+              defaultValue={service.descriptionAr}
               className="w-full bg-background-card border border-gray-dark px-4 py-2 text-white focus:border-green-primary focus:outline-none"
             />
           </div>

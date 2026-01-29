@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import LanguageSwitcher from "../components/LanguageSwitcher";
+import { useToast } from "../components/Toast";
+import { useConfirm } from "../components/ConfirmModal";
 
 interface NassGallery {
   id: string;
@@ -21,6 +23,8 @@ interface NassGallery {
 }
 
 export default function NassGalleryListClient() {
+  const { showToast } = useToast();
+  const { confirm } = useConfirm();
   const t = useTranslations("Admin.nassGallery");
   const tCommon = useTranslations("Admin.common");
   const tActions = useTranslations("Admin.actions");
@@ -46,8 +50,16 @@ export default function NassGalleryListClient() {
     }
   };
 
-  const deleteGallery = async (id: string) => {
-    if (!confirm(t("confirmDelete"))) return;
+  const deleteGallery = async (id: string, title: string) => {
+    const confirmed = await confirm({
+      title: t("confirmDeleteTitle") || "Delete Gallery",
+      message: t("confirmDelete") || `Are you sure you want to delete "${title}"? This action cannot be undone.`,
+      confirmText: tActions("delete") || "Delete",
+      cancelText: tActions("cancel") || "Cancel",
+      type: "danger",
+    });
+
+    if (!confirmed) return;
 
     try {
       const res = await fetch(`/api/nass-gallery/${id}`, {
@@ -58,8 +70,10 @@ export default function NassGalleryListClient() {
       if (!res.ok) throw new Error("Failed to delete gallery");
 
       setGalleries(galleries.filter((g) => g.id !== id));
+      showToast({ type: "success", message: t("galleryDeleted") || "Gallery deleted successfully" });
     } catch (err) {
-      alert(err instanceof Error ? err.message : "Failed to delete");
+      const errorMessage = err instanceof Error ? err.message : "Failed to delete";
+      showToast({ type: "error", message: errorMessage });
     }
   };
 
@@ -180,7 +194,7 @@ export default function NassGalleryListClient() {
                       {tActions("edit")}
                     </Link>
                     <button
-                      onClick={() => deleteGallery(gallery.id)}
+                      onClick={() => deleteGallery(gallery.id, gallery.titleEn)}
                       className="px-4 py-2 border border-red-500 text-red-500 hover:bg-red-500/10 transition-colors"
                     >
                       {tActions("delete")}

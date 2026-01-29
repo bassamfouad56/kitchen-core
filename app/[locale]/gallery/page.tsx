@@ -1,7 +1,7 @@
 import { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
-import { GalleryGrid } from "@/app/components/GalleryGrid";
+import { CinematicBentoGallery } from "@/app/components/CinematicBentoGallery";
+import { CinematicGalleryHero } from "@/app/components/CinematicGalleryHero";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -44,91 +44,123 @@ export default async function GalleryPage({ params }: Props) {
   ];
 
   return (
-    <main className="min-h-screen bg-black pt-28 pb-20">
+    <main className="min-h-screen bg-black">
       {/* Hero Section */}
-      <section className="relative py-20 bg-gradient-to-b from-black via-background-dark to-black overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]" />
+      <CinematicGalleryHero locale={locale} />
+
+      {/* Gallery Section */}
+      <section className="relative py-20 md:py-32">
+        {/* Background Effects */}
+        <div className="absolute inset-0 overflow-hidden">
+          {/* Animated gradient orbs */}
+          <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-green-primary/5 rounded-full filter blur-[150px] animate-pulse" />
+          <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-green-vibrant/5 rounded-full filter blur-[100px] animate-pulse" style={{ animationDelay: "1s" }} />
         </div>
 
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-          <div className="text-center">
-            <span className="text-green-vibrant text-sm tracking-[0.3em] mb-4 font-light block">
-              {isArabic ? "معرض الصور" : "GALLERY"}
-            </span>
-            <h1 className="font-serif text-5xl md:text-7xl text-white mb-6">
-              {isArabic ? "أعمالنا المميزة" : "Our Featured Work"}
-            </h1>
-            <p className="text-lg md:text-xl text-gray-light max-w-3xl mx-auto font-light leading-relaxed">
-              {isArabic
-                ? "استكشف مجموعتنا الكاملة من مشاريع المطابخ الفاخرة عبر الشرق الأوسط"
-                : "Explore our complete collection of luxury kitchen projects across the Middle East"}
-            </p>
-          </div>
-        </div>
-
-        {/* Decorative elements */}
-        <div className="absolute top-1/2 left-0 w-64 h-64 bg-green-glow rounded-full filter blur-3xl opacity-10 -translate-y-1/2" />
-        <div className="absolute top-1/2 right-0 w-64 h-64 bg-green-glow rounded-full filter blur-3xl opacity-10 -translate-y-1/2" />
-      </section>
-
-      {/* Category Stats */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-8 py-12 border-b border-gray-dark">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-          {categories.slice(1).map((category) => {
-            const count = galleryImages.filter(
-              (img) => img.category === category.key,
-            ).length;
-            return (
-              <div key={category.key} className="text-center">
-                <div className="text-4xl font-serif text-green-primary mb-2">
-                  {count}
-                </div>
-                <div className="text-sm text-gray-light">
-                  {isArabic ? category.labelAr : category.labelEn}
-                </div>
+        <div className="relative z-10 max-w-[1800px] mx-auto px-4 md:px-8">
+          {galleryImages.length === 0 ? (
+            <div className="text-center py-20">
+              <div className="w-24 h-24 mx-auto mb-8 border-2 border-green-primary/30 rounded-full flex items-center justify-center">
+                <svg className="w-10 h-10 text-green-primary/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
               </div>
-            );
-          })}
+              <p className="text-gray-light text-xl font-light">
+                {isArabic
+                  ? "لا توجد صور متاحة حالياً"
+                  : "No images available at the moment"}
+              </p>
+              <p className="text-gray-light/60 text-sm mt-2">
+                {isArabic
+                  ? "يرجى العودة لاحقاً"
+                  : "Please check back later"}
+              </p>
+            </div>
+          ) : (
+            <CinematicBentoGallery
+              images={galleryImages}
+              locale={locale}
+              categories={categories}
+            />
+          )}
         </div>
       </section>
 
-      {/* Gallery Grid - Masonry Layout */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-8 py-20">
-        {galleryImages.length === 0 ? (
-          <div className="text-center py-20">
-            <p className="text-gray-light text-lg">
-              {isArabic
-                ? "لا توجد صور متاحة حالياً"
-                : "No images available at the moment"}
-            </p>
-          </div>
-        ) : (
-          <GalleryGrid
-            images={galleryImages}
-            locale={locale}
-            categories={categories}
-          />
-        )}
-      </section>
+      {/* Cinematic CTA Section */}
+      <section className="relative py-32 overflow-hidden">
+        {/* Cinematic background */}
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-b from-black via-background-dark to-black" />
+          <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-5" />
 
-      {/* CTA Section */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-8 py-20">
-        <div className="bg-gradient-to-r from-background-dark to-black border border-green-primary/30 p-12 text-center">
-          <h2 className="font-serif text-4xl text-white mb-6">
-            {isArabic ? "أعجبك ما رأيت؟" : "Love What You See?"}
+          {/* Animated lines */}
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-green-primary/50 to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-green-primary/50 to-transparent" />
+        </div>
+
+        <div className="relative z-10 max-w-5xl mx-auto px-6 lg:px-8 text-center">
+          {/* Film reel decoration */}
+          <div className="flex justify-center mb-8">
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full bg-green-primary animate-pulse" />
+              <div className="w-16 h-px bg-gradient-to-r from-green-primary to-transparent" />
+              <span className="text-green-vibrant text-xs tracking-[0.4em] font-light">
+                {isArabic ? "ابدأ رحلتك" : "START YOUR JOURNEY"}
+              </span>
+              <div className="w-16 h-px bg-gradient-to-l from-green-primary to-transparent" />
+              <div className="w-3 h-3 rounded-full bg-green-primary animate-pulse" />
+            </div>
+          </div>
+
+          <h2 className="font-serif text-4xl md:text-6xl lg:text-7xl text-white mb-8 leading-tight">
+            {isArabic ? "أعجبك ما" : "Love What You"}
+            <span className="block text-green-vibrant italic mt-2">
+              {isArabic ? "رأيت؟" : "See?"}
+            </span>
           </h2>
-          <p className="text-gray-light text-lg mb-8 max-w-2xl mx-auto">
+
+          <p className="text-gray-light text-lg md:text-xl max-w-2xl mx-auto font-light leading-relaxed mb-12">
             {isArabic
               ? "دعنا نحول أحلامك إلى واقع. تواصل معنا لبدء مشروع مطبخك الفاخر"
               : "Let's bring your vision to life. Contact us to start your luxury kitchen project"}
           </p>
-          <a
-            href={`/${locale}#contact`}
-            className="inline-block px-8 py-4 bg-green-primary text-black font-medium hover:bg-green-vibrant transition-all duration-300 text-sm tracking-wider"
-          >
-            {isArabic ? "ابدأ مشروعك" : "START YOUR PROJECT"}
-          </a>
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a
+              href={`/${locale}#contact`}
+              className="group relative px-10 py-5 bg-green-primary text-black font-medium hover:bg-green-vibrant transition-all duration-500 text-sm tracking-wider overflow-hidden"
+            >
+              <span className="relative z-10">
+                {isArabic ? "ابدأ مشروعك" : "START YOUR PROJECT"}
+              </span>
+              <div className="absolute inset-0 bg-gradient-to-r from-green-vibrant via-green-primary to-green-vibrant opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-[length:200%_100%] animate-shimmer" />
+            </a>
+
+            <a
+              href={`/${locale}/projects`}
+              className="group relative px-10 py-5 border border-green-primary/50 text-green-primary hover:text-black font-medium transition-all duration-500 text-sm tracking-wider overflow-hidden"
+            >
+              <span className="relative z-10">
+                {isArabic ? "استعرض المشاريع" : "VIEW PROJECTS"}
+              </span>
+              <div className="absolute inset-0 bg-green-primary transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500" />
+            </a>
+          </div>
+
+          {/* Decorative elements */}
+          <div className="mt-20 flex items-center justify-center gap-8 text-gray-light/40 text-sm">
+            <span>
+              {isArabic ? "صنع بحب" : "Crafted with love"}
+            </span>
+            <span className="w-1 h-1 rounded-full bg-green-primary/50" />
+            <span>
+              {isArabic ? "جودة لا مثيل لها" : "Unmatched quality"}
+            </span>
+            <span className="w-1 h-1 rounded-full bg-green-primary/50" />
+            <span>
+              {isArabic ? "تصميم فريد" : "Unique design"}
+            </span>
+          </div>
         </div>
       </section>
     </main>

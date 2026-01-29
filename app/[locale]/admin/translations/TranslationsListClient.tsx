@@ -3,6 +3,8 @@
 import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useToast } from "../components/Toast";
+import { useConfirm } from "../components/ConfirmModal";
 
 type Translation = {
   id: string;
@@ -29,6 +31,8 @@ export default function TranslationsListClient({
   locale,
 }: TranslationsListClientProps) {
   const router = useRouter();
+  const { showToast } = useToast();
+  const { confirm } = useConfirm();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [deleting, setDeleting] = useState<string | null>(null);
@@ -64,13 +68,15 @@ export default function TranslationsListClient({
     translationId: string,
     translationKey: string,
   ) => {
-    if (
-      !confirm(
-        `Are you sure you want to delete translation: ${translationKey}?`,
-      )
-    ) {
-      return;
-    }
+    const confirmed = await confirm({
+      title: "Delete Translation",
+      message: `Are you sure you want to delete translation: ${translationKey}? This action cannot be undone.`,
+      confirmText: "Delete",
+      cancelText: "Cancel",
+      type: "danger",
+    });
+
+    if (!confirmed) return;
 
     setDeleting(translationId);
     try {
@@ -86,12 +92,12 @@ export default function TranslationsListClient({
         throw new Error(error.error || "Failed to delete translation");
       }
 
+      showToast({ type: "success", message: "Translation deleted successfully" });
       router.refresh();
     } catch (error) {
       console.error("Error deleting translation:", error);
-      alert(
-        error instanceof Error ? error.message : "Failed to delete translation",
-      );
+      const errorMessage = error instanceof Error ? error.message : "Failed to delete translation";
+      showToast({ type: "error", message: errorMessage });
     } finally {
       setDeleting(null);
     }

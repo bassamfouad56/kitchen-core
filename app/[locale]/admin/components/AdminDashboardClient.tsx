@@ -37,17 +37,17 @@ export default function AdminDashboardClient({
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 mb-8 md:mb-12">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3 md:gap-4 mb-8 md:mb-12">
           {stats.map((stat) => (
             <Link
               key={stat.labelKey}
               href={stat.href}
-              className="bg-background-card border border-gray-dark p-6 hover:border-green-primary transition-colors"
+              className="group bg-zinc-900/50 border border-zinc-800 rounded-lg p-4 hover:border-green-primary/50 hover:bg-zinc-900 transition-all duration-200"
             >
-              <div className="text-4xl font-serif text-green-vibrant mb-2">
+              <div className="text-3xl md:text-4xl font-bold text-green-primary mb-1 group-hover:text-green-vibrant transition-colors">
                 {stat.count}
               </div>
-              <div className="text-sm text-gray-light uppercase tracking-wider">
+              <div className="text-xs text-zinc-400 uppercase tracking-wide leading-tight">
                 {t(`stats.${stat.labelKey}`)}
               </div>
             </Link>
@@ -220,7 +220,7 @@ export default function AdminDashboardClient({
         {/* Footer */}
         <div className="mt-12 pt-8 border-t border-gray-dark flex justify-between items-center">
           <div className="text-sm text-gray-dark">{t("dashboard.version")}</div>
-          <div className="space-x-4">
+          <div className="flex items-center gap-4">
             <Link
               href={`/${locale}`}
               className="text-sm text-gray-light hover:text-green-primary transition-colors"

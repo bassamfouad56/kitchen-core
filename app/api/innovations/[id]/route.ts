@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
+import { updateInnovationSchema } from '@/lib/validations/innovation'
+import { ZodError } from 'zod'
 
 export async function GET(
   request: Request,
@@ -33,20 +35,19 @@ export async function PUT(
   try {
     const { id } = await params
     const body = await request.json()
+    const validatedData = updateInnovationSchema.parse(body)
     const innovation = await prisma.innovation.update({
       where: { id },
-      data: {
-        titleEn: body.titleEn,
-        titleAr: body.titleAr,
-        descriptionEn: body.descriptionEn,
-        descriptionAr: body.descriptionAr,
-        icon: body.icon || '',
-        order: body.order || 0,
-        published: body.published ?? true,
-      },
+      data: validatedData,
     })
     return NextResponse.json(innovation)
   } catch (error) {
+    if (error instanceof ZodError) {
+      return NextResponse.json(
+        { error: 'Validation failed', details: error.issues },
+        { status: 400 }
+      )
+    }
     return NextResponse.json({ error: 'Failed to update innovation' }, { status: 500 })
   }
 }

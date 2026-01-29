@@ -1,20 +1,19 @@
 import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 import EditBlogPostClient from "./EditBlogPostClient";
 
-export default async function EditBlogPostPage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  const cookieStore = await cookies();
-  const session = cookieStore.get("admin-session");
+type Props = {
+  params: Promise<{ locale: string; id: string }>;
+};
+
+export default async function EditBlogPostPage({ params }: Props) {
+  const { locale, id } = await params;
+  const session = await getServerSession(authOptions);
 
   if (!session) {
-    redirect("/admin/login");
+    redirect(`/${locale}/admin/login`);
   }
-
-  const { id } = await params;
 
   return <EditBlogPostClient id={id} />;
 }

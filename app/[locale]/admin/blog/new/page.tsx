@@ -1,13 +1,18 @@
 import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 import NewBlogPostClient from "./NewBlogPostClient";
 
-export default async function NewBlogPostPage() {
-  const cookieStore = await cookies();
-  const session = cookieStore.get("admin-session");
+type Props = {
+  params: Promise<{ locale: string }>;
+};
+
+export default async function NewBlogPostPage({ params }: Props) {
+  const { locale } = await params;
+  const session = await getServerSession(authOptions);
 
   if (!session) {
-    redirect("/admin/login");
+    redirect(`/${locale}/admin/login`);
   }
 
   return <NewBlogPostClient />;

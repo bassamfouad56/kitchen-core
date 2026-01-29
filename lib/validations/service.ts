@@ -1,8 +1,10 @@
 import { z } from 'zod';
 
 export const createServiceSchema = z.object({
-  title: z.string().min(1, 'Title is required'),
-  description: z.string().min(1, 'Description is required'),
+  titleEn: z.string().min(1, 'English title is required'),
+  titleAr: z.string().default(''),
+  descriptionEn: z.string().min(1, 'English description is required'),
+  descriptionAr: z.string().default(''),
   features: z.array(z.string()).min(1, 'At least one feature is required'),
   order: z.number().int().default(0),
   published: z.boolean().default(true),

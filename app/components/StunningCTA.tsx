@@ -91,7 +91,12 @@ export default function StunningCTA() {
             fill="none"
             initial={{ pathLength: 0 }}
             animate={{ pathLength: 1 }}
-            transition={{ duration: 4, repeat: Infinity, ease: "linear", delay: 1 }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: "linear",
+              delay: 1,
+            }}
           />
           <defs>
             <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -199,9 +204,9 @@ export default function StunningCTA() {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="text-xl md:text-2xl text-gray-light max-w-3xl mx-auto font-light leading-relaxed mb-12"
         >
-          Join the world's most discerning clients. Transform your kitchen into an
-          architectural masterpiece that combines Italian craftsmanship, cutting-edge
-          technology, and timeless luxury.
+          Join the world's most discerning clients. Transform your kitchen into
+          an architectural masterpiece that combines Italian craftsmanship,
+          cutting-edge technology, and timeless luxury.
         </motion.p>
 
         {/* Value Props */}
@@ -327,7 +332,12 @@ export default function StunningCTA() {
 
             <span className="relative z-10 flex items-center gap-3">
               EXPLORE GALLERY
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -352,7 +362,7 @@ export default function StunningCTA() {
           </p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
-              { number: "150+", label: "Luxury Projects" },
+              { number: "1000+", label: "Luxury Projects" },
               { number: "25", label: "Countries" },
               { number: "100%", label: "Satisfaction" },
               { number: "15+", label: "Years Excellence" },

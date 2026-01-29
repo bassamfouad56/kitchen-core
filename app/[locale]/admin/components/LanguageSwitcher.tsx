@@ -1,47 +1,37 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useRouter, usePathname } from "@/i18n/routing";
+import { useLocale } from "next-intl";
+import { useTransition } from "react";
 
 export default function LanguageSwitcher() {
-  const [locale, setLocale] = useState<"en" | "ar">("en");
-  const [isChanging, setIsChanging] = useState(false);
-
-  useEffect(() => {
-    // Load saved language preference
-    const saved = localStorage.getItem("adminLocale") as "en" | "ar" | null;
-    if (saved) {
-      setLocale(saved);
-    }
-  }, []);
+  const locale = useLocale();
+  const router = useRouter();
+  const pathname = usePathname();
+  const [isPending, startTransition] = useTransition();
 
   const toggleLanguage = () => {
-    if (isChanging) return; // Prevent multiple clicks
+    if (isPending) return;
 
     const newLocale = locale === "en" ? "ar" : "en";
-    setIsChanging(true);
 
-    // Save preference
-    localStorage.setItem("adminLocale", newLocale);
+    startTransition(() => {
+      // Update HTML attributes for RTL support
+      document.documentElement.lang = newLocale;
+      document.documentElement.dir = newLocale === "ar" ? "rtl" : "ltr";
 
-    // Update HTML attributes
-    document.documentElement.lang = newLocale;
-    document.documentElement.dir = newLocale === "ar" ? "rtl" : "ltr";
-
-    // Dispatch custom event for AdminIntlProvider to listen to
-    window.dispatchEvent(
-      new CustomEvent("adminLocaleChange", {
-        detail: { locale: newLocale },
-      }),
-    );
-
-    setLocale(newLocale);
-    setIsChanging(false);
+      // Navigate to the same page with new locale
+      router.replace(pathname, { locale: newLocale });
+    });
   };
 
   return (
     <button
       onClick={toggleLanguage}
-      className="flex items-center gap-2 px-4 py-2 bg-background-card border border-gray-dark hover:border-green-primary text-gray-light hover:text-green-primary transition-colors"
+      disabled={isPending}
+      className={`flex items-center gap-2 px-4 py-2 bg-background-card border border-gray-dark hover:border-green-primary text-gray-light hover:text-green-primary transition-colors ${
+        isPending ? "opacity-50 cursor-not-allowed" : ""
+      }`}
       title={locale === "en" ? "Switch to Arabic" : "التبديل إلى الإنجليزية"}
     >
       <svg

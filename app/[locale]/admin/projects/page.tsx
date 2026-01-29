@@ -21,7 +21,8 @@ export default async function ProjectsPage({ params }: Props) {
     orderBy: { order: "asc" },
     select: {
       id: true,
-      title: true,
+      titleEn: true,
+      titleAr: true,
       slug: true,
       location: true,
       category: true,

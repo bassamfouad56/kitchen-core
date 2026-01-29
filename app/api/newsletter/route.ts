@@ -4,6 +4,8 @@ import { Redis } from '@upstash/redis'
 import { prisma } from '@/lib/prisma'
 import { Resend } from 'resend'
 import crypto from 'crypto'
+import { subscribeNewsletterSchema } from '@/lib/validations/newsletter'
+import { validationErrorResponse } from '@/lib/api/response'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
@@ -32,23 +34,14 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json()
-    const { email, name } = body
 
-    // Validate email
-    if (!email) {
-      return NextResponse.json(
-        { error: 'Email is required' },
-        { status: 400 }
-      )
+    // Validate with Zod
+    const validation = subscribeNewsletterSchema.safeParse(body)
+    if (!validation.success) {
+      return validationErrorResponse(validation.error)
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!emailRegex.test(email)) {
-      return NextResponse.json(
-        { error: 'Invalid email address' },
-        { status: 400 }
-      )
-    }
+    const { email, name } = validation.data
 
     // Check if already subscribed
     const existing = await prisma.subscriber.findUnique({

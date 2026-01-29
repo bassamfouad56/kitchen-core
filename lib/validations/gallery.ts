@@ -9,12 +9,14 @@ export const gallerySizeSchema = z.enum([
 ]);
 
 export const createGalleryImageSchema = z.object({
-  title: z.string().min(1, "Title is required"),
+  titleEn: z.string().min(1, "English title is required"),
+  titleAr: z.string().default(""),
   image: z.string().url("Invalid image URL"),
   category: z.enum(["MODERN_WOODEN", "CLASSIC_WOODEN", "ALUMINUM", "BEDROOMS"]),
   location: z.string().min(1, "Location is required"),
   size: gallerySizeSchema.default("MEDIUM"),
-  description: z.string().min(1, "Description is required"),
+  descriptionEn: z.string().min(1, "English description is required"),
+  descriptionAr: z.string().default(""),
   order: z.number().int().default(0),
   published: z.boolean().default(true),
 });

@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import LanguageSwitcher from "../components/LanguageSwitcher";
+import { useToast } from "../components/Toast";
+import { useConfirm } from "../components/ConfirmModal";
 
 interface Statistic {
   id: string;
@@ -17,6 +19,8 @@ interface Statistic {
 
 export default function StatisticsListClient() {
   const router = useRouter();
+  const { showToast } = useToast();
+  const { confirm } = useConfirm();
   const t = useTranslations("Admin.statistics");
   const tCommon = useTranslations("Admin.common");
   const tActions = useTranslations("Admin.actions");
@@ -44,8 +48,16 @@ export default function StatisticsListClient() {
     }
   };
 
-  const deleteStatistic = async (id: string) => {
-    if (!confirm(t("confirmDelete"))) return;
+  const deleteStatistic = async (id: string, label: string) => {
+    const confirmed = await confirm({
+      title: t("confirmDeleteTitle") || "Delete Statistic",
+      message: t("confirmDelete") || `Are you sure you want to delete "${label}"? This action cannot be undone.`,
+      confirmText: tActions("delete") || "Delete",
+      cancelText: tActions("cancel") || "Cancel",
+      type: "danger",
+    });
+
+    if (!confirmed) return;
 
     try {
       const res = await fetch(`/api/statistics/${id}`, {
@@ -56,8 +68,10 @@ export default function StatisticsListClient() {
       if (!res.ok) throw new Error("Failed to delete statistic");
 
       setStatistics(statistics.filter((s) => s.id !== id));
+      showToast({ type: "success", message: t("statisticDeleted") || "Statistic deleted successfully" });
     } catch (err) {
-      alert(err instanceof Error ? err.message : "Failed to delete");
+      const errorMessage = err instanceof Error ? err.message : "Failed to delete";
+      showToast({ type: "error", message: errorMessage });
     }
   };
 
@@ -151,7 +165,7 @@ export default function StatisticsListClient() {
                       {tActions("edit")}
                     </Link>
                     <button
-                      onClick={() => deleteStatistic(stat.id)}
+                      onClick={() => deleteStatistic(stat.id, stat.labelEn)}
                       className="px-4 py-2 border border-red-500 text-red-500 hover:bg-red-500/10 transition-colors"
                     >
                       {tActions("delete")}

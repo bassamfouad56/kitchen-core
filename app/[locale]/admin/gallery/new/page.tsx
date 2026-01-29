@@ -1,32 +1,39 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useParams } from 'next/navigation'
 import Link from 'next/link'
+import ImageUpload from '@/app/components/ImageUpload'
 
 interface GalleryImageFormData {
-  title: string
+  titleEn: string
+  titleAr: string
   image: string
-  category: 'PALACE' | 'VILLA' | 'ESTATE' | 'PENTHOUSE'
+  category: 'MODERN_WOODEN' | 'CLASSIC_WOODEN' | 'ALUMINUM' | 'BEDROOMS'
   location: string
   size: 'SMALL' | 'MEDIUM' | 'LARGE' | 'WIDE' | 'TALL'
-  description: string
+  descriptionEn: string
+  descriptionAr: string
   order: number
   published: boolean
 }
 
 export default function NewGalleryImagePage() {
   const router = useRouter()
+  const params = useParams()
+  const locale = params.locale as string
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
 
   const [image, setImage] = useState<GalleryImageFormData>({
-    title: '',
+    titleEn: '',
+    titleAr: '',
     image: '',
-    category: 'VILLA',
+    category: 'MODERN_WOODEN',
     location: '',
     size: 'MEDIUM',
-    description: '',
+    descriptionEn: '',
+    descriptionAr: '',
     order: 0,
     published: true,
   })
@@ -45,7 +52,7 @@ export default function NewGalleryImagePage() {
 
       if (!res.ok) throw new Error('Failed to create image')
 
-      router.push('/admin/gallery')
+      router.push(`/${locale}/admin/gallery`)
       router.refresh()
     } catch (err) {
       setError('Failed to create image. Please try again.')
@@ -75,11 +82,11 @@ export default function NewGalleryImagePage() {
             <h2 className="text-xl font-serif mb-4">Image Details</h2>
 
             <div>
-              <label className="block text-sm font-medium text-gray-light mb-2">Title</label>
+              <label className="block text-sm font-medium text-gray-light mb-2">Title (English) *</label>
               <input
                 type="text"
-                value={image.title}
-                onChange={(e) => setImage({ ...image, title: e.target.value })}
+                value={image.titleEn}
+                onChange={(e) => setImage({ ...image, titleEn: e.target.value })}
                 className="w-full px-4 py-2 bg-black border border-gray-dark text-white focus:border-green-primary focus:outline-none"
                 placeholder="Royal Palace Kitchen"
                 required
@@ -87,14 +94,25 @@ export default function NewGalleryImagePage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-light mb-2">Image URL</label>
+              <label className="block text-sm font-medium text-gray-light mb-2">Title (Arabic) - العنوان بالعربية</label>
               <input
                 type="text"
-                value={image.image}
-                onChange={(e) => setImage({ ...image, image: e.target.value })}
+                value={image.titleAr}
+                onChange={(e) => setImage({ ...image, titleAr: e.target.value })}
+                dir="rtl"
                 className="w-full px-4 py-2 bg-black border border-gray-dark text-white focus:border-green-primary focus:outline-none"
-                placeholder="/images/gallery/image.jpg"
-                required
+                placeholder="مطبخ القصر الملكي"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-light mb-2">Image</label>
+              <ImageUpload
+                value={image.image}
+                onChange={(url) => setImage({ ...image, image: url })}
+                label=""
+                aspectRatio="16/9"
+                helperText="Drag and drop or click to upload (JPEG, PNG, WebP - max 10MB)"
               />
             </div>
 
@@ -107,10 +125,10 @@ export default function NewGalleryImagePage() {
                   className="w-full px-4 py-2 bg-black border border-gray-dark text-white focus:border-green-primary focus:outline-none"
                   required
                 >
-                  <option value="PALACE">Palace</option>
-                  <option value="VILLA">Villa</option>
-                  <option value="ESTATE">Estate</option>
-                  <option value="PENTHOUSE">Penthouse</option>
+                  <option value="MODERN_WOODEN">Modern Wooden / مطابخ خشب مودرن</option>
+                  <option value="CLASSIC_WOODEN">Classic Wooden / مطابخ خشب كلاسيك</option>
+                  <option value="ALUMINUM">Aluminum / مطابخ ألومنيوم</option>
+                  <option value="BEDROOMS">Bedrooms / غرف النوم</option>
                 </select>
               </div>
 
@@ -144,14 +162,26 @@ export default function NewGalleryImagePage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-light mb-2">Description</label>
+              <label className="block text-sm font-medium text-gray-light mb-2">Description (English) *</label>
               <textarea
-                value={image.description}
-                onChange={(e) => setImage({ ...image, description: e.target.value })}
+                value={image.descriptionEn}
+                onChange={(e) => setImage({ ...image, descriptionEn: e.target.value })}
                 rows={3}
                 className="w-full px-4 py-2 bg-black border border-gray-dark text-white focus:border-green-primary focus:outline-none"
                 placeholder="Italian marble countertops with custom brass fixtures"
                 required
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-light mb-2">Description (Arabic) - الوصف بالعربية</label>
+              <textarea
+                value={image.descriptionAr}
+                onChange={(e) => setImage({ ...image, descriptionAr: e.target.value })}
+                dir="rtl"
+                rows={3}
+                className="w-full px-4 py-2 bg-black border border-gray-dark text-white focus:border-green-primary focus:outline-none"
+                placeholder="رخام إيطالي مع تجهيزات نحاسية مخصصة"
               />
             </div>
           </div>
@@ -161,7 +191,7 @@ export default function NewGalleryImagePage() {
             <h2 className="text-xl font-serif mb-4">Settings</h2>
 
             <div>
-              <label className="flex items-center space-x-3">
+              <label className="flex items-center gap-3">
                 <input
                   type="checkbox"
                   checked={image.published}
@@ -189,7 +219,7 @@ export default function NewGalleryImagePage() {
           {/* Actions */}
           <div className="flex justify-between items-center pt-4">
             <Link
-              href="/admin/gallery"
+              href={`/${locale}/admin/gallery`}
               className="text-gray-light hover:text-green-primary"
             >
               ← Cancel

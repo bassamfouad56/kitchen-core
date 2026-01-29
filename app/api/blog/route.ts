@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient, Prisma } from "@prisma/client";
-import { cookies } from "next/headers";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import { createBlogPostSchema, blogQuerySchema } from "@/lib/validations/blog";
+import { successResponse, errorResponse, validationErrorResponse } from "@/lib/api/response";
 
 const prisma = new PrismaClient();
 
@@ -60,84 +63,58 @@ export async function GET(request: NextRequest) {
 // POST: Create new blog post (auth required)
 export async function POST(request: NextRequest) {
   try {
-    // Check authentication
-    const cookieStore = await cookies();
-    const session = cookieStore.get("admin-session");
+    // Check authentication with NextAuth
+    const session = await getServerSession(authOptions);
 
     if (!session) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return errorResponse("Unauthorized", 401);
     }
 
     const body = await request.json();
-    const {
-      slug,
-      titleEn,
-      titleAr,
-      excerptEn,
-      excerptAr,
-      contentEn,
-      contentAr,
-      featuredImage,
-      category,
-      tags,
-      author,
-      readingTime,
-      published,
-      publishedAt,
-      seoTitle,
-      seoDescription,
-      seoKeywords,
-    } = body;
 
-    // Validate required fields
-    if (!slug || !titleEn || !excerptEn || !contentEn || !category) {
-      return NextResponse.json(
-        { error: "Missing required fields" },
-        { status: 400 },
-      );
+    // Validate request body with Zod
+    const validation = createBlogPostSchema.safeParse(body);
+    if (!validation.success) {
+      return validationErrorResponse(validation.error);
     }
+
+    const data = validation.data;
 
     // Check if slug already exists
     const existingPost = await prisma.blogPost.findUnique({
-      where: { slug },
+      where: { slug: data.slug },
     });
 
     if (existingPost) {
-      return NextResponse.json(
-        { error: "A post with this slug already exists" },
-        { status: 400 },
-      );
+      return errorResponse("A post with this slug already exists", 400);
     }
 
     // Create the blog post
     const post = await prisma.blogPost.create({
       data: {
-        slug,
-        titleEn,
-        titleAr: titleAr || null,
-        excerptEn,
-        excerptAr: excerptAr || null,
-        contentEn,
-        contentAr: contentAr || null,
-        featuredImage: featuredImage || null,
-        category,
-        tags: tags || [],
-        author: author || "Kitchen Core Team",
-        readingTime: readingTime || 5,
-        published: published || false,
-        publishedAt: published && publishedAt ? new Date(publishedAt) : null,
-        seoTitle: seoTitle || null,
-        seoDescription: seoDescription || null,
-        seoKeywords: seoKeywords || [],
+        slug: data.slug,
+        titleEn: data.titleEn,
+        titleAr: data.titleAr || null,
+        excerptEn: data.excerptEn,
+        excerptAr: data.excerptAr || null,
+        contentEn: data.contentEn,
+        contentAr: data.contentAr || null,
+        featuredImage: data.featuredImage || null,
+        category: data.category,
+        tags: data.tags,
+        author: data.author,
+        readingTime: data.readingTime,
+        published: data.published,
+        publishedAt: data.published && data.publishedAt ? new Date(data.publishedAt) : null,
+        seoTitle: data.seoTitle || null,
+        seoDescription: data.seoDescription || null,
+        seoKeywords: data.seoKeywords,
       },
     });
 
-    return NextResponse.json(post, { status: 201 });
+    return successResponse(post, "Blog post created successfully", 201);
   } catch (error) {
     console.error("Error creating blog post:", error);
-    return NextResponse.json(
-      { error: "Failed to create blog post" },
-      { status: 500 },
-    );
+    return errorResponse("Failed to create blog post", 500);
   }
 }

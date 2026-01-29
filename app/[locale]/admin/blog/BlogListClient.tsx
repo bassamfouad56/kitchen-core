@@ -4,6 +4,8 @@ import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import LanguageSwitcher from "../components/LanguageSwitcher";
+import { useToast } from "../components/Toast";
+import { useConfirm } from "../components/ConfirmModal";
 
 interface BlogPost {
   id: string;
@@ -21,6 +23,8 @@ export default function BlogListClient() {
   const t = useTranslations("Admin.blog");
   const tCommon = useTranslations("Admin.common");
   const tActions = useTranslations("Admin.actions");
+  const { showToast } = useToast();
+  const { confirm } = useConfirm();
 
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
@@ -56,8 +60,16 @@ export default function BlogListClient() {
     fetchPosts();
   }, [fetchPosts]);
 
-  const handleDelete = async (slug: string) => {
-    if (!confirm(t("confirmDelete"))) return;
+  const handleDelete = async (slug: string, title: string) => {
+    const confirmed = await confirm({
+      title: t("confirmDeleteTitle") || "Delete Post",
+      message: t("confirmDeleteMessage") || `Are you sure you want to delete "${title}"? This action cannot be undone.`,
+      confirmText: tActions("delete"),
+      cancelText: tActions("cancel") || "Cancel",
+      type: "danger",
+    });
+
+    if (!confirmed) return;
 
     try {
       const res = await fetch(`/api/blog/${slug}`, {
@@ -67,10 +79,17 @@ export default function BlogListClient() {
 
       if (!res.ok) throw new Error("Failed to delete post");
 
+      showToast({
+        type: "success",
+        message: t("postDeleted") || "Post deleted successfully",
+      });
       fetchPosts();
     } catch (error) {
       console.error("Error deleting post:", error);
-      alert("Failed to delete post");
+      showToast({
+        type: "error",
+        message: t("deleteError") || "Failed to delete post. Please try again.",
+      });
     }
   };
 
@@ -258,7 +277,7 @@ export default function BlogListClient() {
                           {tActions("edit")}
                         </Link>
                         <button
-                          onClick={() => handleDelete(post.slug)}
+                          onClick={() => handleDelete(post.slug, post.titleEn)}
                           className="text-red-500 hover:text-red-400 transition-colors"
                         >
                           {tActions("delete")}

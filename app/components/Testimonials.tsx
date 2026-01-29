@@ -15,34 +15,11 @@ interface Testimonial {
   project: string;
 }
 
-// Fallback data in case CMS fetch fails
-const fallbackTestimonials: Testimonial[] = [
-  {
-    id: "1",
-    name: "Sheikh Mohammed Al-Rashid",
-    title: "Private Palace Owner",
-    location: "Dubai, UAE",
-    image: "/9.jpg",
-    quote: "Kitchen Core transformed our palace kitchen into a culinary masterpiece. The attention to detail and quality of craftsmanship is unparalleled. Every element speaks of luxury and functionality.",
-    rating: 5,
-    project: "Royal Palace Kitchen, Dubai",
-  },
-  {
-    id: "2",
-    name: "Isabella Rossi",
-    title: "Villa Owner",
-    location: "Monaco",
-    image: "/10.jpg",
-    quote: "Working with Kitchen Core was an absolute pleasure. They understood our vision for a Mediterranean villa kitchen and exceeded every expectation. The Italian marble selection and smart technology integration is flawless.",
-    rating: 5,
-    project: "Mediterranean Villa Kitchen",
-  },
-];
-
 export default function Testimonials() {
   const locale = useLocale();
-  const [testimonials, setTestimonials] = useState<Testimonial[]>(fallbackTestimonials);
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   // Fetch testimonials from CMS
@@ -50,16 +27,21 @@ export default function Testimonials() {
     async function fetchTestimonials() {
       try {
         setLoading(true);
+        setError(null);
         const response = await fetch(`/api/cms/homepage?locale=${locale}`);
-        if (response.ok) {
-          const data = await response.json();
-          if (data.testimonials && data.testimonials.length > 0) {
-            setTestimonials(data.testimonials);
-          }
+        if (!response.ok) {
+          throw new Error("Failed to fetch testimonials");
         }
-      } catch (error) {
-        console.error('Error fetching testimonials from CMS:', error);
-        // Keep fallback data on error
+        const data = await response.json();
+        if (data.testimonials && data.testimonials.length > 0) {
+          setTestimonials(data.testimonials);
+        } else {
+          setTestimonials([]);
+        }
+      } catch (err) {
+        console.error("Error fetching testimonials from CMS:", err);
+        setError("Unable to load testimonials. Please try again later.");
+        setTestimonials([]);
       } finally {
         setLoading(false);
       }
@@ -76,6 +58,11 @@ export default function Testimonials() {
   };
 
   const currentTestimonial = testimonials[currentIndex];
+
+  // Don't render section if no testimonials and not loading
+  if (!loading && !error && testimonials.length === 0) {
+    return null;
+  }
 
   return (
     <section className="py-32 bg-background-elevated border-y border-gray-dark">
@@ -98,6 +85,56 @@ export default function Testimonials() {
           </motion.div>
         </div>
 
+        {/* Loading State */}
+        {loading && (
+          <div className="bg-background-card border border-gray-dark p-8 md:p-12 animate-pulse">
+            <div className="flex flex-col md:flex-row gap-8 items-start">
+              <div className="w-24 h-24 rounded-full bg-gray-dark/50 flex-shrink-0" />
+              <div className="flex-1 space-y-4">
+                <div className="flex gap-1">
+                  {[...Array(5)].map((_, i) => (
+                    <div key={i} className="w-5 h-5 bg-gray-dark/50 rounded" />
+                  ))}
+                </div>
+                <div className="h-6 bg-gray-dark/50 rounded w-full" />
+                <div className="h-6 bg-gray-dark/50 rounded w-3/4" />
+                <div className="h-6 bg-gray-dark/50 rounded w-1/2" />
+                <div className="border-t border-gray-dark pt-6 mt-6">
+                  <div className="h-4 bg-gray-dark/50 rounded w-1/4" />
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Error State */}
+        {!loading && error && (
+          <div className="text-center py-16 border border-gray-dark bg-background-card">
+            <svg
+              className="w-16 h-16 text-gray-light mx-auto mb-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={1.5}
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+              />
+            </svg>
+            <p className="text-gray-light mb-4">{error}</p>
+            <button
+              onClick={() => window.location.reload()}
+              className="px-6 py-2 border border-green-primary text-green-primary hover:bg-green-primary hover:text-black transition-colors text-sm tracking-wider"
+            >
+              TRY AGAIN
+            </button>
+          </div>
+        )}
+
+        {/* Testimonials Content */}
+        {!loading && !error && currentTestimonial && (
         <div className="relative">
           <AnimatePresence mode="wait">
             <motion.div
@@ -220,6 +257,7 @@ export default function Testimonials() {
             ))}
           </div>
         </div>
+        )}
       </div>
     </section>
   );

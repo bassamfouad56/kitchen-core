@@ -33,6 +33,7 @@ export default function RichTextEditor({
   minHeight = "200px",
 }: RichTextEditorProps) {
   const editor = useEditor({
+    immediatelyRender: false,
     extensions: [
       StarterKit.configure({
         heading: {
@@ -67,7 +68,7 @@ export default function RichTextEditor({
     },
     editorProps: {
       attributes: {
-        class: `prose prose-sm sm:prose lg:prose-lg xl:prose-2xl focus:outline-none max-w-none`,
+        class: `prose prose-invert prose-sm sm:prose lg:prose-lg xl:prose-2xl focus:outline-none max-w-none text-zinc-200`,
         style: `min-height: ${minHeight}`,
       },
     },
@@ -103,23 +104,23 @@ export default function RichTextEditor({
   return (
     <div className={`space-y-2 ${className}`}>
       {label && (
-        <label className="block text-sm font-medium text-gray-700">
+        <label className="block text-sm font-medium text-zinc-300">
           {label}
         </label>
       )}
 
-      {helperText && <p className="text-sm text-gray-500">{helperText}</p>}
+      {helperText && <p className="text-sm text-zinc-400">{helperText}</p>}
 
       {/* Toolbar */}
-      <div className="border border-gray-300 rounded-t-lg bg-gray-50 p-2 flex flex-wrap gap-1">
+      <div className="border border-zinc-700 rounded-t-lg bg-zinc-900 p-2 flex flex-wrap gap-1">
         {/* Text Formatting */}
-        <div className="flex gap-1 border-r border-gray-300 pr-2">
+        <div className="flex gap-1 border-r border-zinc-700 pr-2">
           <button
             type="button"
             onClick={() => editor.chain().focus().toggleBold().run()}
             disabled={disabled}
-            className={`p-2 rounded hover:bg-gray-200 transition-colors ${
-              editor.isActive("bold") ? "bg-gray-300" : ""
+            className={`p-2 rounded hover:bg-zinc-800 transition-colors text-zinc-300 ${
+              editor.isActive("bold") ? "bg-zinc-700 text-green-primary" : ""
             } disabled:opacity-50`}
             title="Bold (Ctrl+B)"
           >
@@ -142,8 +143,8 @@ export default function RichTextEditor({
             type="button"
             onClick={() => editor.chain().focus().toggleItalic().run()}
             disabled={disabled}
-            className={`p-2 rounded hover:bg-gray-200 transition-colors ${
-              editor.isActive("italic") ? "bg-gray-300" : ""
+            className={`p-2 rounded hover:bg-zinc-800 transition-colors text-zinc-300 ${
+              editor.isActive("italic") ? "bg-zinc-700 text-green-primary" : ""
             } disabled:opacity-50`}
             title="Italic (Ctrl+I)"
           >
@@ -163,8 +164,8 @@ export default function RichTextEditor({
             type="button"
             onClick={() => editor.chain().focus().toggleUnderline().run()}
             disabled={disabled}
-            className={`p-2 rounded hover:bg-gray-200 transition-colors ${
-              editor.isActive("underline") ? "bg-gray-300" : ""
+            className={`p-2 rounded hover:bg-zinc-800 transition-colors text-zinc-300 ${
+              editor.isActive("underline") ? "bg-zinc-700 text-green-primary" : ""
             } disabled:opacity-50`}
             title="Underline (Ctrl+U)"
           >
@@ -187,8 +188,8 @@ export default function RichTextEditor({
             type="button"
             onClick={() => editor.chain().focus().toggleStrike().run()}
             disabled={disabled}
-            className={`p-2 rounded hover:bg-gray-200 transition-colors ${
-              editor.isActive("strike") ? "bg-gray-300" : ""
+            className={`p-2 rounded hover:bg-zinc-800 transition-colors text-zinc-300 ${
+              editor.isActive("strike") ? "bg-zinc-700 text-green-primary" : ""
             } disabled:opacity-50`}
             title="Strikethrough"
           >
@@ -205,15 +206,15 @@ export default function RichTextEditor({
         </div>
 
         {/* Headings */}
-        <div className="flex gap-1 border-r border-gray-300 pr-2">
+        <div className="flex gap-1 border-r border-zinc-700 pr-2">
           <button
             type="button"
             onClick={() =>
               editor.chain().focus().toggleHeading({ level: 1 }).run()
             }
             disabled={disabled}
-            className={`px-2 py-1 rounded hover:bg-gray-200 transition-colors text-sm font-bold ${
-              editor.isActive("heading", { level: 1 }) ? "bg-gray-300" : ""
+            className={`px-2 py-1 rounded hover:bg-zinc-800 transition-colors text-sm font-bold text-zinc-300 ${
+              editor.isActive("heading", { level: 1 }) ? "bg-zinc-700 text-green-primary" : ""
             } disabled:opacity-50`}
             title="Heading 1"
           >
@@ -226,8 +227,8 @@ export default function RichTextEditor({
               editor.chain().focus().toggleHeading({ level: 2 }).run()
             }
             disabled={disabled}
-            className={`px-2 py-1 rounded hover:bg-gray-200 transition-colors text-sm font-bold ${
-              editor.isActive("heading", { level: 2 }) ? "bg-gray-300" : ""
+            className={`px-2 py-1 rounded hover:bg-zinc-800 transition-colors text-sm font-bold text-zinc-300 ${
+              editor.isActive("heading", { level: 2 }) ? "bg-zinc-700 text-green-primary" : ""
             } disabled:opacity-50`}
             title="Heading 2"
           >
@@ -240,8 +241,8 @@ export default function RichTextEditor({
               editor.chain().focus().toggleHeading({ level: 3 }).run()
             }
             disabled={disabled}
-            className={`px-2 py-1 rounded hover:bg-gray-200 transition-colors text-sm font-bold ${
-              editor.isActive("heading", { level: 3 }) ? "bg-gray-300" : ""
+            className={`px-2 py-1 rounded hover:bg-zinc-800 transition-colors text-sm font-bold text-zinc-300 ${
+              editor.isActive("heading", { level: 3 }) ? "bg-zinc-700 text-green-primary" : ""
             } disabled:opacity-50`}
             title="Heading 3"
           >
@@ -250,13 +251,13 @@ export default function RichTextEditor({
         </div>
 
         {/* Lists */}
-        <div className="flex gap-1 border-r border-gray-300 pr-2">
+        <div className="flex gap-1 border-r border-zinc-700 pr-2">
           <button
             type="button"
             onClick={() => editor.chain().focus().toggleBulletList().run()}
             disabled={disabled}
-            className={`p-2 rounded hover:bg-gray-200 transition-colors ${
-              editor.isActive("bulletList") ? "bg-gray-300" : ""
+            className={`p-2 rounded hover:bg-zinc-800 transition-colors text-zinc-300 ${
+              editor.isActive("bulletList") ? "bg-zinc-700 text-green-primary" : ""
             } disabled:opacity-50`}
             title="Bullet List"
           >
@@ -279,8 +280,8 @@ export default function RichTextEditor({
             type="button"
             onClick={() => editor.chain().focus().toggleOrderedList().run()}
             disabled={disabled}
-            className={`p-2 rounded hover:bg-gray-200 transition-colors ${
-              editor.isActive("orderedList") ? "bg-gray-300" : ""
+            className={`p-2 rounded hover:bg-zinc-800 transition-colors text-zinc-300 ${
+              editor.isActive("orderedList") ? "bg-zinc-700 text-green-primary" : ""
             } disabled:opacity-50`}
             title="Numbered List"
           >
@@ -307,13 +308,13 @@ export default function RichTextEditor({
         </div>
 
         {/* Alignment */}
-        <div className="flex gap-1 border-r border-gray-300 pr-2">
+        <div className="flex gap-1 border-r border-zinc-700 pr-2">
           <button
             type="button"
             onClick={() => editor.chain().focus().setTextAlign("left").run()}
             disabled={disabled}
-            className={`p-2 rounded hover:bg-gray-200 transition-colors ${
-              editor.isActive({ textAlign: "left" }) ? "bg-gray-300" : ""
+            className={`p-2 rounded hover:bg-zinc-800 transition-colors text-zinc-300 ${
+              editor.isActive({ textAlign: "left" }) ? "bg-zinc-700 text-green-primary" : ""
             } disabled:opacity-50`}
             title="Align Left"
           >
@@ -333,8 +334,8 @@ export default function RichTextEditor({
             type="button"
             onClick={() => editor.chain().focus().setTextAlign("center").run()}
             disabled={disabled}
-            className={`p-2 rounded hover:bg-gray-200 transition-colors ${
-              editor.isActive({ textAlign: "center" }) ? "bg-gray-300" : ""
+            className={`p-2 rounded hover:bg-zinc-800 transition-colors text-zinc-300 ${
+              editor.isActive({ textAlign: "center" }) ? "bg-zinc-700 text-green-primary" : ""
             } disabled:opacity-50`}
             title="Align Center"
           >
@@ -354,8 +355,8 @@ export default function RichTextEditor({
             type="button"
             onClick={() => editor.chain().focus().setTextAlign("right").run()}
             disabled={disabled}
-            className={`p-2 rounded hover:bg-gray-200 transition-colors ${
-              editor.isActive({ textAlign: "right" }) ? "bg-gray-300" : ""
+            className={`p-2 rounded hover:bg-zinc-800 transition-colors text-zinc-300 ${
+              editor.isActive({ textAlign: "right" }) ? "bg-zinc-700 text-green-primary" : ""
             } disabled:opacity-50`}
             title="Align Right"
           >
@@ -373,13 +374,13 @@ export default function RichTextEditor({
         </div>
 
         {/* Link & Image */}
-        <div className="flex gap-1 border-r border-gray-300 pr-2">
+        <div className="flex gap-1 border-r border-zinc-700 pr-2">
           <button
             type="button"
             onClick={setLink}
             disabled={disabled}
-            className={`p-2 rounded hover:bg-gray-200 transition-colors ${
-              editor.isActive("link") ? "bg-gray-300" : ""
+            className={`p-2 rounded hover:bg-zinc-800 transition-colors text-zinc-300 ${
+              editor.isActive("link") ? "bg-zinc-700 text-green-primary" : ""
             } disabled:opacity-50`}
             title="Insert Link"
           >
@@ -402,7 +403,7 @@ export default function RichTextEditor({
             type="button"
             onClick={addImage}
             disabled={disabled}
-            className="p-2 rounded hover:bg-gray-200 transition-colors disabled:opacity-50"
+            className="p-2 rounded hover:bg-zinc-800 transition-colors text-zinc-300 disabled:opacity-50"
             title="Insert Image"
           >
             <svg
@@ -427,7 +428,7 @@ export default function RichTextEditor({
             type="button"
             onClick={() => editor.chain().focus().undo().run()}
             disabled={disabled || !editor.can().undo()}
-            className="p-2 rounded hover:bg-gray-200 transition-colors disabled:opacity-50"
+            className="p-2 rounded hover:bg-zinc-800 transition-colors text-zinc-300 disabled:opacity-50"
             title="Undo (Ctrl+Z)"
           >
             <svg
@@ -449,7 +450,7 @@ export default function RichTextEditor({
             type="button"
             onClick={() => editor.chain().focus().redo().run()}
             disabled={disabled || !editor.can().redo()}
-            className="p-2 rounded hover:bg-gray-200 transition-colors disabled:opacity-50"
+            className="p-2 rounded hover:bg-zinc-800 transition-colors text-zinc-300 disabled:opacity-50"
             title="Redo (Ctrl+Y)"
           >
             <svg
@@ -470,7 +471,7 @@ export default function RichTextEditor({
       </div>
 
       {/* Editor Content */}
-      <div className="border border-t-0 border-gray-300 rounded-b-lg p-4 bg-white prose max-w-none">
+      <div className="border border-t-0 border-zinc-700 rounded-b-lg p-4 bg-zinc-950 text-zinc-200 prose prose-invert max-w-none">
         <EditorContent editor={editor} />
       </div>
     </div>

@@ -171,14 +171,6 @@ const nextConfig: NextConfig = {
     // ONLY USE IN DEVELOPMENT - Remove for production
     // ignoreBuildErrors: false,
   },
-
-  // ESLint configuration
-  eslint: {
-    // Only run on changed files during build
-    dirs: ['app', 'components', 'lib', 'hooks'],
-    // Allow production builds to complete even with ESLint warnings
-    ignoreDuringBuilds: true,
-  },
 };
 
 export default withNextIntl(nextConfig);

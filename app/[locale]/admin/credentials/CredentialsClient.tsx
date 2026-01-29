@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { useToast } from "../components/Toast";
+import { useConfirm } from "../components/ConfirmModal";
 
 type Credential = {
   id: string;
@@ -29,6 +31,8 @@ export default function CredentialsClient({
   locale,
 }: CredentialsClientProps) {
   const router = useRouter();
+  const { showToast } = useToast();
+  const { confirm } = useConfirm();
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -130,9 +134,15 @@ export default function CredentialsClient({
   };
 
   const handleDelete = async (id: string, title: string) => {
-    if (!confirm(`Are you sure you want to delete "${title}"?`)) {
-      return;
-    }
+    const confirmed = await confirm({
+      title: "Delete Credential",
+      message: `Are you sure you want to delete "${title}"? This action cannot be undone.`,
+      confirmText: "Delete",
+      cancelText: "Cancel",
+      type: "danger",
+    });
+
+    if (!confirmed) return;
 
     try {
       const response = await fetch(`/${locale}/api/admin/credentials/${id}`, {
@@ -143,10 +153,11 @@ export default function CredentialsClient({
         throw new Error("Failed to delete credential");
       }
 
+      showToast({ type: "success", message: "Credential deleted successfully" });
       router.refresh();
     } catch (error) {
       console.error("Error deleting credential:", error);
-      alert("Failed to delete credential");
+      showToast({ type: "error", message: "Failed to delete credential" });
     }
   };
 

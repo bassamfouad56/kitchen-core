@@ -44,7 +44,7 @@ export default function CompanyStats({ company, locale }: CompanyStatsProps) {
 
   const stats = [
     {
-      number: company.projectsCompleted || "150+",
+      number: company.projectsCompleted || "1000+",
       label: isArabic ? "مشروع فاخر" : "Luxury Projects",
       useCounter: true,
       end: parseInt(company.projectsCompleted?.replace(/\D/g, "") || "150"),

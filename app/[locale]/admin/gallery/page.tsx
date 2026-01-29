@@ -5,9 +5,14 @@ import { prisma } from '@/lib/prisma'
 import Link from 'next/link'
 import Image from 'next/image'
 
-export default async function GalleryPage() {
+type Props = {
+  params: Promise<{ locale: string }>;
+};
+
+export default async function GalleryPage({ params }: Props) {
+  const { locale } = await params;
   const session = await getServerSession(authOptions)
-  if (!session) redirect('/admin/login')
+  if (!session) redirect(`/${locale}/admin/login`)
 
   const images = await prisma.galleryImage.findMany({
     orderBy: { order: 'asc' },
@@ -23,7 +28,7 @@ export default async function GalleryPage() {
             <p className="text-gray-light">Manage your gallery collection</p>
           </div>
           <Link
-            href="/admin/gallery/new"
+            href={`/${locale}/admin/gallery/new`}
             className="bg-green-primary text-black px-6 py-3 font-medium hover:bg-green-vibrant transition-colors"
           >
             + New Image
@@ -64,7 +69,7 @@ export default async function GalleryPage() {
                   )}
                 </div>
                 <Link
-                  href={`/admin/gallery/${img.id}`}
+                  href={`/${locale}/admin/gallery/${img.id}`}
                   className="text-green-primary hover:text-green-vibrant text-sm"
                 >
                   Edit →
@@ -78,7 +83,7 @@ export default async function GalleryPage() {
           <div className="text-center py-12">
             <p className="text-gray-light mb-4">No gallery images yet</p>
             <Link
-              href="/admin/gallery/new"
+              href={`/${locale}/admin/gallery/new`}
               className="inline-block px-6 py-3 bg-green-primary text-black font-medium hover:bg-green-vibrant transition-colors"
             >
               Add Your First Image
@@ -88,7 +93,7 @@ export default async function GalleryPage() {
 
         {/* Back Link */}
         <div className="mt-8">
-          <Link href="/admin" className="text-gray-light hover:text-green-primary text-sm">
+          <Link href={`/${locale}/admin`} className="text-gray-light hover:text-green-primary text-sm">
             ← Back to Dashboard
           </Link>
         </div>

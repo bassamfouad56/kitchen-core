@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { updateTeamMemberSchema } from "@/lib/validations/team-member";
+import { ZodError } from "zod";
 
 export async function GET(
   request: NextRequest,
@@ -38,13 +40,20 @@ export async function PUT(
 
     const { id } = await params;
     const body = await request.json();
+    const validatedData = updateTeamMemberSchema.parse(body);
     const teamMember = await prisma.teamMember.update({
       where: { id },
-      data: body,
+      data: validatedData,
     });
 
     return NextResponse.json(teamMember);
   } catch (error) {
+    if (error instanceof ZodError) {
+      return NextResponse.json(
+        { error: "Validation failed", details: error.issues },
+        { status: 400 },
+      );
+    }
     console.error("Error updating team member:", error);
     return NextResponse.json(
       { error: "Failed to update team member" },

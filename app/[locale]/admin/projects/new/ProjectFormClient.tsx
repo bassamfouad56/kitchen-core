@@ -8,13 +8,15 @@ import MultipleImageUpload from "@/app/components/MultipleImageUpload";
 import RichTextEditor from "@/app/components/RichTextEditor";
 
 interface ProjectFormData {
-  title: string;
+  titleEn: string;
+  titleAr: string;
   slug: string;
   location: string;
-  category: "PALACE" | "VILLA" | "ESTATE" | "PENTHOUSE";
+  category: "MODERN_WOODEN" | "CLASSIC_WOODEN" | "ALUMINUM" | "BEDROOMS";
   image: string;
   gallery: string[];
-  description: string;
+  descriptionEn: string;
+  descriptionAr: string;
   year: string;
   area: string;
   budget: string;
@@ -22,7 +24,8 @@ interface ProjectFormData {
   appliances: string[];
   features: string[];
   duration: string;
-  challenges: string;
+  challengesEn: string;
+  challengesAr: string;
   innovations: string[];
   featured: boolean;
   published: boolean;
@@ -45,15 +48,18 @@ export default function ProjectFormClient({
   const router = useRouter();
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const [project, setProject] = useState<ProjectFormData>({
-    title: initialData?.title || "",
+    titleEn: initialData?.titleEn || "",
+    titleAr: initialData?.titleAr || "",
     slug: initialData?.slug || "",
     location: initialData?.location || "",
-    category: initialData?.category || "VILLA",
+    category: initialData?.category || "MODERN_WOODEN",
     image: initialData?.image || "",
     gallery: initialData?.gallery || [],
-    description: initialData?.description || "",
+    descriptionEn: initialData?.descriptionEn || "",
+    descriptionAr: initialData?.descriptionAr || "",
     year: initialData?.year || new Date().getFullYear().toString(),
     area: initialData?.area || "",
     budget: initialData?.budget || "",
@@ -61,7 +67,8 @@ export default function ProjectFormClient({
     appliances: initialData?.appliances || [],
     features: initialData?.features || [],
     duration: initialData?.duration || "",
-    challenges: initialData?.challenges || "",
+    challengesEn: initialData?.challengesEn || "",
+    challengesAr: initialData?.challengesAr || "",
     innovations: initialData?.innovations || [],
     featured: initialData?.featured || false,
     published: initialData?.published || false,
@@ -84,11 +91,12 @@ export default function ProjectFormClient({
     e.preventDefault();
     setSaving(true);
     setError("");
+    setSuccess("");
 
     try {
       const url = isEditing
-        ? `/${locale}/api/admin/projects/${projectId}`
-        : `/${locale}/api/admin/projects`;
+        ? `/api/projects/${projectId}`
+        : `/api/projects`;
 
       const method = isEditing ? "PUT" : "POST";
 
@@ -99,12 +107,24 @@ export default function ProjectFormClient({
       });
 
       if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.error || "Failed to save project");
+        let errorMessage = "Failed to save project";
+        try {
+          const data = await response.json();
+          errorMessage = data.error || data.message || errorMessage;
+        } catch {
+          // Response may not be JSON
+          errorMessage = `Server error: ${response.status} ${response.statusText}`;
+        }
+        throw new Error(errorMessage);
       }
 
-      router.push(`/${locale}/admin/projects`);
-      router.refresh();
+      setSuccess(isEditing ? "Project updated successfully!" : "Project created successfully!");
+
+      // Redirect after showing success message
+      setTimeout(() => {
+        router.push(`/${locale}/admin/projects`);
+        router.refresh();
+      }, 1500);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to save project");
     } finally {
@@ -140,6 +160,12 @@ export default function ProjectFormClient({
           </div>
         )}
 
+        {success && (
+          <div className="mb-6 p-4 bg-green-900/20 border border-green-500/50 text-green-400">
+            {success}
+          </div>
+        )}
+
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Basic Information */}
           <div className="bg-background-card border border-gray-dark p-6 space-y-4">
@@ -147,22 +173,40 @@ export default function ProjectFormClient({
 
             <div>
               <label className="block text-sm font-medium text-gray-light mb-2">
-                Title
+                Title (English)
               </label>
               <input
                 type="text"
-                value={project.title}
+                value={project.titleEn}
                 onChange={(e) => {
-                  setProject({ ...project, title: e.target.value });
-                  if (!isEditing && !project.slug) {
+                  const newTitle = e.target.value;
+                  if (!isEditing) {
+                    // Auto-generate slug from title for new projects
                     setProject((prev) => ({
                       ...prev,
-                      slug: generateSlug(e.target.value),
+                      titleEn: newTitle,
+                      slug: generateSlug(newTitle),
                     }));
+                  } else {
+                    setProject((prev) => ({ ...prev, titleEn: newTitle }));
                   }
                 }}
                 className="w-full px-4 py-2 bg-black border border-gray-dark text-white focus:border-green-primary focus:outline-none"
                 required
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-light mb-2">
+                Title (Arabic)
+              </label>
+              <input
+                type="text"
+                value={project.titleAr}
+                onChange={(e) => setProject((prev) => ({ ...prev, titleAr: e.target.value }))}
+                className="w-full px-4 py-2 bg-black border border-gray-dark text-white focus:border-green-primary focus:outline-none text-right"
+                dir="rtl"
+                placeholder="العنوان بالعربية"
               />
             </div>
 
@@ -216,22 +260,34 @@ export default function ProjectFormClient({
                   className="w-full px-4 py-2 bg-black border border-gray-dark text-white focus:border-green-primary focus:outline-none"
                   required
                 >
-                  <option value="PALACE">Palace</option>
-                  <option value="VILLA">Villa</option>
-                  <option value="ESTATE">Estate</option>
-                  <option value="PENTHOUSE">Penthouse</option>
+                  <option value="MODERN_WOODEN">Modern Wooden</option>
+                  <option value="CLASSIC_WOODEN">Classic Wooden</option>
+                  <option value="ALUMINUM">Aluminum</option>
+                  <option value="BEDROOMS">Bedrooms</option>
                 </select>
               </div>
             </div>
 
             <div>
               <RichTextEditor
-                label="Description"
-                value={project.description}
+                label="Description (English)"
+                value={project.descriptionEn}
                 onChange={(html) =>
-                  setProject({ ...project, description: html })
+                  setProject({ ...project, descriptionEn: html })
                 }
                 placeholder="Brief description of the project..."
+                minHeight="150px"
+              />
+            </div>
+
+            <div>
+              <RichTextEditor
+                label="Description (Arabic)"
+                value={project.descriptionAr}
+                onChange={(html) =>
+                  setProject({ ...project, descriptionAr: html })
+                }
+                placeholder="وصف المشروع بالعربية..."
                 minHeight="150px"
               />
             </div>
@@ -380,12 +436,24 @@ export default function ProjectFormClient({
 
             <div>
               <RichTextEditor
-                label="Challenges"
-                value={project.challenges}
+                label="Challenges (English)"
+                value={project.challengesEn}
                 onChange={(html) =>
-                  setProject({ ...project, challenges: html })
+                  setProject({ ...project, challengesEn: html })
                 }
                 placeholder="Key challenges faced during the project..."
+                minHeight="120px"
+              />
+            </div>
+
+            <div>
+              <RichTextEditor
+                label="Challenges (Arabic)"
+                value={project.challengesAr}
+                onChange={(html) =>
+                  setProject({ ...project, challengesAr: html })
+                }
+                placeholder="التحديات التي واجهت المشروع..."
                 minHeight="120px"
               />
             </div>

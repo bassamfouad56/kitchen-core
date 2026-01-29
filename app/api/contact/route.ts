@@ -1,13 +1,10 @@
 import { NextRequest } from 'next/server';
-import { Resend } from 'resend';
 import { successResponse, handleApiError, errorResponse } from '@/lib/api/response';
 import { getClientIP, contactLimiter, checkRateLimit } from '@/lib/rate-limit';
 import { contactFormSchema } from '@/lib/validations/contact';
 import { prisma } from '@/lib/prisma';
-import ContactNotificationEmail from '@/emails/contact-notification';
-
-// Initialize Resend
-const resend = new Resend(process.env.RESEND_API_KEY);
+import { sendEmail } from '@/lib/email';
+import { getAdminNotificationEmail, getUserConfirmationEmail } from '@/lib/email-templates';
 
 /**
  * POST /api/contact
@@ -33,7 +30,7 @@ export async function POST(request: NextRequest) {
     const validatedData = contactFormSchema.parse(body);
 
     // Extract data
-    const { name, email, phone, company, subject, message } = validatedData;
+    const { name, email, phone, company, subject, projectType, message } = validatedData;
 
     // Split name into first and last
     const nameParts = name.trim().split(' ');
@@ -54,7 +51,7 @@ export async function POST(request: NextRequest) {
           email,
           phone: phone || null,
           company: company || null,
-          message,
+          message: message || '',
           source: 'WEBSITE',
           status: 'NEW',
           priority: 'MEDIUM',
@@ -64,6 +61,7 @@ export async function POST(request: NextRequest) {
             ip,
             formSubmission: true,
             subject,
+            projectType,
             submittedAt: new Date().toISOString(),
           },
         },
@@ -83,12 +81,13 @@ export async function POST(request: NextRequest) {
           phone: phone || null,
           company: company || null,
           subject: subject || 'General Inquiry',
-          message,
+          message: message || '',
           source: referer || 'Unknown',
           metadata: {
             userAgent,
             ip,
             leadId,
+            projectType,
           },
         },
       });
@@ -96,26 +95,55 @@ export async function POST(request: NextRequest) {
       console.error('Failed to create contact submission:', submissionError);
     }
 
-    // Send email notification via Resend
-    if (process.env.RESEND_API_KEY) {
+    // Detect locale from referer URL
+    const locale = referer?.includes('/ar') ? 'ar' : 'en';
+
+    // Send email notifications via Gmail
+    if (process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD) {
+      // 1. Send notification to admin
       try {
-        await resend.emails.send({
-          from: process.env.EMAIL_FROM || 'Kitchen Core <onboarding@resend.dev>',
-          to: process.env.EMAIL_REPLY_TO || 'design@kitchencore.com',
-          replyTo: email,
-          subject: `New Contact: ${subject || 'General Inquiry'} - ${name}`,
-          react: ContactNotificationEmail({
+        const emailSubject = projectType
+          ? `New Contact: ${projectType} - ${name}`
+          : `New Contact: ${subject || 'General Inquiry'} - ${name}`;
+
+        await sendEmail({
+          to: ['kitchencorefuj@gmail.com', 'bassamfouad56@gmail.com'],
+          subject: emailSubject,
+          html: getAdminNotificationEmail({
             name,
             email,
             phone,
-            message,
-            projectType: subject,
+            message: message || 'No message provided',
+            projectType: projectType || subject,
+          }),
+          replyTo: email,
+        });
+        console.log('Admin notification email sent successfully');
+      } catch (emailError) {
+        console.error('Failed to send admin notification email:', emailError);
+      }
+
+      // 2. Send confirmation email to user
+      try {
+        const confirmationSubject = locale === 'ar'
+          ? 'شكراً لتواصلك مع كيتشن كور'
+          : 'Thank you for contacting Kitchen Core';
+
+        await sendEmail({
+          to: email,
+          subject: confirmationSubject,
+          html: getUserConfirmationEmail({
+            name,
+            projectType,
+            locale: locale as 'en' | 'ar',
           }),
         });
+        console.log('User confirmation email sent successfully');
       } catch (emailError) {
-        console.error('Failed to send email:', emailError);
-        // Continue even if email fails
+        console.error('Failed to send confirmation email to user:', emailError);
       }
+    } else {
+      console.warn('Gmail credentials not configured. Emails not sent.');
     }
 
     return successResponse(

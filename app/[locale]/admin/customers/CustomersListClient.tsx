@@ -2,6 +2,8 @@
 
 import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
+import { useToast } from "../components/Toast";
+import { useConfirm } from "../components/ConfirmModal";
 
 type Customer = {
   id: string;
@@ -47,6 +49,8 @@ export default function CustomersListClient({
   locale,
 }: CustomersListClientProps) {
   const router = useRouter();
+  const { showToast } = useToast();
+  const { confirm } = useConfirm();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedStatus, setSelectedStatus] = useState<string>("all");
   const [selectedType, setSelectedType] = useState<string>("all");
@@ -102,13 +106,15 @@ export default function CustomersListClient({
   }, [customers, selectedStatus, selectedType, searchQuery, sortBy]);
 
   const handleDelete = async (customerId: string, customerName: string) => {
-    if (
-      !confirm(
-        `Are you sure you want to delete ${customerName}? This action cannot be undone.`,
-      )
-    ) {
-      return;
-    }
+    const confirmed = await confirm({
+      title: "Delete Customer",
+      message: `Are you sure you want to delete ${customerName}? This action cannot be undone.`,
+      confirmText: "Delete",
+      cancelText: "Cancel",
+      type: "danger",
+    });
+
+    if (!confirmed) return;
 
     try {
       const response = await fetch(
@@ -123,12 +129,12 @@ export default function CustomersListClient({
         throw new Error(errorData.error || "Failed to delete customer");
       }
 
+      showToast({ type: "success", message: "Customer deleted successfully" });
       router.refresh();
     } catch (error) {
       console.error("Error deleting customer:", error);
-      alert(
-        error instanceof Error ? error.message : "Failed to delete customer",
-      );
+      const errorMessage = error instanceof Error ? error.message : "Failed to delete customer";
+      showToast({ type: "error", message: errorMessage });
     }
   };
 

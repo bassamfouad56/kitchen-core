@@ -49,12 +49,18 @@ export interface TeamMember {
 export interface Founder {
   id: string;
   name: string;
+  nameAr: string | null;
   title: string;
+  titleAr: string | null;
   image: string;
   bio: string;
+  bioAr: string | null;
   education: string[];
+  educationAr: string[];
   recognition: string[];
+  recognitionAr: string[];
   quote: string;
+  quoteAr: string | null;
   published: boolean;
   createdAt: Date;
   updatedAt: Date;

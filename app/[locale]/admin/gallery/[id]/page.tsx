@@ -231,7 +231,7 @@ export default function EditGalleryImagePage({ params }: { params: Promise<{ id:
             <h2 className="text-xl font-serif mb-4">Settings</h2>
 
             <div>
-              <label className="flex items-center space-x-3">
+              <label className="flex items-center gap-3">
                 <input
                   type="checkbox"
                   checked={image.published}

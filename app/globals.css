@@ -27,8 +27,8 @@
   --font-family-sans: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
   --font-family-serif: var(--font-playfair), Georgia, serif;
 
-  /* Font families - RTL (Arabic) */
-  --font-family-arabic-sans: var(--font-cairo), system-ui, -apple-system, sans-serif;
+  /* Font families - RTL (Arabic) - Dubai font for modern Arabic look */
+  --font-family-arabic-sans: var(--font-dubai), system-ui, -apple-system, sans-serif;
   --font-family-arabic-serif: var(--font-amiri), Georgia, serif;
 }
 
@@ -73,9 +73,9 @@ html {
   font-family: var(--font-family-arabic-serif);
 }
 
-/* Increase font size for Arabic text (20-25% larger) */
+/* Increase font size for Arabic text - Dubai font looks better larger */
 [dir="rtl"] {
-  font-size: 105%;
+  font-size: 118%;
 }
 
 [dir="rtl"] h1,
@@ -84,12 +84,12 @@ html {
 [dir="rtl"] h4,
 [dir="rtl"] h5,
 [dir="rtl"] h6 {
-  font-size: 110%;
+  font-size: 125%;
 }
 
-/* Adjust line height for better Arabic readability */
+/* Adjust line height for better Arabic readability with Dubai font */
 [dir="rtl"] {
-  line-height: 1.7;
+  line-height: 1.8;
 }
 
 /* RTL flexbox utilities */

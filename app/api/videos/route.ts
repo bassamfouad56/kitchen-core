@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
+import { createVideoSchema } from '@/lib/validations/video'
+import { ZodError } from 'zod'
 
 export async function GET() {
   try {
@@ -23,20 +25,18 @@ export async function POST(request: Request) {
 
   try {
     const body = await request.json()
+    const validatedData = createVideoSchema.parse(body)
     const video = await prisma.video.create({
-      data: {
-        titleEn: body.titleEn,
-        titleAr: body.titleAr,
-        descriptionEn: body.descriptionEn,
-        descriptionAr: body.descriptionAr,
-        url: body.url,
-        thumbnail: body.thumbnail || null,
-        order: body.order || 0,
-        published: body.published ?? true,
-      },
+      data: validatedData,
     })
     return NextResponse.json(video)
   } catch (error) {
+    if (error instanceof ZodError) {
+      return NextResponse.json(
+        { error: 'Validation failed', details: error.issues },
+        { status: 400 }
+      )
+    }
     return NextResponse.json({ error: 'Failed to create video' }, { status: 500 })
   }
 }

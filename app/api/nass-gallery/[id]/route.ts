@@ -1,7 +1,14 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { updateNassGallerySchema } from "@/lib/validations/nass-gallery";
+import {
+  successResponse,
+  errorResponse,
+  validationErrorResponse,
+  notFoundResponse,
+} from "@/lib/api/response";
 
 // GET - Get single gallery by ID
 export async function GET(
@@ -19,16 +26,13 @@ export async function GET(
     });
 
     if (!gallery) {
-      return NextResponse.json({ error: "Gallery not found" }, { status: 404 });
+      return notFoundResponse("Gallery");
     }
 
-    return NextResponse.json(gallery);
+    return successResponse(gallery);
   } catch (error) {
     console.error("Error fetching gallery:", error);
-    return NextResponse.json(
-      { error: "Failed to fetch gallery" },
-      { status: 500 },
-    );
+    return errorResponse("Failed to fetch gallery");
   }
 }
 
@@ -40,12 +44,28 @@ export async function PUT(
   try {
     const session = await getServerSession(authOptions);
     if (!session) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return errorResponse("Unauthorized", 401);
     }
 
     const { id } = await params;
     const body = await request.json();
-    const { images, features, ...galleryData } = body;
+
+    // Validate request body
+    const validation = updateNassGallerySchema.safeParse(body);
+    if (!validation.success) {
+      return validationErrorResponse(validation.error);
+    }
+
+    // Check if gallery exists
+    const existing = await prisma.nassGallery.findUnique({
+      where: { id },
+    });
+
+    if (!existing) {
+      return notFoundResponse("Gallery");
+    }
+
+    const { images, features, ...galleryData } = validation.data;
 
     // Delete existing images and features, then create new ones
     await prisma.nassImage.deleteMany({
@@ -79,13 +99,10 @@ export async function PUT(
       },
     });
 
-    return NextResponse.json(gallery);
+    return successResponse(gallery, "Gallery updated successfully");
   } catch (error) {
     console.error("Error updating gallery:", error);
-    return NextResponse.json(
-      { error: "Failed to update gallery" },
-      { status: 500 },
-    );
+    return errorResponse("Failed to update gallery");
   }
 }
 
@@ -97,21 +114,28 @@ export async function DELETE(
   try {
     const session = await getServerSession(authOptions);
     if (!session) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return errorResponse("Unauthorized", 401);
     }
 
     const { id } = await params;
+
+    // Check if gallery exists
+    const existing = await prisma.nassGallery.findUnique({
+      where: { id },
+    });
+
+    if (!existing) {
+      return notFoundResponse("Gallery");
+    }
+
     // Images and features will be cascade deleted due to schema
     await prisma.nassGallery.delete({
       where: { id },
     });
 
-    return NextResponse.json({ success: true });
+    return successResponse(null, "Gallery deleted successfully");
   } catch (error) {
     console.error("Error deleting gallery:", error);
-    return NextResponse.json(
-      { error: "Failed to delete gallery" },
-      { status: 500 },
-    );
+    return errorResponse("Failed to delete gallery");
   }
 }

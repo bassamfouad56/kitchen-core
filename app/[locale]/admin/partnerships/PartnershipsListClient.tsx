@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import { useToast } from "../components/Toast";
+import { useConfirm } from "../components/ConfirmModal";
 
 type Partnership = {
   id: string;
@@ -27,14 +29,20 @@ export default function PartnershipsListClient({
   locale,
 }: PartnershipsListClientProps) {
   const router = useRouter();
+  const { showToast } = useToast();
+  const { confirm } = useConfirm();
   const [deleting, setDeleting] = useState<string | null>(null);
 
   const handleDelete = async (partnershipId: string, partnerName: string) => {
-    if (
-      !confirm(`Are you sure you want to delete partnership: ${partnerName}?`)
-    ) {
-      return;
-    }
+    const confirmed = await confirm({
+      title: "Delete Partnership",
+      message: `Are you sure you want to delete partnership: ${partnerName}? This action cannot be undone.`,
+      confirmText: "Delete",
+      cancelText: "Cancel",
+      type: "danger",
+    });
+
+    if (!confirmed) return;
 
     setDeleting(partnershipId);
     try {
@@ -50,12 +58,12 @@ export default function PartnershipsListClient({
         throw new Error(error.error || "Failed to delete partnership");
       }
 
+      showToast({ type: "success", message: "Partnership deleted successfully" });
       router.refresh();
     } catch (error) {
       console.error("Error deleting partnership:", error);
-      alert(
-        error instanceof Error ? error.message : "Failed to delete partnership",
-      );
+      const errorMessage = error instanceof Error ? error.message : "Failed to delete partnership";
+      showToast({ type: "error", message: errorMessage });
     } finally {
       setDeleting(null);
     }

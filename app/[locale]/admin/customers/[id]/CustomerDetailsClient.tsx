@@ -170,7 +170,7 @@ export default function CustomerDetailsClient({
 
       {/* Tabs */}
       <div className="mb-6 border-b border-gray-200">
-        <nav className="-mb-px flex space-x-8">
+        <nav className="-mb-px flex gap-8">
           <button
             onClick={() => setActiveTab("overview")}
             className={`pb-4 px-1 border-b-2 font-medium text-sm ${

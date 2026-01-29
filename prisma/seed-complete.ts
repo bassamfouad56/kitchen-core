@@ -35,9 +35,9 @@ async function main() {
       taglineEn: "Distinctive Elegance",
       taglineAr: "تفرّد بأناقة",
       descriptionEn:
-        "For over fifteen years, we've been transforming ideas into exceptional spaces — we listen, understand, and design beyond expectations.",
+        "Since 2020, we've been transforming visions into exceptional living spaces — combining innovative design with masterful craftsmanship.",
       descriptionAr:
-        "منذ أكثر من خمسة عشر عاماً، نحوّل الأفكار إلى مساحات استثنائية — نستمع، نفهم، ونصمم بما يتجاوز التوقعات.",
+        "منذ عام ٢٠٢٠، نحوّل الأفكار إلى مساحات معيشة استثنائية — نجمع بين التصميم المبتكر والحرفية المتقنة.",
       missionEn:
         "We listen to your vision, understand your challenges, and create design solutions that fit your space and lifestyle — every project is unique, every detail is thoughtful.",
       missionAr:
@@ -62,7 +62,7 @@ async function main() {
       ],
       foundedYear: "2009",
       employeeCount: "25+",
-      projectsCompleted: "150+",
+      projectsCompleted: "1000+",
       countriesServed: "25+",
       yearsOfExperience: "15+",
       phone: "+971 4 XXX XXXX",
@@ -77,7 +77,7 @@ async function main() {
   await prisma.statistic.createMany({
     data: [
       {
-        number: "150+",
+        number: "1000+",
         labelEn: "Luxury Kitchens",
         labelAr: "مطبخ فاخر",
         section: "HOMEPAGE_TRUST",

@@ -1,18 +1,23 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useParams } from 'next/navigation'
 import Link from 'next/link'
+import ImageUpload from '@/app/components/ImageUpload'
+import MultipleImageUpload from '@/app/components/MultipleImageUpload'
+import RichTextEditor from '@/app/components/RichTextEditor'
 
 interface Project {
   id: string
-  title: string
+  titleEn: string
+  titleAr: string
   slug: string
   location: string
-  category: 'PALACE' | 'VILLA' | 'ESTATE' | 'PENTHOUSE'
+  category: 'MODERN_WOODEN' | 'CLASSIC_WOODEN' | 'ALUMINUM' | 'BEDROOMS'
   image: string
   gallery: string[]
-  description: string
+  descriptionEn: string
+  descriptionAr: string
   year: string
   area: string
   budget: string
@@ -20,35 +25,40 @@ interface Project {
   appliances: string[]
   features: string[]
   duration: string
-  challenges: string
+  challengesEn: string
+  challengesAr: string
   innovations: string[]
   featured: boolean
   published: boolean
   order: number
 }
 
-export default function EditProjectPage({ params }: { params: Promise<{ id: string }> }) {
+export default function EditProjectPage() {
   const router = useRouter()
+  const params = useParams()
+  const locale = params.locale as string
+  const projectId = params.id as string
+
   const [project, setProject] = useState<Project | null>(null)
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
+  const [success, setSuccess] = useState('')
   const [showDeleteModal, setShowDeleteModal] = useState(false)
-  const [projectId, setProjectId] = useState<string | null>(null)
 
   useEffect(() => {
-    params.then(p => {
-      setProjectId(p.id)
-      fetchProject(p.id)
-    })
-  }, [])
+    if (projectId) {
+      fetchProject(projectId)
+    }
+  }, [projectId])
 
   const fetchProject = async (id: string) => {
     try {
       const res = await fetch(`/api/projects/${id}`)
       if (!res.ok) throw new Error('Failed to fetch project')
-      const data = await res.json()
-      setProject(data)
+      const json = await res.json()
+      // API returns { success: true, data: project }
+      setProject(json.data || json)
     } catch (err) {
       setError('Failed to load project')
     } finally {
@@ -62,6 +72,7 @@ export default function EditProjectPage({ params }: { params: Promise<{ id: stri
 
     setSaving(true)
     setError('')
+    setSuccess('')
 
     try {
       const res = await fetch(`/api/projects/${projectId}`, {
@@ -70,12 +81,24 @@ export default function EditProjectPage({ params }: { params: Promise<{ id: stri
         body: JSON.stringify(project),
       })
 
-      if (!res.ok) throw new Error('Failed to update project')
+      if (!res.ok) {
+        let errorMessage = 'Failed to update project'
+        try {
+          const data = await res.json()
+          errorMessage = data.error || data.message || errorMessage
+        } catch {
+          errorMessage = `Server error: ${res.status} ${res.statusText}`
+        }
+        throw new Error(errorMessage)
+      }
 
-      router.push('/admin/projects')
-      router.refresh()
+      setSuccess('Project updated successfully!')
+      setTimeout(() => {
+        router.push(`/${locale}/admin/projects`)
+        router.refresh()
+      }, 1500)
     } catch (err) {
-      setError('Failed to save project. Please try again.')
+      setError(err instanceof Error ? err.message : 'Failed to save project')
     } finally {
       setSaving(false)
     }
@@ -91,7 +114,7 @@ export default function EditProjectPage({ params }: { params: Promise<{ id: stri
 
       if (!res.ok) throw new Error('Failed to delete project')
 
-      router.push('/admin/projects')
+      router.push(`/${locale}/admin/projects`)
       router.refresh()
     } catch (err) {
       setError('Failed to delete project')
@@ -118,7 +141,7 @@ export default function EditProjectPage({ params }: { params: Promise<{ id: stri
       <div className="min-h-screen bg-black text-white flex items-center justify-center">
         <div>
           <div className="text-xl mb-4">Project not found</div>
-          <Link href="/admin/projects" className="text-green-primary hover:text-green-vibrant">
+          <Link href={`/${locale}/admin/projects`} className="text-green-primary hover:text-green-vibrant">
             ← Back to Projects
           </Link>
         </div>
@@ -133,7 +156,7 @@ export default function EditProjectPage({ params }: { params: Promise<{ id: stri
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-3xl font-serif mb-2">Edit Project</h1>
-            <p className="text-gray-light">{project.title}</p>
+            <p className="text-gray-light">{project.titleEn || project.titleAr}</p>
           </div>
           <button
             onClick={() => setShowDeleteModal(true)}
@@ -149,19 +172,37 @@ export default function EditProjectPage({ params }: { params: Promise<{ id: stri
           </div>
         )}
 
+        {success && (
+          <div className="mb-6 p-4 bg-green-900/20 border border-green-500/50 text-green-400">
+            {success}
+          </div>
+        )}
+
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Basic Information */}
           <div className="bg-background-card border border-gray-dark p-6 space-y-4">
             <h2 className="text-xl font-serif mb-4">Basic Information</h2>
 
             <div>
-              <label className="block text-sm font-medium text-gray-light mb-2">Title</label>
+              <label className="block text-sm font-medium text-gray-light mb-2">Title (English)</label>
               <input
                 type="text"
-                value={project.title}
-                onChange={(e) => setProject({ ...project, title: e.target.value })}
+                value={project.titleEn}
+                onChange={(e) => setProject({ ...project, titleEn: e.target.value })}
                 className="w-full px-4 py-2 bg-black border border-gray-dark text-white focus:border-green-primary focus:outline-none"
                 required
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-light mb-2">Title (Arabic)</label>
+              <input
+                type="text"
+                value={project.titleAr}
+                onChange={(e) => setProject({ ...project, titleAr: e.target.value })}
+                className="w-full px-4 py-2 bg-black border border-gray-dark text-white focus:border-green-primary focus:outline-none text-right"
+                dir="rtl"
+                placeholder="العنوان بالعربية"
               />
             </div>
 
@@ -196,51 +237,61 @@ export default function EditProjectPage({ params }: { params: Promise<{ id: stri
                   className="w-full px-4 py-2 bg-black border border-gray-dark text-white focus:border-green-primary focus:outline-none"
                   required
                 >
-                  <option value="PALACE">Palace</option>
-                  <option value="VILLA">Villa</option>
-                  <option value="ESTATE">Estate</option>
-                  <option value="PENTHOUSE">Penthouse</option>
+                  <option value="MODERN_WOODEN">Modern Wooden</option>
+                  <option value="CLASSIC_WOODEN">Classic Wooden</option>
+                  <option value="ALUMINUM">Aluminum</option>
+                  <option value="BEDROOMS">Bedrooms</option>
                 </select>
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-light mb-2">Description</label>
-              <textarea
-                value={project.description}
-                onChange={(e) => setProject({ ...project, description: e.target.value })}
-                rows={3}
-                className="w-full px-4 py-2 bg-black border border-gray-dark text-white focus:border-green-primary focus:outline-none"
-                required
+              <RichTextEditor
+                label="Description (English)"
+                value={project.descriptionEn}
+                onChange={(html) => setProject({ ...project, descriptionEn: html })}
+                placeholder="Brief description of the project..."
+                minHeight="150px"
+              />
+            </div>
+
+            <div>
+              <RichTextEditor
+                label="Description (Arabic)"
+                value={project.descriptionAr}
+                onChange={(html) => setProject({ ...project, descriptionAr: html })}
+                placeholder="وصف المشروع بالعربية..."
+                minHeight="150px"
               />
             </div>
           </div>
 
           {/* Images */}
-          <div className="bg-background-card border border-gray-dark p-6 space-y-4">
-            <h2 className="text-xl font-serif mb-4">Images</h2>
+          <div className="bg-background-card border border-gray-dark p-6 space-y-6">
+            <h2 className="text-xl font-serif mb-4 text-white">Images</h2>
 
             <div>
-              <label className="block text-sm font-medium text-gray-light mb-2">Main Image URL</label>
-              <input
-                type="text"
+              <ImageUpload
+                label="Main Project Image"
+                helperText="Primary image shown on project cards (Recommended: 1920x1080px)"
                 value={project.image}
-                onChange={(e) => setProject({ ...project, image: e.target.value })}
-                className="w-full px-4 py-2 bg-black border border-gray-dark text-white focus:border-green-primary focus:outline-none"
-                required
+                onChange={(url) => setProject({ ...project, image: url })}
+                onDelete={() => setProject({ ...project, image: '' })}
+                aspectRatio="16/9"
+                maxSize={10}
+                className="bg-black"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-light mb-2">
-                Gallery URLs (one per line)
-              </label>
-              <textarea
-                value={project.gallery.join('\n')}
-                onChange={(e) => updateArrayField('gallery', e.target.value)}
-                rows={4}
-                className="w-full px-4 py-2 bg-black border border-gray-dark text-white focus:border-green-primary focus:outline-none font-mono text-sm"
-                placeholder="/image1.jpg&#10;/image2.jpg&#10;/image3.jpg"
+              <MultipleImageUpload
+                label="Project Gallery"
+                helperText="Additional images for the project gallery (drag to reorder)"
+                value={project.gallery}
+                onChange={(urls) => setProject({ ...project, gallery: urls })}
+                maxImages={15}
+                maxSize={10}
+                className="bg-black"
               />
             </div>
           </div>
@@ -335,12 +386,22 @@ export default function EditProjectPage({ params }: { params: Promise<{ id: stri
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-light mb-2">Challenges</label>
-              <textarea
-                value={project.challenges}
-                onChange={(e) => setProject({ ...project, challenges: e.target.value })}
-                rows={3}
-                className="w-full px-4 py-2 bg-black border border-gray-dark text-white focus:border-green-primary focus:outline-none"
+              <RichTextEditor
+                label="Challenges (English)"
+                value={project.challengesEn}
+                onChange={(html) => setProject({ ...project, challengesEn: html })}
+                placeholder="Key challenges faced during the project..."
+                minHeight="120px"
+              />
+            </div>
+
+            <div>
+              <RichTextEditor
+                label="Challenges (Arabic)"
+                value={project.challengesAr}
+                onChange={(html) => setProject({ ...project, challengesAr: html })}
+                placeholder="التحديات التي واجهت المشروع..."
+                minHeight="120px"
               />
             </div>
 
@@ -362,7 +423,7 @@ export default function EditProjectPage({ params }: { params: Promise<{ id: stri
             <h2 className="text-xl font-serif mb-4">Settings</h2>
 
             <div className="space-y-3">
-              <label className="flex items-center space-x-3">
+              <label className="flex items-center gap-3">
                 <input
                   type="checkbox"
                   checked={project.featured}
@@ -372,7 +433,7 @@ export default function EditProjectPage({ params }: { params: Promise<{ id: stri
                 <span className="text-gray-light">Featured Project</span>
               </label>
 
-              <label className="flex items-center space-x-3">
+              <label className="flex items-center gap-3">
                 <input
                   type="checkbox"
                   checked={project.published}
@@ -400,7 +461,7 @@ export default function EditProjectPage({ params }: { params: Promise<{ id: stri
           {/* Actions */}
           <div className="flex justify-between items-center pt-4">
             <Link
-              href="/admin/projects"
+              href={`/${locale}/admin/projects`}
               className="text-gray-light hover:text-green-primary"
             >
               ← Cancel
@@ -421,7 +482,7 @@ export default function EditProjectPage({ params }: { params: Promise<{ id: stri
             <div className="bg-background-card border border-gray-dark p-8 max-w-md">
               <h3 className="text-xl font-serif mb-4">Delete Project?</h3>
               <p className="text-gray-light mb-6">
-                Are you sure you want to delete "{project.title}"? This action cannot be undone.
+                Are you sure you want to delete &quot;{project.titleEn || project.titleAr}&quot;? This action cannot be undone.
               </p>
               <div className="flex gap-4">
                 <button

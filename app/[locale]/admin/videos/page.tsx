@@ -4,11 +4,16 @@ import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import Link from 'next/link'
 
-export default async function VideosPage() {
+type Props = {
+  params: Promise<{ locale: string }>;
+};
+
+export default async function VideosPage({ params }: Props) {
+  const { locale } = await params;
   const session = await getServerSession(authOptions)
 
   if (!session) {
-    redirect('/admin/login')
+    redirect(`/${locale}/admin/login`)
   }
 
   const videos = await prisma.video.findMany({
@@ -25,7 +30,7 @@ export default async function VideosPage() {
             <p className="text-gray-light">Manage video showcase content</p>
           </div>
           <Link
-            href="/admin/videos/new"
+            href={`/${locale}/admin/videos/new`}
             className="bg-green-primary text-black px-6 py-3 hover:bg-green-vibrant transition-colors font-medium"
           >
             + New Video
@@ -69,7 +74,7 @@ export default async function VideosPage() {
                   <div className="flex justify-between items-center mt-4 pt-4 border-t border-gray-dark">
                     <span className="text-xs text-gray-dark">Order: {video.order}</span>
                     <Link
-                      href={`/admin/videos/${video.id}`}
+                      href={`/${locale}/admin/videos/${video.id}`}
                       className="text-green-primary hover:text-green-vibrant text-sm"
                     >
                       Edit
@@ -83,7 +88,7 @@ export default async function VideosPage() {
 
         {/* Back Link */}
         <div className="mt-8">
-          <Link href="/admin" className="text-gray-light hover:text-green-primary text-sm">
+          <Link href={`/${locale}/admin`} className="text-gray-light hover:text-green-primary text-sm">
             ← Back to Dashboard
           </Link>
         </div>

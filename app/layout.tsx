@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display, Cairo, Amiri } from "next/font/google";
+import { Inter, Playfair_Display, Amiri, Cairo } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 
@@ -16,12 +16,12 @@ const playfair = Playfair_Display({
   weight: ["400", "500", "600", "700", "800"],
 });
 
-// Arabic fonts for RTL support
+// Arabic fonts for RTL support - Cairo font for modern Arabic look
 const cairo = Cairo({
-  variable: "--font-cairo",
+  variable: "--font-dubai",
   subsets: ["arabic", "latin"],
   display: "swap",
-  weight: ["200", "300", "400", "500", "600", "700", "800"],
+  weight: ["300", "400", "500", "700"],
 });
 
 const amiri = Amiri({

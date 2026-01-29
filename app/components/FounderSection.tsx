@@ -2,8 +2,12 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useLocale } from "next-intl";
 
 export default function FounderSection() {
+  const locale = useLocale();
+  const isArabic = locale === "ar";
+
   return (
     <section
       id="founder"
@@ -22,10 +26,10 @@ export default function FounderSection() {
             viewport={{ once: true }}
           >
             <p className="text-green-vibrant text-sm tracking-[0.3em] mb-4 font-light">
-              MEET THE VISIONARY
+              {isArabic ? "التعرف على المؤسس" : "MEET THE VISIONARY"}
             </p>
             <h2 className="font-serif text-5xl md:text-6xl text-white mb-6">
-              About the Founder
+              {isArabic ? "عن المؤسس" : "About the Founder"}
             </h2>
           </motion.div>
         </div>
@@ -38,16 +42,16 @@ export default function FounderSection() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="order-2 lg:order-1"
+            className={isArabic ? "order-2 lg:order-2" : "order-2 lg:order-1"}
           >
             <div className="relative group">
               {/* Image container with border */}
               <div className="relative aspect-[3/4] border-2 border-green-primary/40 hover:border-green-primary transition-all duration-500 overflow-hidden">
                 <Image
-                  src="/ceo.png"
-                  alt="Founder and CEO - Kitchen Core"
+                  src="/founder.jpeg"
+                  alt={isArabic ? "المهندس عصام عودة - المؤسس" : "Eng. Esam Odeh - Founder"}
                   fill
-                  className="object-contain transition-transform duration-700 group-hover:scale-105 "
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
                   sizes="(max-width: 768px) 100vw, 70vw"
                 />
                 {/* Subtle overlay gradient */}
@@ -66,87 +70,104 @@ export default function FounderSection() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="order-1 lg:order-2"
+            className={isArabic ? "order-1 lg:order-1" : "order-1 lg:order-2"}
           >
             {/* Founder name and title */}
             <div className="mb-8">
               <h3 className="font-serif text-4xl text-white mb-2">
-                Eng. Esam Odeh
+                {isArabic ? "المهندس عصام عودة" : "Eng. Esam Odeh"}
               </h3>
               <p className="text-green-vibrant text-lg tracking-wide">
-                Founder & Chief Executive Officer
+                {isArabic ? "المؤسس والرئيس التنفيذي" : "Founder & Chief Executive Officer"}
               </p>
               <div className="w-16 h-px bg-green-primary mt-4" />
             </div>
 
             {/* Founder story */}
             <div className="space-y-6 text-gray-light leading-relaxed font-light">
-              <p className="text-lg">
-                With over{" "}
-                <span className="text-green-primary font-normal">
-                  two decades
-                </span>{" "}
-                of engineering excellence and unwavering passion for culinary
-                design, Ahmad Al-Khateeb founded Kitchen Core with a singular
-                vision: to revolutionize luxury kitchen experiences across the
-                Middle East and beyond.
-              </p>
-              <p>
-                Beginning his career as a mechanical engineer specializing in
-                HVAC and building systems, Ahmad quickly recognized the untapped
-                potential in luxury residential kitchens. His unique blend of
-                technical expertise and artistic sensibility led him to pursue
-                advanced studies in Italian kitchen design and craftsmanship.
-              </p>
-              <p>
-                <span className="text-white italic">
-                  "A kitchen is not merely a functional space—it is the heart of
-                  the home, where memories are created and traditions are
-                  preserved,"
-                </span>
-                Ahmad often says. This philosophy drives every project Kitchen
-                Core undertakes.
-              </p>
-              <p>
-                Under his leadership, Kitchen Core has completed over 150
-                prestigious projects for royal palaces, luxury villas, and
-                exclusive estates across 25 countries, earning recognition from{" "}
-                <span className="text-green-primary font-normal">
-                  Architectural Digest
-                </span>
-                ,
-                <span className="text-green-primary font-normal">
-                  {" "}
-                  Luxury Home Design
-                </span>
-                , and numerous international design awards.
-              </p>
+              {isArabic ? (
+                <>
+                  <p className="text-lg">
+                    يقود المهندس عصام عودة شركة{" "}
+                    <span className="text-green-primary font-normal">
+                      "كيتشن كور"
+                    </span>{" "}
+                    برؤية هندسية استراتيجية تجمع بين الدقة الفنية والاحترافية الإدارية الشاملة.
+                  </p>
+                  <p>
+                    تنطلق فلسفته القيادية من إيمان عميق بأن النجاح المؤسسي يبدأ من التفاصيل، حيث يرتكز نهجه على أربعة محاور أساسية: إدارة المشاريع، تطوير الكفاءات البشرية، إدارة الجودة الشاملة، ورضى العملاء.
+                  </p>
+                  <p>
+                    انطلقت رحلتنا بقيادة المهندس عصام من دولة الإمارات العربية المتحدة، حيث أرسينا قواعد التميز والابتكار، ومنها توسعنا لنضع بصمتنا في المملكة الأردنية الهاشمية.
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p className="text-lg">
+                    Eng. Esam Odeh leads{" "}
+                    <span className="text-green-primary font-normal">
+                      Kitchen Core
+                    </span>{" "}
+                    with a strategic engineering vision that combines technical precision with comprehensive professional management.
+                  </p>
+                  <p>
+                    His leadership philosophy stems from a deep belief that institutional success begins with attention to detail. His approach is built on four core pillars: Project Management, Human Resource Development, Total Quality Management, and Customer Satisfaction.
+                  </p>
+                  <p>
+                    Our journey began under Eng. Esam's leadership from the United Arab Emirates, where we established the foundations of excellence and innovation, and from there we expanded to make our mark in the Hashemite Kingdom of Jordan.
+                  </p>
+                </>
+              )}
             </div>
 
-            {/* Key Achievements */}
+            {/* Key Focus Areas */}
             <div className="mt-10 grid grid-cols-2 gap-8">
               <div className="border-l-2 border-green-primary pl-6">
                 <div className="text-green-vibrant text-sm tracking-widest mb-2">
-                  EDUCATION
+                  {isArabic ? "محاور العمل" : "FOCUS AREAS"}
                 </div>
                 <div className="text-white font-light text-sm leading-relaxed">
-                  MEng Mechanical Engineering
-                  <br />
-                  Advanced Italian Kitchen Design
-                  <br />
-                  PMP & LEED Certified
+                  {isArabic ? (
+                    <>
+                      إدارة المشاريع
+                      <br />
+                      تطوير الكفاءات
+                      <br />
+                      إدارة الجودة الشاملة
+                    </>
+                  ) : (
+                    <>
+                      Project Management
+                      <br />
+                      Talent Development
+                      <br />
+                      Quality Management
+                    </>
+                  )}
                 </div>
               </div>
               <div className="border-l-2 border-green-primary pl-6">
                 <div className="text-green-vibrant text-sm tracking-widest mb-2">
-                  RECOGNITION
+                  {isArabic ? "التواجد" : "PRESENCE"}
                 </div>
                 <div className="text-white font-light text-sm leading-relaxed">
-                  Best Design Award 2024
-                  <br />
-                  Excellence in Innovation
-                  <br />
-                  Industry Leadership
+                  {isArabic ? (
+                    <>
+                      الإمارات العربية المتحدة
+                      <br />
+                      المملكة الأردنية الهاشمية
+                      <br />
+                      توسع نحو الخليج والعالمية
+                    </>
+                  ) : (
+                    <>
+                      United Arab Emirates
+                      <br />
+                      Hashemite Kingdom of Jordan
+                      <br />
+                      Expanding to Gulf & Global
+                    </>
+                  )}
                 </div>
               </div>
             </div>
@@ -160,12 +181,12 @@ export default function FounderSection() {
               className="mt-10 bg-green-primary/5 border-l-4 border-green-primary p-6"
             >
               <p className="text-white italic text-lg leading-relaxed">
-                "Excellence is not a destination—it is a continuous journey of
-                innovation, craftsmanship, and dedication to creating spaces
-                that inspire culinary artistry."
+                {isArabic
+                  ? "نحن في كيتشن كور لا نصمم مطابخ فحسب، بل نبني مستقبلاً يتجاوز الحدود الجغرافية ليقدم مفهوماً جديداً للأناقة والجودة في كل مكان."
+                  : "At Kitchen Core, we don't just design kitchens — we build a future that transcends geographical boundaries to offer a new concept of elegance and quality everywhere."}
               </p>
               <p className="text-green-vibrant text-sm mt-4 tracking-wide">
-                — Ahmad Al-Khateeb
+                — {isArabic ? "المهندس عصام عودة" : "Eng. Esam Odeh"}
               </p>
             </motion.div>
           </motion.div>

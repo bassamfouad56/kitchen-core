@@ -4,9 +4,14 @@ import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 
-export default async function LeadsPage() {
+type Props = {
+  params: Promise<{ locale: string }>;
+};
+
+export default async function LeadsPage({ params }: Props) {
+  const { locale } = await params;
   const session = await getServerSession(authOptions);
-  if (!session) redirect("/admin/login");
+  if (!session) redirect(`/${locale}/admin/login`);
 
   const leads = await prisma.lead.findMany({
     include: {
@@ -68,7 +73,7 @@ export default async function LeadsPage() {
             </p>
           </div>
           <Link
-            href="/admin/leads/new"
+            href={`/${locale}/admin/leads/new`}
             className="bg-green-primary text-black px-6 py-3 font-medium hover:bg-green-vibrant transition-colors"
           >
             + New Lead
@@ -202,13 +207,13 @@ export default async function LeadsPage() {
                     <td className="p-4">
                       <div className="flex gap-2">
                         <Link
-                          href={`/admin/leads/${lead.id}`}
+                          href={`/${locale}/admin/leads/${lead.id}`}
                           className="text-green-primary hover:text-green-vibrant text-sm"
                         >
                           View
                         </Link>
                         <Link
-                          href={`/admin/leads/${lead.id}/edit`}
+                          href={`/${locale}/admin/leads/${lead.id}/edit`}
                           className="text-blue-400 hover:text-blue-300 text-sm"
                         >
                           Edit
@@ -226,7 +231,7 @@ export default async function LeadsPage() {
           <div className="text-center py-12">
             <p className="text-gray-light mb-4">No leads yet</p>
             <Link
-              href="/admin/leads/new"
+              href={`/${locale}/admin/leads/new`}
               className="inline-block px-6 py-3 bg-green-primary text-black font-medium hover:bg-green-vibrant transition-colors"
             >
               Add Your First Lead
@@ -237,7 +242,7 @@ export default async function LeadsPage() {
         {/* Back Link */}
         <div className="mt-8">
           <Link
-            href="/admin"
+            href={`/${locale}/admin`}
             className="text-gray-light hover:text-green-primary text-sm"
           >
             ← Back to Dashboard
@@ -247,10 +252,3 @@ export default async function LeadsPage() {
     </div>
   );
 }
-
-
-
-
-
-
-

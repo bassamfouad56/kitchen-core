@@ -2,6 +2,8 @@
 
 import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
+import { useToast } from "../components/Toast";
+import { useConfirm } from "../components/ConfirmModal";
 
 import { Prisma } from "@prisma/client";
 
@@ -27,6 +29,8 @@ export default function SubscribersClient({
   locale,
 }: SubscribersClientProps) {
   const router = useRouter();
+  const { showToast } = useToast();
+  const { confirm } = useConfirm();
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -109,9 +113,15 @@ export default function SubscribersClient({
   };
 
   const handleDelete = async (id: string, email: string) => {
-    if (!confirm(`Are you sure you want to delete "${email}"?`)) {
-      return;
-    }
+    const confirmed = await confirm({
+      title: "Delete Subscriber",
+      message: `Are you sure you want to delete "${email}"? This action cannot be undone.`,
+      confirmText: "Delete",
+      cancelText: "Cancel",
+      type: "danger",
+    });
+
+    if (!confirmed) return;
 
     try {
       const response = await fetch(`/${locale}/api/admin/subscribers/${id}`, {
@@ -122,10 +132,11 @@ export default function SubscribersClient({
         throw new Error("Failed to delete subscriber");
       }
 
+      showToast({ type: "success", message: "Subscriber deleted successfully" });
       router.refresh();
     } catch (error) {
       console.error("Error deleting subscriber:", error);
-      alert("Failed to delete subscriber");
+      showToast({ type: "error", message: "Failed to delete subscriber" });
     }
   };
 

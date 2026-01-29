@@ -1,17 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useTranslations, useLocale } from "next-intl";
-import EnhancedPortfolio from "../components/EnhancedPortfolio";
 import VideoShowcase from "../components/VideoShowcase";
-import BeforeAfterSlider from "../components/BeforeAfterSlider";
-
-interface Statistic {
-  id: string;
-  value: string;
-  label: string;
-}
+import ServiceShowcase from "../components/ServiceShowcase";
+import CustomerServices from "../components/CustomerServices";
+import MissionVision from "../components/about/MissionVision";
 
 export default function Home() {
   const t = useTranslations();
@@ -19,41 +13,6 @@ export default function Home() {
   const { scrollY } = useScroll();
   const heroOpacity = useTransform(scrollY, [0, 300], [1, 0]);
   const heroScale = useTransform(scrollY, [0, 300], [1, 0.95]);
-
-  // CMS Data State
-  const [statistics, setStatistics] = useState<Statistic[]>([
-    { id: "1", value: "150+", label: t("Stats.kitchens") },
-    { id: "2", value: "25+", label: t("Stats.countries") },
-    { id: "3", value: "15", label: t("Stats.experience") },
-    { id: "4", value: "100%", label: t("Stats.satisfaction") },
-  ]);
-
-  // Fetch CMS data
-  useEffect(() => {
-    async function fetchCMSData() {
-      try {
-        const response = await fetch(`/api/cms/homepage?locale=${locale}`);
-        if (response.ok) {
-          const data = await response.json();
-
-          // Update statistics if available from CMS
-          if (data.statistics && data.statistics.length > 0) {
-            const trustStats = data.statistics.filter(
-              (stat: Statistic & { section?: string }) =>
-                stat.section === "trust",
-            );
-            if (trustStats.length > 0) {
-              setStatistics(trustStats);
-            }
-          }
-        }
-      } catch (error) {
-        console.error("Error fetching homepage CMS data:", error);
-        // Keep fallback data on error
-      }
-    }
-    fetchCMSData();
-  }, [locale, t]);
 
   return (
     <div className="min-h-screen bg-black text-white overflow-x-hidden">
@@ -117,18 +76,12 @@ export default function Home() {
             <p className="text-xl md:text-2xl text-gray-light max-w-3xl mx-auto font-light leading-relaxed mb-12">
               {t("Hero.description")}
             </p>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+            <div className="flex justify-center">
               <a
-                href="#portfolio"
-                className="bg-green-primary text-black px-10 py-4 text-sm tracking-widest font-medium hover:bg-green-vibrant transition-all duration-300 shadow-xl shadow-green-primary/20 hover:shadow-green-vibrant/40"
+                href="#services"
+                className="bg-green-primary text-black px-12 py-4 text-sm tracking-widest font-medium hover:bg-green-vibrant transition-all duration-300 shadow-xl shadow-green-primary/20 hover:shadow-green-vibrant/40"
               >
                 {t("Hero.viewProjects").toUpperCase()}
-              </a>
-              <a
-                href="#contact"
-                className="border-2 border-green-primary text-green-primary px-10 py-4 text-sm tracking-widest font-medium hover:bg-green-primary/10 transition-all duration-300"
-              >
-                {t("Hero.startProject").toUpperCase()}
               </a>
             </div>
           </motion.div>
@@ -152,38 +105,17 @@ export default function Home() {
         </motion.div>
       </motion.section>
 
-      {/* Trust Markers */}
-      <section className="py-20 bg-background-elevated border-y border-gray-dark">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            {statistics.map((stat, index) => (
-              <motion.div
-                key={stat.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                viewport={{ once: true }}
-              >
-                <div className="font-serif text-5xl text-green-vibrant mb-2">
-                  {stat.value}
-                </div>
-                <div className="text-sm tracking-wider text-gray-light uppercase">
-                  {stat.label}
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Service Showcase - 4 Category Sections */}
+      <ServiceShowcase />
 
-      {/* Enhanced Portfolio Section - Most Important */}
-      <EnhancedPortfolio />
-
-      {/* Before & After Section - Transformation showcase */}
-      <BeforeAfterSlider />
+      {/* Mission & Vision - Company Story */}
+      <MissionVision locale={locale} />
 
       {/* Video Showcase - Visual demonstration of work */}
       <VideoShowcase />
+
+      {/* Customer Services - Booking & Support Options */}
+      <CustomerServices />
 
       {/* About / Story Section - Condensed */}
       <section id="about" className="py-32 bg-black">
@@ -196,9 +128,9 @@ export default function Home() {
               transition={{ duration: 0.8 }}
             >
               <div
-                className="aspect-[3/4] bg-cover bg-center border border-gray-dark"
+                className="aspect-[3/4] bg-contain bg-center border border-gray-dark bg-no-repeat"
                 style={{
-                  backgroundImage: "url(/8.jpg)",
+                  backgroundImage: "url(/ceo.png)",
                 }}
               />
             </motion.div>

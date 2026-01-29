@@ -198,12 +198,18 @@ enum StatSection {
 model Founder {
   id            String    @id @default(cuid())
   name          String
+  nameAr        String?
   title         String
+  titleAr       String?
   image         String    // Portrait image URL
   bio           String    @db.Text
+  bioAr         String?   @db.Text
   education     String[]
+  educationAr   String[]
   recognition   String[]
+  recognitionAr String[]
   quote         String    @db.Text
+  quoteAr       String?   @db.Text
   published     Boolean   @default(true)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
@@ -562,6 +568,22 @@ model Company {
   youtubeUrl            String?  // YouTube channel
   tiktokUrl             String?  // TikTok account
 
+  // Mission/Vision Section (for MissionVision component)
+  aboutBadgeEn          String?
+  aboutBadgeAr          String?
+  aboutTitleEn          String?
+  aboutTitleAr          String?
+  aboutTitleHighlightEn String?
+  aboutTitleHighlightAr String?
+  storyFeaturesEn       Json?    // Array of {icon, title, description}
+  storyFeaturesAr       Json?
+  innovationBadgeEn     String?
+  innovationBadgeAr     String?
+  innovationTitleEn     String?
+  innovationTitleAr     String?
+  innovationFeaturesEn  Json?    // Array of {icon, title, description}
+  innovationFeaturesAr  Json?
+
   published             Boolean  @default(true)
   createdAt             DateTime @default(now())
   updatedAt             DateTime @updatedAt
@@ -854,5 +876,76 @@ model UITranslation {
 
   @@index([key])
   @@index([category])
+  @@index([order])
+}
+
+// ===== PRODUCT & CUSTOMER SERVICES =====
+
+// Product Services - Main kitchen/bedroom categories
+model ProductService {
+  id              String                @id @default(cuid())
+  slug            String                @unique
+  categoryKey     String                @unique  // modernWood, classicWood, aluminum, bedrooms
+  dbCategory      ProjectCategory
+  titleEn         String
+  titleAr         String
+  taglineEn       String
+  taglineAr       String
+  descriptionEn   String                @db.Text
+  descriptionAr   String                @db.Text
+  heroImage       String
+  featuresEn      String[]
+  featuresAr      String[]
+  benefitsEn      String[]
+  benefitsAr      String[]
+  images          ProductServiceImage[]
+  order           Int                   @default(0)
+  published       Boolean               @default(true)
+  createdAt       DateTime              @default(now())
+  updatedAt       DateTime              @updatedAt
+
+  @@index([slug])
+  @@index([categoryKey])
+  @@index([order])
+}
+
+// Product Service Images - Gallery images for each product service
+model ProductServiceImage {
+  id        String         @id @default(cuid())
+  service   ProductService @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  serviceId String
+  src       String
+  altEn     String?
+  altAr     String?
+  order     Int            @default(0)
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+
+  @@index([serviceId])
+  @@index([order])
+}
+
+// Customer Services - Site inspection, design consultation, etc.
+model CustomerService {
+  id            String   @id @default(cuid())
+  slug          String   @unique
+  icon          String   // Icon name: MapPin, Palette, Calculator, ClipboardList, Wrench
+  titleEn       String
+  titleAr       String
+  taglineEn     String   @default("")
+  taglineAr     String   @default("")
+  descriptionEn String   @db.Text
+  descriptionAr String   @db.Text
+  image         String   @default("")
+  stepsEn       String[]
+  stepsAr       String[]
+  benefitsEn    String[]
+  benefitsAr    String[]
+  order         Int      @default(0)
+  published     Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([slug])
   @@index([order])
 }

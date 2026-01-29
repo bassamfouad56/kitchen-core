@@ -18,8 +18,8 @@
     "title": "Distinctive",
     "titleHighlight": "Elegance",
     "description": "We offer complete kitchen solutions designed to fit every space and meet every expectation — from refined luxury to smart practicality.",
-    "viewProjects": "View Projects",
-    "startProject": "Start Your Project",
+    "viewProjects": "Explore Our Work",
+    "startProject": "Design My Kitchen",
     "scroll": "Scroll"
   },
   "Stats": {
@@ -129,22 +129,6 @@
       "spaceDesc": "Maximum functionality in every inch"
     }
   },
-  "VideoShowcase": {
-    "badge": "Video Showcase",
-    "title": "Experience",
-    "titleHighlight": "Excellence",
-    "description": "Watch our kitchen transformations come to life. See the quality, precision, and attention to detail that defines Kitchen Core.",
-    "video1Title": "Complete Kitchen Solutions",
-    "video1Description": "Kitchen Core offers a complete solution for kitchens that combine high quality and modern design. The internal structure is made entirely of aluminum to ensure durability and efficiency in the long term. The external facades are made of PVC material, designed carefully to give an elegant and lasting appearance.",
-    "video2Title": "Modern High-Quality Design",
-    "video2Description": "Modern design with high quality adds a refined touch to every corner of your home.",
-    "cta": {
-      "title": "Ready to Transform Your",
-      "titleHighlight": "Kitchen?",
-      "description": "Experience the perfect blend of durability and elegance. Our aluminum structures and PVC finishes ensure your kitchen stays beautiful for years to come.",
-      "button": "Start Your Project"
-    }
-  },
   "Services": {
     "badge": "Our Expertise",
     "title": "Comprehensive Services",
@@ -182,15 +166,29 @@
   "About": {
     "badge": "Our Philosophy",
     "title": "Creating Solutions That Fit Your Vision",
-    "description1": "For over fifteen years, we've been transforming ideas into exceptional spaces — we listen, understand, and design beyond expectations.",
+    "description1": "We transform ideas into exceptional spaces — we listen, understand, and design beyond expectations.",
     "description2": "Our approach starts with understanding your unique needs, then we apply our design expertise to solve every challenge with creative and practical solutions.",
     "description3": "From modern kitchens to classic designs, and from lasting aluminum to luxurious wood — every project carries a distinctive design signature that reflects your personal style.",
     "recognizedBy": "Our Experience",
-    "recognizedByValue": "150+ Completed Projects\nUnique Designs for Every Client",
+    "recognizedByValue": "1000+ Completed Projects\nUnique Designs for Every Client",
     "awards": "Our Excellence",
     "awardsValue": "Innovative Design Solutions\nExceptional Execution Quality",
     "pageTitle": "About Us",
-    "metaDescription": "Discover Kitchen Core - specialists in designing and executing kitchen and interior space solutions with over 15 years of experience in solving design challenges with creative approaches."
+    "metaDescription": "Discover Kitchen Core - specialists in designing and executing kitchen and interior space solutions, solving design challenges with creative approaches."
+  },
+  "VideoShowcase": {
+    "badge": "Video Showcase",
+    "title": "Experience",
+    "titleHighlight": "Excellence",
+    "description": "Watch our kitchen transformations come to life. See the quality, precision, and attention to detail that defines Kitchen Core.",
+    "video1Title": "Complete Kitchen Solutions",
+    "video1Description": "Kitchen Core offers a complete solution for kitchens that combine high quality and modern design. The internal structure is made entirely of aluminum to ensure durability and efficiency in the long term. The external facades are made of PVC material, designed carefully to give an elegant and lasting appearance.",
+    "video2Title": "Modern High-Quality Design",
+    "video2Description": "Modern design with high quality adds a refined touch to every corner of your home.",
+    "ctaTitle": "Ready to Transform Your",
+    "ctaTitleHighlight": "Kitchen?",
+    "ctaDescription": "",
+    "ctaButton": "Start Your Project"
   },
   "Contact": {
     "badge": "Begin Your Journey",
@@ -226,7 +224,9 @@
     "appliances": "Appliances",
     "keyFeatures": "Key Features",
     "innovations": "Innovations",
-    "engineeringChallenge": "Engineering Challenge"
+    "engineeringChallenge": "Engineering Challenge",
+    "interestedInProject": "Interested in a similar project? Let's discuss your vision.",
+    "contactUs": "Contact Us"
   },
   "ProjectCategories": {
     "all": {
@@ -259,7 +259,7 @@
     "company": {
       "badge": "About Kitchen Core",
       "title": "Design That Starts With Understanding Your Needs",
-      "description": "Kitchen Core specializes in transforming spaces into functional and beautiful environments. For over 15 years, we've been delivering innovative design solutions that combine beauty with practicality — from kitchens to bedrooms and interior spaces.",
+      "description": "Kitchen Core specializes in transforming spaces into functional and beautiful environments. We deliver innovative design solutions that combine beauty with practicality — from kitchens to bedrooms and interior spaces.",
       "mission": {
         "title": "Our Mission",
         "description": "We listen to your vision, understand your challenges, and create design solutions that fit your space and lifestyle — every project is unique, every detail is thoughtful."
@@ -280,7 +280,7 @@
       }
     },
     "stats": {
-      "projects": "150+ Luxury Kitchens",
+      "projects": "1000+ Luxury Kitchens",
       "countries": "25+ Countries Served",
       "experience": "15 Years of Excellence",
       "satisfaction": "100% Client Satisfaction"
@@ -302,6 +302,85 @@
     "projects": {
       "title": "Our Projects | Kitchen Core",
       "description": "Explore our portfolio of luxury kitchen designs for palaces, villas, and premium estates across the Middle East."
+    }
+  },
+  "ProjectsPage": {
+    "badge": "OUR WORK",
+    "title": "Project Portfolio",
+    "description": "Explore our collection of luxury kitchen designs across the Middle East. Each project represents our commitment to excellence, innovation, and timeless elegance."
+  },
+  "ContactForm": {
+    "title": "Get In Touch",
+    "subtitle": "Ready to transform your kitchen? Let's discuss your vision.",
+    "name": "Full Name",
+    "namePlaceholder": "Enter your name",
+    "email": "Email Address",
+    "emailPlaceholder": "your@email.com",
+    "phone": "Phone Number",
+    "phonePlaceholder": "+971 XX XXX XXXX",
+    "projectType": "Project Type",
+    "projectTypePlaceholder": "Select a project type",
+    "projectTypes": {
+      "modernKitchen": "Modern Kitchen (Wood)",
+      "classicKitchen": "Classic Kitchen (Wood)",
+      "aluminumKitchen": "Aluminum Kitchen",
+      "wardrobes": "Bedrooms & Wardrobes",
+      "washbasins": "Washbasins",
+      "tvUnits": "TV Units"
+    },
+    "message": "Your Message",
+    "messagePlaceholder": "Tell us about your project and vision...",
+    "required": "*",
+    "optional": "Optional",
+    "submit": "REQUEST CONSULTATION",
+    "submitting": "SENDING...",
+    "success": {
+      "title": "Message Sent Successfully!",
+      "description": "Thank you for reaching out. Our team will respond within",
+      "time": "24 hours"
+    },
+    "error": "Something went wrong. Please try again or contact us directly.",
+    "errors": {
+      "title": "Unable to Send",
+      "tooManyRequests": "You've submitted too many requests. Please try again in an hour.",
+      "validationFailed": "Please check your information and try again.",
+      "networkError": "Network error. Please check your connection and try again."
+    },
+    "validation": {
+      "nameRequired": "Name is required",
+      "emailRequired": "Email is required",
+      "emailInvalid": "Please enter a valid email",
+      "phoneRequired": "Phone number is required",
+      "messageRequired": "Message is required"
+    }
+  },
+  "Accessibility": {
+    "skipToContent": "Skip to main content"
+  },
+  "ServiceShowcase": {
+    "badge": "OUR SPECIALTIES",
+    "title": "Crafted for Your Lifestyle",
+    "description": "From modern minimalism to timeless classics, we design and build spaces that reflect your unique style and meet your practical needs.",
+    "viewMore": "EXPLORE MORE",
+    "modernWood": {
+      "title": "Modern Kitchens – Wood",
+      "tagline": "Precise design, smart details.",
+      "description": "The luxury of clean lines and functionality that suits a modern lifestyle. Our modern wooden kitchens combine contemporary aesthetics with premium craftsmanship for spaces that inspire."
+    },
+    "classicWood": {
+      "title": "Classic Kitchens – Wood",
+      "tagline": "Timeless elegance.",
+      "description": "Luxurious details and a presence that reflects sophistication and warmth. Classic wooden kitchens that bring heritage craftsmanship into your home with enduring beauty."
+    },
+    "aluminum": {
+      "title": "Aluminum Kitchens",
+      "tagline": "A practical solution that lasts.",
+      "description": "Resistant to external factors, with design options that give you beauty without maintenance. Perfect for modern homes seeking durability and style."
+    },
+    "bedrooms": {
+      "title": "Bedrooms & Wardrobes",
+      "tagline": "Spaces that reflect your style.",
+      "description": "Smart organization that gives every item its place, making every day an easier start. Custom wardrobes and bedroom furniture designed for your lifestyle."
     }
   }
 }

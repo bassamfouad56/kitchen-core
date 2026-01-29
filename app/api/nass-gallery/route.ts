@@ -1,7 +1,13 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { createNassGallerySchema } from "@/lib/validations/nass-gallery";
+import {
+  successResponse,
+  errorResponse,
+  validationErrorResponse,
+} from "@/lib/api/response";
 
 // GET - List all galleries or get by collectionKey
 export async function GET(request: NextRequest) {
@@ -17,7 +23,7 @@ export async function GET(request: NextRequest) {
           features: { orderBy: { order: "asc" } },
         },
       });
-      return NextResponse.json(gallery);
+      return successResponse(gallery);
     }
 
     const galleries = await prisma.nassGallery.findMany({
@@ -27,13 +33,10 @@ export async function GET(request: NextRequest) {
       },
       orderBy: { order: "asc" },
     });
-    return NextResponse.json(galleries);
+    return successResponse(galleries);
   } catch (error) {
     console.error("Error fetching galleries:", error);
-    return NextResponse.json(
-      { error: "Failed to fetch galleries" },
-      { status: 500 },
-    );
+    return errorResponse("Failed to fetch galleries");
   }
 }
 
@@ -42,13 +45,19 @@ export async function POST(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
     if (!session) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return errorResponse("Unauthorized", 401);
     }
 
     const body = await request.json();
 
+    // Validate request body
+    const validation = createNassGallerySchema.safeParse(body);
+    if (!validation.success) {
+      return validationErrorResponse(validation.error);
+    }
+
     // Separate images and features from the main body
-    const { images, features, ...galleryData } = body;
+    const { images, features, ...galleryData } = validation.data;
 
     const gallery = await prisma.nassGallery.create({
       data: {
@@ -72,12 +81,9 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    return NextResponse.json(gallery, { status: 201 });
+    return successResponse(gallery, "Gallery created successfully");
   } catch (error) {
     console.error("Error creating gallery:", error);
-    return NextResponse.json(
-      { error: "Failed to create gallery" },
-      { status: 500 },
-    );
+    return errorResponse("Failed to create gallery");
   }
 }

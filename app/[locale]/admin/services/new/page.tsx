@@ -17,8 +17,10 @@ export default function NewServicePage() {
 
     const formData = new FormData(e.currentTarget)
     const data = {
-      title: formData.get('title'),
-      description: formData.get('description'),
+      titleEn: formData.get('titleEn'),
+      titleAr: formData.get('titleAr') || '',
+      descriptionEn: formData.get('descriptionEn'),
+      descriptionAr: formData.get('descriptionAr') || '',
       features: features.filter(f => f.trim()),
       order: parseInt(formData.get('order') as string) || 0,
       published: formData.get('published') === 'on',
@@ -64,29 +66,57 @@ export default function NewServicePage() {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Title */}
+          {/* Title (English) */}
           <div>
-            <label htmlFor="title" className="block text-sm font-medium text-gray-light mb-2">
-              Title *
+            <label htmlFor="titleEn" className="block text-sm font-medium text-gray-light mb-2">
+              Title (English) *
             </label>
             <input
               type="text"
-              id="title"
-              name="title"
+              id="titleEn"
+              name="titleEn"
               required
               className="w-full bg-background-card border border-gray-dark px-4 py-2 text-white focus:border-green-primary focus:outline-none"
             />
           </div>
 
-          {/* Description */}
+          {/* Title (Arabic) */}
           <div>
-            <label htmlFor="description" className="block text-sm font-medium text-gray-light mb-2">
-              Description *
+            <label htmlFor="titleAr" className="block text-sm font-medium text-gray-light mb-2">
+              Title (Arabic) - العنوان بالعربية
+            </label>
+            <input
+              type="text"
+              id="titleAr"
+              name="titleAr"
+              dir="rtl"
+              className="w-full bg-background-card border border-gray-dark px-4 py-2 text-white focus:border-green-primary focus:outline-none"
+            />
+          </div>
+
+          {/* Description (English) */}
+          <div>
+            <label htmlFor="descriptionEn" className="block text-sm font-medium text-gray-light mb-2">
+              Description (English) *
             </label>
             <textarea
-              id="description"
-              name="description"
+              id="descriptionEn"
+              name="descriptionEn"
               required
+              rows={4}
+              className="w-full bg-background-card border border-gray-dark px-4 py-2 text-white focus:border-green-primary focus:outline-none"
+            />
+          </div>
+
+          {/* Description (Arabic) */}
+          <div>
+            <label htmlFor="descriptionAr" className="block text-sm font-medium text-gray-light mb-2">
+              Description (Arabic) - الوصف بالعربية
+            </label>
+            <textarea
+              id="descriptionAr"
+              name="descriptionAr"
+              dir="rtl"
               rows={4}
               className="w-full bg-background-card border border-gray-dark px-4 py-2 text-white focus:border-green-primary focus:outline-none"
             />

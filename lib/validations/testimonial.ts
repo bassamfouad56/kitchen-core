@@ -1,11 +1,14 @@
 import { z } from 'zod';
 
 export const createTestimonialSchema = z.object({
-  name: z.string().min(1, 'Name is required'),
-  title: z.string().min(1, 'Title is required'),
+  nameEn: z.string().min(1, 'English name is required'),
+  nameAr: z.string().default(''),
+  titleEn: z.string().min(1, 'English title is required'),
+  titleAr: z.string().default(''),
   location: z.string().min(1, 'Location is required'),
   image: z.string().url('Invalid image URL'),
-  quote: z.string().min(1, 'Quote is required'),
+  quoteEn: z.string().min(1, 'English quote is required'),
+  quoteAr: z.string().default(''),
   rating: z.number().int().min(1).max(5).default(5),
   project: z.string().min(1, 'Project is required'),
   featured: z.boolean().default(false),

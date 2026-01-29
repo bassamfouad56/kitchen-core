@@ -5,11 +5,14 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 
 interface TestimonialFormData {
-  name: string
-  title: string
+  nameEn: string
+  nameAr: string
+  titleEn: string
+  titleAr: string
   location: string
   image: string
-  quote: string
+  quoteEn: string
+  quoteAr: string
   rating: number
   project: string
   featured: boolean
@@ -23,11 +26,14 @@ export default function NewTestimonialPage() {
   const [error, setError] = useState('')
 
   const [testimonial, setTestimonial] = useState<TestimonialFormData>({
-    name: '',
-    title: '',
+    nameEn: '',
+    nameAr: '',
+    titleEn: '',
+    titleAr: '',
     location: '',
     image: '',
-    quote: '',
+    quoteEn: '',
+    quoteAr: '',
     rating: 5,
     project: '',
     featured: false,
@@ -76,28 +82,53 @@ export default function NewTestimonialPage() {
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Client Name */}
+            {/* Client Name (English) */}
             <div>
-              <label className="block text-sm mb-2">Client Name *</label>
+              <label className="block text-sm mb-2">Client Name (English) *</label>
               <input
                 type="text"
-                value={testimonial.name}
-                onChange={(e) => setTestimonial({ ...testimonial, name: e.target.value })}
+                value={testimonial.nameEn}
+                onChange={(e) => setTestimonial({ ...testimonial, nameEn: e.target.value })}
                 className="w-full px-4 py-2 bg-black border border-gray-dark text-white focus:border-green-primary focus:outline-none"
                 required
               />
             </div>
 
-            {/* Title/Role */}
+            {/* Client Name (Arabic) */}
             <div>
-              <label className="block text-sm mb-2">Title/Role *</label>
+              <label className="block text-sm mb-2">Client Name (Arabic) - اسم العميل</label>
               <input
                 type="text"
-                value={testimonial.title}
-                onChange={(e) => setTestimonial({ ...testimonial, title: e.target.value })}
+                value={testimonial.nameAr}
+                onChange={(e) => setTestimonial({ ...testimonial, nameAr: e.target.value })}
+                dir="rtl"
+                className="w-full px-4 py-2 bg-black border border-gray-dark text-white focus:border-green-primary focus:outline-none"
+              />
+            </div>
+
+            {/* Title/Role (English) */}
+            <div>
+              <label className="block text-sm mb-2">Title/Role (English) *</label>
+              <input
+                type="text"
+                value={testimonial.titleEn}
+                onChange={(e) => setTestimonial({ ...testimonial, titleEn: e.target.value })}
                 className="w-full px-4 py-2 bg-black border border-gray-dark text-white focus:border-green-primary focus:outline-none"
                 placeholder="e.g., CEO, Homeowner"
                 required
+              />
+            </div>
+
+            {/* Title/Role (Arabic) */}
+            <div>
+              <label className="block text-sm mb-2">Title/Role (Arabic) - المسمى الوظيفي</label>
+              <input
+                type="text"
+                value={testimonial.titleAr}
+                onChange={(e) => setTestimonial({ ...testimonial, titleAr: e.target.value })}
+                dir="rtl"
+                className="w-full px-4 py-2 bg-black border border-gray-dark text-white focus:border-green-primary focus:outline-none"
+                placeholder="مثال: رئيس تنفيذي، مالك منزل"
               />
             </div>
 
@@ -166,16 +197,29 @@ export default function NewTestimonialPage() {
             />
           </div>
 
-          {/* Quote */}
+          {/* Quote (English) */}
           <div>
-            <label className="block text-sm mb-2">Testimonial Quote *</label>
+            <label className="block text-sm mb-2">Testimonial Quote (English) *</label>
             <textarea
-              value={testimonial.quote}
-              onChange={(e) => setTestimonial({ ...testimonial, quote: e.target.value })}
-              rows={6}
+              value={testimonial.quoteEn}
+              onChange={(e) => setTestimonial({ ...testimonial, quoteEn: e.target.value })}
+              rows={4}
               className="w-full px-4 py-2 bg-black border border-gray-dark text-white focus:border-green-primary focus:outline-none"
-              placeholder="Enter the client's testimonial..."
+              placeholder="Enter the client's testimonial in English..."
               required
+            />
+          </div>
+
+          {/* Quote (Arabic) */}
+          <div>
+            <label className="block text-sm mb-2">Testimonial Quote (Arabic) - الشهادة بالعربية</label>
+            <textarea
+              value={testimonial.quoteAr}
+              onChange={(e) => setTestimonial({ ...testimonial, quoteAr: e.target.value })}
+              dir="rtl"
+              rows={4}
+              className="w-full px-4 py-2 bg-black border border-gray-dark text-white focus:border-green-primary focus:outline-none"
+              placeholder="أدخل شهادة العميل بالعربية..."
             />
           </div>
 

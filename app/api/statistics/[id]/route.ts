@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { updateStatisticSchema } from "@/lib/validations/statistic";
+import { ZodError } from "zod";
 
 export async function GET(
   request: NextRequest,
@@ -38,13 +40,20 @@ export async function PUT(
 
     const { id } = await params;
     const body = await request.json();
+    const validatedData = updateStatisticSchema.parse(body);
     const statistic = await prisma.statistic.update({
       where: { id },
-      data: body,
+      data: validatedData,
     });
 
     return NextResponse.json(statistic);
   } catch (error) {
+    if (error instanceof ZodError) {
+      return NextResponse.json(
+        { error: "Validation failed", details: error.issues },
+        { status: 400 },
+      );
+    }
     console.error("Error updating statistic:", error);
     return NextResponse.json(
       { error: "Failed to update statistic" },

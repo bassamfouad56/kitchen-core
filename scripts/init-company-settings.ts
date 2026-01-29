@@ -11,7 +11,7 @@ async function initCompanySettings() {
 
     if (existing) {
       console.log(
-        "✅ Company settings already exist, updating with new values...",
+        "✅ Company settings already exist, updating with new values..."
       );
 
       const updated = await prisma.company.update({
@@ -73,7 +73,7 @@ async function initCompanySettings() {
           // Statistics
           foundedYear: "2008",
           employeeCount: "50+",
-          projectsCompleted: "150+",
+          projectsCompleted: "1000+",
           countriesServed: "25+",
           yearsOfExperience: "15+",
 
@@ -102,7 +102,7 @@ async function initCompanySettings() {
     }
 
     console.log(
-      "\n✨ Done! You can now manage these settings in the admin panel at /admin/company",
+      "\n✨ Done! You can now manage these settings in the admin panel at /admin/company"
     );
   } catch (error) {
     console.error("❌ Error initializing company settings:", error);

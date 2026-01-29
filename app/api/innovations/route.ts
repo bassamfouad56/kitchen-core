@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
+import { createInnovationSchema } from '@/lib/validations/innovation'
+import { ZodError } from 'zod'
 
 export async function GET() {
   try {
@@ -23,19 +25,18 @@ export async function POST(request: Request) {
 
   try {
     const body = await request.json()
+    const validatedData = createInnovationSchema.parse(body)
     const innovation = await prisma.innovation.create({
-      data: {
-        titleEn: body.titleEn,
-        titleAr: body.titleAr,
-        descriptionEn: body.descriptionEn,
-        descriptionAr: body.descriptionAr,
-        icon: body.icon || '',
-        order: body.order || 0,
-        published: body.published ?? true,
-      },
+      data: validatedData,
     })
     return NextResponse.json(innovation)
   } catch (error) {
+    if (error instanceof ZodError) {
+      return NextResponse.json(
+        { error: 'Validation failed', details: error.issues },
+        { status: 400 }
+      )
+    }
     return NextResponse.json({ error: 'Failed to create innovation' }, { status: 500 })
   }
 }

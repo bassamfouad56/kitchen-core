@@ -107,6 +107,19 @@ function TeamMemberCard({
         {/* Top Accent Line */}
         <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-green-primary to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500" />
 
+        {/* Image Container */}
+        {member.image && (
+          <div className="relative h-64 overflow-hidden">
+            <Image
+              src={member.image}
+              alt={isArabic ? member.nameAr : member.nameEn}
+              fill
+              className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+          </div>
+        )}
+
         {/* Content Container */}
         <div className="p-8">
           {/* Role Badge */}

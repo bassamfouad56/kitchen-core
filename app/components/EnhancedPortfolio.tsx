@@ -21,41 +21,6 @@ interface Project {
   innovations: string[];
 }
 
-// Fallback data in case CMS fetch fails
-const fallbackProjects: Project[] = [
-  {
-    id: "1",
-    title: "Contemporary Kitchen Design",
-    location: "Dubai, UAE",
-    category: "modernWooden",
-    image: "/2.jpg",
-    description: "Modern kitchen with precise design and smart details",
-    year: "2024",
-    materials: ["European Oak", "Quartz Countertops", "Brass Hardware"],
-    appliances: ["Sub-Zero", "Wolf Range", "Miele Dishwasher"],
-    features: ["Smart Home Integration", "Custom Lighting", "Island Design"],
-    duration: "20 weeks",
-    challenges:
-      "Integrated modern technology while maintaining clean aesthetic",
-    innovations: ["Hidden storage", "Smart lighting", "Custom cabinetry"],
-  },
-  {
-    id: "2",
-    title: "Traditional Wooden Kitchen",
-    location: "Riyadh, KSA",
-    category: "classicWooden",
-    image: "/3.jpg",
-    description: "Timeless elegance with luxurious details",
-    year: "2024",
-    materials: ["American Walnut", "Marble Countertops", "Antique Brass"],
-    appliances: ["Gaggenau", "Miele", "Sub-Zero"],
-    features: ["Butler's Pantry", "Wine Storage", "Professional Ventilation"],
-    duration: "18 weeks",
-    challenges: "Preserving traditional aesthetics with modern functionality",
-    innovations: ["Custom millwork", "Integrated appliances", "Hidden pantry"],
-  },
-];
-
 const categoryKeys = [
   "all",
   "modernWooden",
@@ -66,16 +31,19 @@ const categoryKeys = [
 
 interface EnhancedPortfolioProps {
   showViewAllButton?: boolean;
+  maxProjects?: number;
 }
 
 export default function EnhancedPortfolio({
   showViewAllButton = true,
+  maxProjects = 6,
 }: EnhancedPortfolioProps) {
   const locale = useLocale();
   const t = useTranslations("ProjectCategories");
   const tPortfolio = useTranslations("Portfolio");
-  const [projects, setProjects] = useState<Project[]>(fallbackProjects);
+  const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
@@ -84,16 +52,21 @@ export default function EnhancedPortfolio({
     async function fetchProjects() {
       try {
         setLoading(true);
+        setError(null);
         const response = await fetch(`/api/cms/homepage?locale=${locale}`);
-        if (response.ok) {
-          const data = await response.json();
-          if (data.projects && data.projects.length > 0) {
-            setProjects(data.projects);
-          }
+        if (!response.ok) {
+          throw new Error("Failed to fetch projects");
         }
-      } catch (error) {
-        console.error("Error fetching projects from CMS:", error);
-        // Keep fallback data on error
+        const data = await response.json();
+        if (data.projects && data.projects.length > 0) {
+          setProjects(data.projects);
+        } else {
+          setProjects([]);
+        }
+      } catch (err) {
+        console.error("Error fetching projects from CMS:", err);
+        setError("Unable to load projects. Please try again later.");
+        setProjects([]);
       } finally {
         setLoading(false);
       }
@@ -101,10 +74,17 @@ export default function EnhancedPortfolio({
     fetchProjects();
   }, [locale]);
 
-  const filteredProjects =
+  const allFilteredProjects =
     selectedCategory === "all"
       ? projects
       : projects.filter((p) => p.category === selectedCategory);
+
+  // Limit projects on homepage, show all on projects page
+  const filteredProjects = showViewAllButton
+    ? allFilteredProjects.slice(0, maxProjects)
+    : allFilteredProjects;
+
+  const hasMoreProjects = allFilteredProjects.length > maxProjects;
 
   return (
     <section id="portfolio" className="py-32 bg-black">
@@ -159,7 +139,76 @@ export default function EnhancedPortfolio({
           )}
         </div>
 
+        {/* Loading State */}
+        {loading && (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[...Array(6)].map((_, i) => (
+              <div
+                key={i}
+                className="border border-gray-dark animate-pulse"
+              >
+                <div className="aspect-[4/3] bg-gray-dark/50" />
+                <div className="p-6 bg-background-card">
+                  <div className="h-6 bg-gray-dark/50 rounded mb-3 w-3/4" />
+                  <div className="h-4 bg-gray-dark/50 rounded mb-2 w-full" />
+                  <div className="h-4 bg-gray-dark/50 rounded mb-4 w-2/3" />
+                  <div className="h-10 bg-gray-dark/50 rounded" />
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Error State */}
+        {!loading && error && (
+          <div className="text-center py-16 border border-gray-dark bg-background-card">
+            <svg
+              className="w-16 h-16 text-gray-light mx-auto mb-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={1.5}
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+              />
+            </svg>
+            <p className="text-gray-light mb-4">{error}</p>
+            <button
+              onClick={() => window.location.reload()}
+              className="px-6 py-2 border border-green-primary text-green-primary hover:bg-green-primary hover:text-black transition-colors text-sm tracking-wider"
+            >
+              {tPortfolio("tryAgain") || "TRY AGAIN"}
+            </button>
+          </div>
+        )}
+
+        {/* Empty State */}
+        {!loading && !error && projects.length === 0 && (
+          <div className="text-center py-16 border border-gray-dark bg-background-card">
+            <svg
+              className="w-16 h-16 text-gray-light mx-auto mb-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={1.5}
+                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+              />
+            </svg>
+            <p className="text-gray-light">
+              {tPortfolio("noProjects") || "No projects available at the moment."}
+            </p>
+          </div>
+        )}
+
         {/* Projects Grid */}
+        {!loading && !error && filteredProjects.length > 0 && (
         <motion.div layout className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           <AnimatePresence>
             {filteredProjects.map((project, index) => (
@@ -199,28 +248,6 @@ export default function EnhancedPortfolio({
                     <h3 className="font-serif text-2xl text-white mb-2 group-hover:text-green-vibrant transition-colors duration-300">
                       {project.title}
                     </h3>
-                    <p className="text-sm text-gray-light mb-4 flex items-center gap-2">
-                      <svg
-                        className="w-4 h-4 text-green-primary"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                        />
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                        />
-                      </svg>
-                      {project.location}
-                    </p>
                     <p className="text-gray-light text-sm mb-4 flex-1">
                       {project.description}
                     </p>
@@ -235,9 +262,10 @@ export default function EnhancedPortfolio({
             ))}
           </AnimatePresence>
         </motion.div>
+        )}
 
-        {/* View All Projects Button - Only show on homepage */}
-        {showViewAllButton && (
+        {/* View All Projects Button - Only show on homepage when there are more projects */}
+        {showViewAllButton && hasMoreProjects && !loading && !error && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -332,129 +360,54 @@ export default function EnhancedPortfolio({
                       <h2 className="font-serif text-4xl md:text-5xl text-white mb-4">
                         {selectedProject.title}
                       </h2>
-                      <p className="text-lg text-gray-light flex items-center gap-2 mb-4">
-                        <svg
-                          className="w-5 h-5 text-green-primary"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                          />
-                        </svg>
-                        {selectedProject.location}
-                      </p>
                       <p className="text-gray-light italic">
                         {t(`${selectedProject.category}.slogan`)}
                       </p>
                     </div>
 
-                    {/* Project Overview */}
-                    <div className="grid md:grid-cols-1 gap-6 mb-12 pb-12 border-b border-gray-dark">
-                      <div className="bg-background-elevated border border-gray-dark p-6">
-                        <div className="text-green-vibrant text-sm tracking-wider mb-2">
-                          {tPortfolio("completionTime").toUpperCase()}
-                        </div>
-                        <div className="text-white text-2xl font-serif">
-                          {selectedProject.duration}
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Technical Specifications */}
-                    <div className="mb-12">
-                      <h3 className="font-serif text-3xl text-white mb-6">
-                        {tPortfolio("technicalSpecs")}
-                      </h3>
-                      <div className="grid md:grid-cols-2 gap-8">
-                        {/* Materials */}
-                        <div>
-                          <h4 className="text-green-vibrant text-sm tracking-wider mb-4">
-                            {tPortfolio("materials").toUpperCase()}
-                          </h4>
-                          <ul className="space-y-2">
-                            {selectedProject.materials.map((material, i) => (
-                              <li
-                                key={i}
-                                className="flex items-start gap-3 text-gray-light"
-                              >
-                                <span className="w-1.5 h-1.5 bg-green-vibrant mt-2 flex-shrink-0" />
-                                <span>{material}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-
-                        {/* Appliances */}
-                        <div>
-                          <h4 className="text-green-vibrant text-sm tracking-wider mb-4">
-                            {tPortfolio("appliances").toUpperCase()}
-                          </h4>
-                          <ul className="space-y-2">
-                            {selectedProject.appliances.map((appliance, i) => (
-                              <li
-                                key={i}
-                                className="flex items-start gap-3 text-gray-light"
-                              >
-                                <span className="w-1.5 h-1.5 bg-green-vibrant mt-2 flex-shrink-0" />
-                                <span>{appliance}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-
-                        {/* Features */}
-                        <div>
-                          <h4 className="text-green-vibrant text-sm tracking-wider mb-4">
-                            {tPortfolio("keyFeatures").toUpperCase()}
-                          </h4>
-                          <ul className="space-y-2">
-                            {selectedProject.features.map((feature, i) => (
-                              <li
-                                key={i}
-                                className="flex items-start gap-3 text-gray-light"
-                              >
-                                <span className="w-1.5 h-1.5 bg-green-vibrant mt-2 flex-shrink-0" />
-                                <span>{feature}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-
-                        {/* Innovations */}
-                        <div>
-                          <h4 className="text-green-vibrant text-sm tracking-wider mb-4">
-                            {tPortfolio("innovations").toUpperCase()}
-                          </h4>
-                          <ul className="space-y-2">
-                            {selectedProject.innovations.map(
-                              (innovation, i) => (
-                                <li
-                                  key={i}
-                                  className="flex items-start gap-3 text-gray-light"
-                                >
-                                  <span className="w-1.5 h-1.5 bg-green-vibrant mt-2 flex-shrink-0" />
-                                  <span>{innovation}</span>
-                                </li>
-                              ),
-                            )}
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Engineering Challenge */}
-                    <div className="bg-background-elevated border border-gray-dark p-8">
-                      <h4 className="text-green-vibrant text-sm tracking-wider mb-4">
-                        {tPortfolio("engineeringChallenge").toUpperCase()}
-                      </h4>
-                      <p className="text-gray-light leading-relaxed">
-                        {selectedProject.challenges}
+                    {/* Project Description */}
+                    <div className="mb-8">
+                      <p className="text-gray-light text-lg leading-relaxed">
+                        {selectedProject.description}
                       </p>
+                    </div>
+
+                    {/* Location */}
+                    <div className="flex items-center gap-3 mb-8 text-gray-light">
+                      <svg
+                        className="w-5 h-5 text-green-primary"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                        />
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                        />
+                      </svg>
+                      <span>{selectedProject.location}</span>
+                    </div>
+
+                    {/* CTA */}
+                    <div className="bg-background-elevated border border-gray-dark p-8 text-center">
+                      <p className="text-gray-light mb-6">
+                        {tPortfolio("interestedInProject")}
+                      </p>
+                      <a
+                        href="#contact"
+                        onClick={() => setSelectedProject(null)}
+                        className="inline-block bg-green-primary text-black px-8 py-3 text-sm tracking-wider font-medium hover:bg-green-vibrant transition-colors"
+                      >
+                        {tPortfolio("contactUs").toUpperCase()}
+                      </a>
                     </div>
                   </div>
                 </motion.div>

@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { createTeamMemberSchema } from "@/lib/validations/team-member";
+import { ZodError } from "zod";
 
 export async function GET() {
   try {
@@ -25,9 +27,16 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const teamMember = await prisma.teamMember.create({ data: body });
+    const validatedData = createTeamMemberSchema.parse(body);
+    const teamMember = await prisma.teamMember.create({ data: validatedData });
     return NextResponse.json(teamMember, { status: 201 });
   } catch (error) {
+    if (error instanceof ZodError) {
+      return NextResponse.json(
+        { error: "Validation failed", details: error.issues },
+        { status: 400 },
+      );
+    }
     console.error("Error creating team member:", error);
     return NextResponse.json(
       { error: "Failed to create team member" },

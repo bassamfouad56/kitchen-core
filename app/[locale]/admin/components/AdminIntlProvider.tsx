@@ -1,29 +1,29 @@
 "use client";
 
-import { NextIntlClientProvider } from "next-intl";
+import { NextIntlClientProvider, useLocale } from "next-intl";
 import { ReactNode, useEffect, useState, useCallback, useRef } from "react";
 
 interface AdminIntlProviderProps {
   children: ReactNode;
+  locale: string;
 }
 
 export default function AdminIntlProvider({
   children,
+  locale: initialLocale,
 }: AdminIntlProviderProps) {
-  const [locale, setLocale] = useState<"en" | "ar">("en");
   const [messages, setMessages] = useState<Record<string, unknown> | null>(
-    null,
+    null
   );
   const isInitialized = useRef(false);
+  const currentLocale = (initialLocale as "en" | "ar") || "en";
 
   const loadMessages = useCallback(async (locale: "en" | "ar") => {
     try {
       const adminMessages = await import(
         `../../../../messages/admin-${locale}.json`
       );
-      const publicMessages = await import(
-        `../../../../messages/${locale}.json`
-      );
+      const publicMessages = await import(`../../../../messages/${locale}.json`);
 
       // Merge admin and public messages
       setMessages({
@@ -37,51 +37,15 @@ export default function AdminIntlProvider({
     }
   }, []);
 
-  // Initial load only
+  // Load messages when locale changes
   useEffect(() => {
-    if (!isInitialized.current) {
-      // Load saved language preference
-      const saved = localStorage.getItem("adminLocale") as "en" | "ar" | null;
-      const currentLocale = saved || "en";
-      setLocale(currentLocale);
+    // Update HTML attributes for RTL support
+    document.documentElement.lang = currentLocale;
+    document.documentElement.dir = currentLocale === "ar" ? "rtl" : "ltr";
 
-      // Update HTML attributes
-      document.documentElement.lang = currentLocale;
-      document.documentElement.dir = currentLocale === "ar" ? "rtl" : "ltr";
-
-      // Load messages
-      loadMessages(currentLocale);
-      isInitialized.current = true;
-    }
-  }, [loadMessages]);
-
-  // Listen for language change events
-  useEffect(() => {
-    const handleLocaleChange = (
-      event: CustomEvent<{ locale: "en" | "ar" }>,
-    ) => {
-      const newLocale = event.detail.locale;
-      setLocale(newLocale);
-
-      // Update HTML attributes
-      document.documentElement.lang = newLocale;
-      document.documentElement.dir = newLocale === "ar" ? "rtl" : "ltr";
-
-      loadMessages(newLocale);
-    };
-
-    window.addEventListener(
-      "adminLocaleChange",
-      handleLocaleChange as EventListener,
-    );
-
-    return () => {
-      window.removeEventListener(
-        "adminLocaleChange",
-        handleLocaleChange as EventListener,
-      );
-    };
-  }, [loadMessages]);
+    // Load messages for current locale
+    loadMessages(currentLocale);
+  }, [currentLocale, loadMessages]);
 
   if (!messages) {
     return (
@@ -92,7 +56,7 @@ export default function AdminIntlProvider({
   }
 
   return (
-    <NextIntlClientProvider locale={locale} messages={messages}>
+    <NextIntlClientProvider locale={currentLocale} messages={messages}>
       {children}
     </NextIntlClientProvider>
   );

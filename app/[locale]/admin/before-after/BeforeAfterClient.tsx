@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import ImageUpload from "@/app/components/ImageUpload";
+import { useToast } from "../components/Toast";
+import { useConfirm } from "../components/ConfirmModal";
 
 type BeforeAfterItem = {
   id: string;
@@ -29,6 +31,8 @@ export default function BeforeAfterClient({
   locale,
 }: BeforeAfterClientProps) {
   const router = useRouter();
+  const { showToast } = useToast();
+  const { confirm } = useConfirm();
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -121,9 +125,15 @@ export default function BeforeAfterClient({
   };
 
   const handleDelete = async (id: string, title: string) => {
-    if (!confirm(`Are you sure you want to delete "${title}"?`)) {
-      return;
-    }
+    const confirmed = await confirm({
+      title: "Delete Item",
+      message: `Are you sure you want to delete "${title}"? This action cannot be undone.`,
+      confirmText: "Delete",
+      cancelText: "Cancel",
+      type: "danger",
+    });
+
+    if (!confirmed) return;
 
     try {
       const response = await fetch(`/${locale}/api/admin/before-after/${id}`, {
@@ -134,10 +144,11 @@ export default function BeforeAfterClient({
         throw new Error("Failed to delete item");
       }
 
+      showToast({ type: "success", message: "Item deleted successfully" });
       router.refresh();
     } catch (error) {
       console.error("Error deleting item:", error);
-      alert("Failed to delete item");
+      showToast({ type: "error", message: "Failed to delete item" });
     }
   };
 

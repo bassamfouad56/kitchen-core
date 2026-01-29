@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { createFounderSchema, updateFounderSchema } from "@/lib/validations/founder";
+import { ZodError } from "zod";
 
 export async function GET() {
   try {
@@ -28,16 +30,24 @@ export async function PUT(request: NextRequest) {
     const founder = await prisma.founder.findFirst();
 
     if (founder) {
+      const validatedData = updateFounderSchema.parse(body);
       const updated = await prisma.founder.update({
         where: { id: founder.id },
-        data: body,
+        data: validatedData,
       });
       return NextResponse.json(updated);
     } else {
-      const created = await prisma.founder.create({ data: body });
+      const validatedData = createFounderSchema.parse(body);
+      const created = await prisma.founder.create({ data: validatedData });
       return NextResponse.json(created, { status: 201 });
     }
   } catch (error) {
+    if (error instanceof ZodError) {
+      return NextResponse.json(
+        { error: "Validation failed", details: error.issues },
+        { status: 400 },
+      );
+    }
     console.error("Error updating founder:", error);
     return NextResponse.json(
       { error: "Failed to update founder" },

@@ -13,7 +13,13 @@ export default function LanguageSwitcher() {
   const [isPending, startTransition] = useTransition();
 
   const switchToLocale = (newLocale: string) => {
+    if (isPending || locale === newLocale) return;
+
     startTransition(() => {
+      // Update HTML attributes for RTL support
+      document.documentElement.lang = newLocale;
+      document.documentElement.dir = newLocale === "ar" ? "rtl" : "ltr";
+
       // Use next-intl's router.replace with locale override
       // Pass both pathname and params to preserve navigation state
       router.replace(

@@ -14,6 +14,31 @@ export async function POST(request: Request) {
 
     console.log("Seeding production database with About page data...");
 
+    // Check if company exists
+    const existingCompany = await prisma.company.findFirst();
+    if (existingCompany) {
+      console.log("✓ Company already exists");
+    } else {
+      await prisma.company.create({
+        data: {
+          nameEn: "Kitchen Core",
+          nameAr: "كيتشن كور",
+          descriptionEn: "Luxury kitchen design and manufacturing specialists for palaces, villas, and premium estates across UAE and Jordan. With over a decade of experience, we transform spaces into culinary masterpieces that blend artistry with functionality.",
+          descriptionAr: "متخصصون في تصميم وتصنيع المطابخ الفاخرة للقصور والفيلات والعقارات المتميزة في جميع أنحاء الإمارات والأردن. مع أكثر من عقد من الخبرة، نحول المساحات إلى روائع طهوية تمزج بين الفن والوظائف.",
+          foundedYear: "2015",
+          employeeCount: "50",
+          missionEn: "To create exceptional kitchen experiences that inspire culinary creativity and elevate everyday living through innovative design, premium materials, and uncompromising craftsmanship.",
+          missionAr: "خلق تجارب مطبخ استثنائية تلهم الإبداع في الطهي وترتقي بالحياة اليومية من خلال التصميم المبتكر والمواد الممتازة والحرفية التي لا تتنازل.",
+          visionEn: "To be the Middle East's most trusted name in luxury kitchen design, setting the global standard for bespoke culinary spaces.",
+          visionAr: "أن نكون الاسم الأكثر ثقة في الشرق الأوسط في تصميم المطابخ الفاخرة، ووضع المعيار العالمي للمساحات الطهوية المخصصة.",
+          valuesEn: ["Excellence", "Innovation", "Integrity", "Craftsmanship", "Customer Focus"],
+          valuesAr: ["التميز", "الابتكار", "النزاهة", "الحرفية", "التركيز على العملاء"],
+          published: true,
+        },
+      });
+      console.log("✓ Created company");
+    }
+
     // Check if founder exists
     const existingFounder = await prisma.founder.findFirst();
     if (existingFounder) {
@@ -205,6 +230,7 @@ export async function POST(request: Request) {
     return NextResponse.json({
       success: true,
       message: "Production database seeded successfully",
+      company: existingCompany ? "existed" : "created",
       founder: existingFounder ? "existed" : "created",
       teamMembers: teamMembers.length,
     });

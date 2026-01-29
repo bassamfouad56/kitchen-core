@@ -5,8 +5,7 @@ import AboutHero from "@/app/components/about/AboutHero";
 import MissionVision from "@/app/components/about/MissionVision";
 import CompanyValues from "@/app/components/about/CompanyValues";
 import FounderShowcase from "@/app/components/about/FounderShowcase";
-import TeamGrid from "@/app/components/about/TeamGrid";
-import CompanyStats from "@/app/components/about/CompanyStats";
+import CinematicTeamScroll from "@/app/components/about/CinematicTeamScroll";
 import AboutCTA from "@/app/components/about/AboutCTA";
 import type { AboutPageData } from "@/types/about";
 
@@ -132,13 +131,8 @@ export default async function AboutPage(props: {
       {/* Hero Section */}
       <AboutHero company={data.company} locale={locale} />
 
-      {/* Company Stats */}
-      <CompanyStats company={data.company} locale={locale} />
-
       {/* Mission & Vision */}
-      {(data.company.missionEn || data.company.visionEn) && (
-        <MissionVision company={data.company} locale={locale} />
-      )}
+      <MissionVision locale={locale} />
 
       {/* Company Values */}
       {data.company.valuesEn.length > 0 && (
@@ -150,9 +144,9 @@ export default async function AboutPage(props: {
         <FounderShowcase founder={data.founder} locale={locale} />
       )}
 
-      {/* Team Grid */}
+      {/* Team Section - Cinematic Scroll */}
       {data.teamMembers.length > 0 && (
-        <TeamGrid teamMembers={data.teamMembers} locale={locale} />
+        <CinematicTeamScroll teamMembers={data.teamMembers} locale={locale} />
       )}
 
       {/* CTA Section */}
@@ -171,7 +165,6 @@ export default async function AboutPage(props: {
             description: isArabic
               ? data.company.descriptionAr
               : data.company.descriptionEn,
-            foundingDate: data.company.foundedYear,
             founder: data.founder
               ? {
                   "@type": "Person",

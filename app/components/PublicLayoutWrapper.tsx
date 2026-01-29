@@ -25,7 +25,9 @@ export default function PublicLayoutWrapper({
   return (
     <>
       <Navigation />
-      {children}
+      <main id="main-content" tabIndex={-1} className="outline-none">
+        {children}
+      </main>
       <ContactForm />
       <Footer />
       <FloatingSocialWrapper />

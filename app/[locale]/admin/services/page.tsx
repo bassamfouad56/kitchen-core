@@ -4,11 +4,16 @@ import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import Link from 'next/link'
 
-export default async function ServicesPage() {
+type Props = {
+  params: Promise<{ locale: string }>;
+};
+
+export default async function ServicesPage({ params }: Props) {
+  const { locale } = await params;
   const session = await getServerSession(authOptions)
 
   if (!session) {
-    redirect('/admin/login')
+    redirect(`/${locale}/admin/login`)
   }
 
   const services = await prisma.service.findMany({
@@ -25,7 +30,7 @@ export default async function ServicesPage() {
             <p className="text-gray-light">Manage service offerings</p>
           </div>
           <Link
-            href="/admin/services/new"
+            href={`/${locale}/admin/services/new`}
             className="bg-green-primary text-black px-6 py-3 hover:bg-green-vibrant transition-colors font-medium"
           >
             + New Service
@@ -55,7 +60,7 @@ export default async function ServicesPage() {
                 services.map((service) => (
                   <tr key={service.id} className="border-b border-gray-dark hover:bg-black/50">
                     <td className="p-4 text-gray-light">{service.order}</td>
-                    <td className="p-4">{service.title}</td>
+                    <td className="p-4">{service.titleEn || service.title}</td>
                     <td className="p-4 text-gray-light text-sm">
                       {service.features.length} features
                     </td>
@@ -72,7 +77,7 @@ export default async function ServicesPage() {
                     </td>
                     <td className="p-4">
                       <Link
-                        href={`/admin/services/${service.id}`}
+                        href={`/${locale}/admin/services/${service.id}`}
                         className="text-green-primary hover:text-green-vibrant text-sm"
                       >
                         Edit
@@ -87,7 +92,7 @@ export default async function ServicesPage() {
 
         {/* Back Link */}
         <div className="mt-8">
-          <Link href="/admin" className="text-gray-light hover:text-green-primary text-sm">
+          <Link href={`/${locale}/admin`} className="text-gray-light hover:text-green-primary text-sm">
             ← Back to Dashboard
           </Link>
         </div>

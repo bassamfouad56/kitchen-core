@@ -3,6 +3,8 @@
 import { ContactSubmission } from "@prisma/client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useToast } from "../components/Toast";
+import { useConfirm } from "../components/ConfirmModal";
 
 interface ContactSubmissionsListClientProps {
   submissions: ContactSubmission[];
@@ -14,6 +16,8 @@ export default function ContactSubmissionsListClient({
   locale,
 }: ContactSubmissionsListClientProps) {
   const router = useRouter();
+  const { showToast } = useToast();
+  const { confirm } = useConfirm();
   const [filter, setFilter] = useState<"all" | "processed" | "unprocessed">(
     "all",
   );
@@ -41,17 +45,26 @@ export default function ContactSubmissionsListClient({
 
       if (!response.ok) throw new Error("Failed to update");
 
+      showToast({ type: "success", message: processed ? "Marked as processed" : "Marked as unprocessed" });
       router.refresh();
     } catch (error) {
       console.error("Error updating submission:", error);
-      alert("Failed to update submission");
+      showToast({ type: "error", message: "Failed to update submission" });
     } finally {
       setProcessing(null);
     }
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this submission?")) return;
+    const confirmed = await confirm({
+      title: "Delete Submission",
+      message: "Are you sure you want to delete this submission? This action cannot be undone.",
+      confirmText: "Delete",
+      cancelText: "Cancel",
+      type: "danger",
+    });
+
+    if (!confirmed) return;
 
     try {
       const response = await fetch(
@@ -63,11 +76,12 @@ export default function ContactSubmissionsListClient({
 
       if (!response.ok) throw new Error("Failed to delete");
 
+      showToast({ type: "success", message: "Submission deleted successfully" });
       router.refresh();
       setSelectedSubmission(null);
     } catch (error) {
       console.error("Error deleting submission:", error);
-      alert("Failed to delete submission");
+      showToast({ type: "error", message: "Failed to delete submission" });
     }
   };
 

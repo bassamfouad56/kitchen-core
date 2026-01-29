@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
-import { cookies } from "next/headers";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
 const prisma = new PrismaClient();
 
@@ -36,9 +37,8 @@ export async function PUT(
   { params }: { params: Promise<{ slug: string }> },
 ) {
   try {
-    // Check authentication
-    const cookieStore = await cookies();
-    const session = cookieStore.get("admin-session");
+    // Check authentication with NextAuth
+    const session = await getServerSession(authOptions);
 
     if (!session) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -113,9 +113,8 @@ export async function DELETE(
   { params }: { params: Promise<{ slug: string }> },
 ) {
   try {
-    // Check authentication
-    const cookieStore = await cookies();
-    const session = cookieStore.get("admin-session");
+    // Check authentication with NextAuth
+    const session = await getServerSession(authOptions);
 
     if (!session) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

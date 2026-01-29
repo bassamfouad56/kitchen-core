@@ -1,16 +1,25 @@
 import AdminIntlProvider from "./components/AdminIntlProvider";
 import AdminLayoutClient from "./components/AdminLayoutClient";
 import { ToastProvider } from "./components/Toast";
+import { ConfirmProvider } from "./components/ConfirmModal";
 
-export default function AdminLayout({
-  children,
-}: {
+interface AdminLayoutProps {
   children: React.ReactNode;
-}) {
+  params: Promise<{ locale: string }>;
+}
+
+export default async function AdminLayout({
+  children,
+  params,
+}: AdminLayoutProps) {
+  const { locale } = await params;
+
   return (
-    <AdminIntlProvider>
+    <AdminIntlProvider locale={locale}>
       <ToastProvider>
-        <AdminLayoutClient>{children}</AdminLayoutClient>
+        <ConfirmProvider>
+          <AdminLayoutClient>{children}</AdminLayoutClient>
+        </ConfirmProvider>
       </ToastProvider>
     </AdminIntlProvider>
   );

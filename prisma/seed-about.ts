@@ -46,7 +46,7 @@ async function seedAboutPage() {
       ],
       foundedYear: "2010",
       employeeCount: "50+",
-      projectsCompleted: "150+",
+      projectsCompleted: "1000+",
       countriesServed: "25+",
       yearsOfExperience: "15+",
       featuredImage: "/8.jpg",

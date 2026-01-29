@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { createCompanySchema, updateCompanySchema } from "@/lib/validations/company";
+import { ZodError } from "zod";
 
 export async function GET() {
   try {
@@ -25,9 +27,16 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const company = await prisma.company.create({ data: body });
+    const validatedData = createCompanySchema.parse(body);
+    const company = await prisma.company.create({ data: validatedData });
     return NextResponse.json(company, { status: 201 });
   } catch (error) {
+    if (error instanceof ZodError) {
+      return NextResponse.json(
+        { error: "Validation failed", details: error.issues },
+        { status: 400 },
+      );
+    }
     console.error("Error creating company:", error);
     return NextResponse.json(
       { error: "Failed to create company" },
@@ -47,16 +56,24 @@ export async function PUT(request: NextRequest) {
     const company = await prisma.company.findFirst();
 
     if (company) {
+      const validatedData = updateCompanySchema.parse(body);
       const updated = await prisma.company.update({
         where: { id: company.id },
-        data: body,
+        data: validatedData,
       });
       return NextResponse.json(updated);
     } else {
-      const created = await prisma.company.create({ data: body });
+      const validatedData = createCompanySchema.parse(body);
+      const created = await prisma.company.create({ data: validatedData });
       return NextResponse.json(created, { status: 201 });
     }
   } catch (error) {
+    if (error instanceof ZodError) {
+      return NextResponse.json(
+        { error: "Validation failed", details: error.issues },
+        { status: 400 },
+      );
+    }
     console.error("Error updating company:", error);
     return NextResponse.json(
       { error: "Failed to update company" },

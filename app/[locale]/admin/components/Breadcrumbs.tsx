@@ -50,7 +50,7 @@ export default function Breadcrumbs() {
   if (!segments || segments.length === 0) return null;
 
   return (
-    <nav className="flex items-center space-x-2 text-sm mb-6">
+    <nav className="flex items-center gap-2 text-sm mb-6">
       <Link
         href={`/${locale}/admin`}
         className="text-gray-light hover:text-green-primary transition-colors"
