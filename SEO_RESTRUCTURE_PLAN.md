@@ -79,7 +79,7 @@ Home → Portfolio → Services → Gallery → About → Blog → Contact
 
 ```
 1. Hero (Hook - 5 seconds to captivate)
-2. Trust Stats (Credibility - 150+ kitchens, etc.)
+2. Trust Stats (Credibility - 1000+ kitchens, etc.)
 3. Portfolio Showcase (Proof - Best work first)
 4. Before/After Slider (Transformation - Emotional impact)
 5. Video Showcase (Dynamic proof - Movement captures attention)

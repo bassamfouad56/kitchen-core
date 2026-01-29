@@ -116,7 +116,7 @@ Then open: `http://localhost:3000`
 ### 1. Homepage (`/`)
 
 - [ ] Hero shows: "تفرّد بأناقة" / "Distinctive Elegance"
-- [ ] Statistics show: 150+ kitchens, 25+ countries, etc.
+- [ ] Statistics show: 1000+ kitchens, 25+ countries, etc.
 - [ ] Projects section has 4 categories with slogans
 - [ ] Only 7 sections total (not 20+)
 - [ ] Single clean footer at bottom
@@ -204,7 +204,7 @@ pnpm prisma generate
 
 ### Statistics Table (4 records)
 
-- 150+ Luxury Kitchens
+- 1000+ Luxury Kitchens
 - 25+ Countries
 - 15 Years Excellence
 - 100% Client Satisfaction

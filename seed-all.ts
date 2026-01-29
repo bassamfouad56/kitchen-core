@@ -58,7 +58,7 @@ async function main() {
       },
       {
         titleEn: "Bedroom & Wardrobe Solutions",
-        titleAr: "حلول غرف النوم والخزائن",
+        titleAr: "حلول غرف النوم وخزائن الملابس",
         descriptionEn:
           "Smart organization systems that maximize space and reflect your personal style.",
         descriptionAr: "أنظمة تنظيم ذكية تعظم المساحة وتعكس أسلوبك الشخصي.",

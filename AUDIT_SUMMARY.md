@@ -166,7 +166,7 @@ export default function robots() {
 ### You Have in Database:
 
 - 30+ content models
-- 150+ projects
+- 1000+ projects
 - Gallery images, testimonials, services, videos, blog posts
 - Full CRM system (leads, customers, tasks)
 - Company info, team members, founder profile

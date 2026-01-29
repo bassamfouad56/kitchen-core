@@ -3,6 +3,7 @@
 ## FOR IMMEDIATE RELEASE
 
 ### [Headline - 70-80 characters max]
+
 Kitchen Core Unveils Revolutionary Luxury Kitchen Design Approach for High-Net-Worth Clients
 
 **[City, Date]** – Kitchen Core, the international leader in luxury kitchen design and installation, today announced [key announcement/achievement/milestone].
@@ -19,9 +20,10 @@ The company's portfolio includes prestigious projects in Dubai palaces, Monaco v
 Kitchen Core's signature service includes comprehensive design consultation, custom cabinetry manufacturing, premium appliance integration, and white-glove installation. The company's design philosophy centers on three pillars: timeless elegance, functional innovation, and uncompromising quality.
 
 Recent accolades include:
+
 - Featured in Architectural Digest's "Top Kitchen Designers 2025"
 - Winner of Luxury Home Design Award (Best Kitchen Category)
-- 100% client satisfaction rating across 150+ completed projects
+- 100% client satisfaction rating across 1000+ completed projects
 - Average client relationship spanning 8+ years for multiple properties
 
 [Fourth paragraph - Call to Action and Future Plans]
@@ -38,7 +40,7 @@ Press Kit: www.kitchencore.com/press
 
 ### About Kitchen Core
 
-Kitchen Core is an international luxury kitchen design and installation firm specializing in bespoke solutions for high-end residential properties. Founded in [year], the company has completed 150+ projects across 25 countries, serving discerning clientele including royal families, business leaders, and luxury property developers. With a commitment to timeless elegance, functional innovation, and uncompromising quality, Kitchen Core transforms kitchens into architectural masterpieces that enhance both property value and lifestyle.
+Kitchen Core is an international luxury kitchen design and installation firm specializing in bespoke solutions for high-end residential properties. Founded in [year], the company has completed 1000+ projects across 25 countries, serving discerning clientele including royal families, business leaders, and luxury property developers. With a commitment to timeless elegance, functional innovation, and uncompromising quality, Kitchen Core transforms kitchens into architectural masterpieces that enhance both property value and lifestyle.
 
 For more information, visit www.kitchencore.com
 
@@ -56,6 +58,7 @@ Kitchen Core
 ## Press Release Distribution List
 
 ### Tier 1 - Luxury & Design Publications
+
 - Architectural Digest
 - Elle Decor
 - Luxe Interiors + Design
@@ -64,6 +67,7 @@ Kitchen Core
 - The Spaces
 
 ### Tier 2 - Regional Publications
+
 - Emirates Woman (UAE)
 - Arabian Business
 - Gulf News Luxury
@@ -71,6 +75,7 @@ Kitchen Core
 - Harper's Bazaar Interiors Arabia
 
 ### Tier 3 - Trade Publications
+
 - Kitchen & Bath Design News
 - Interior Design Magazine
 - Contract Magazine
@@ -78,6 +83,7 @@ Kitchen Core
 - Commercial Integrator
 
 ### Tier 4 - Online & Social
+
 - Dezeen
 - Design Milk
 - Contemporist
@@ -85,6 +91,7 @@ Kitchen Core
 - Architectural Record
 
 ### Tier 5 - General Media
+
 - Forbes (Home section)
 - Wall Street Journal (Mansion)
 - Financial Times (House & Home)
@@ -93,10 +100,12 @@ Kitchen Core
 ## Key Messages
 
 ### Core Message
+
 Kitchen Core transforms luxury residences with bespoke kitchen designs that combine timeless elegance, functional innovation, and uncompromising quality.
 
 ### Supporting Messages
-1. **Heritage & Expertise**: 15+ years of experience, 150+ completed projects worldwide
+
+1. **Heritage & Expertise**: 15+ years of experience, 1000+ completed projects worldwide
 2. **Elite Clientele**: Trusted by royal families, business leaders, and luxury property developers
 3. **Global Presence**: Serving clients across 25+ countries with consistent excellence
 4. **Premium Partnerships**: Authorized integrator for Sub-Zero, Wolf, Miele, Gaggenau, and other luxury brands
@@ -105,18 +114,23 @@ Kitchen Core transforms luxury residences with bespoke kitchen designs that comb
 ## Spokesperson Talking Points
 
 ### On Company Vision
+
 "We believe a luxury kitchen is more than appliances and cabinets – it's the heart of the home where memories are created and shared."
 
 ### On Design Philosophy
+
 "Our approach is rooted in three principles: timeless elegance that never goes out of style, functional innovation that enhances daily life, and quality that lasts generations."
 
 ### On Client Relationships
+
 "Our clients become family. Many return to us for their second, third, or fourth properties, which speaks to the trust we've built."
 
 ### On Market Position
+
 "We're privileged to serve the most discerning clients in the world. Their expectations push us to continually raise our standards."
 
 ### On Future Growth
+
 "While we're expanding internationally, we maintain our boutique approach. Every project receives personal attention from our founding team."
 
 ## Media Kit Contents

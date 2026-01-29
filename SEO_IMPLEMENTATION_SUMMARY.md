@@ -73,7 +73,7 @@ Home → Portfolio → Services → Gallery → About → Blog → Contact
 ```
 1. Hero Section (Video background, CTA)
    ↓
-2. Trust Statistics (150+ kitchens, social proof)
+2. Trust Statistics (1000+ kitchens, social proof)
    ↓
 3. Enhanced Portfolio (Featured projects with filtering)
    ↓
